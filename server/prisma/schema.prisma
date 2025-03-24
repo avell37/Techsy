@@ -48,9 +48,9 @@ model Device {
   rating        Int            @default(0)
   img           String
   Brand         Brand?         @relation(fields: [brandId], references: [id])
-  brandId       Int?
+  brandId       Int
   Type          Type?          @relation(fields: [typeId], references: [id])
-  typeId        Int?
+  typeId        Int
   basketDevices BasketDevice[]
   deviceInfo    DeviceInfo[]
   ratings       Rating[]

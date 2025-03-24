@@ -2,26 +2,17 @@ require("dotenv").config();
 const express = require('express');
 const cors = require('cors');
 const router = require('./routes/routes.ts');
-const {PrismaClient} = require('@prisma/client')
+const path = require('path');
+const fileUpload = require('express-fileupload')
 
-const prisma = new PrismaClient();
 const app = express();
 const PORT = process.env.PORT || 4000;
 
 app.use(cors());
 app.use(express.json());
-// app.use('/api', router)
-
-app.post('/users', async (req: any, res: any) => {
-    const { email, password } = req.body;
-    const newUser = await prisma.user.create({
-        data: {
-            email,
-            password
-        }
-    });
-    res.json(newUser);
-})
+app.use(express.static(path.resolve(__dirname, 'static')))
+app.use(fileUpload({}))
+app.use('/api', router);
 
 async function start() {
     try {
