@@ -8,84 +8,109 @@ datasource db {
 }
 
 model User {
-  id       Int      @id @default(autoincrement())
-  email    String   @unique
-  password String
-  role     String   @default("USER")
-  basket   Basket?
-  ratings  Rating[]
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  username  String   @default("Аноним")
+  email     String   @unique
+  password  String?
+  picture   String
+  role      String   @default("User")
+  basket    Basket?
+  ratings   Rating[]
+
+  @@map("user")
 }
 
 model Basket {
-  id            Int            @id @default(autoincrement())
-  user          User           @relation(fields: [userId], references: [id])
-  userId        Int            @unique
-  basketDevices BasketDevice[]
-}
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id])
+  Device    Device[]
 
-model BasketDevice {
-  in       Int     @id @default(autoincrement())
-  basket   Basket? @relation(fields: [basketId], references: [id])
-  basketId Int?
-  device   Device? @relation(fields: [deviceId], references: [id])
-  deviceId Int?
-}
-
-model Rating {
-  id       Int     @id @default(autoincrement())
-  rate     Int
-  text     String
-  device   Device? @relation(fields: [deviceId], references: [id])
-  deviceId Int?
-  user     User?   @relation(fields: [userId], references: [id])
-  userId   Int?
+  @@map("basket")
 }
 
 model Device {
-  id            Int            @id @default(autoincrement())
-  name          String         @unique
-  price         Int
-  rating        Int            @default(0)
-  img           String
-  Brand         Brand?         @relation(fields: [brandId], references: [id])
-  brandId       Int
-  Type          Type?          @relation(fields: [typeId], references: [id])
-  typeId        Int
-  basketDevices BasketDevice[]
-  deviceInfo    DeviceInfo[]
-  ratings       Rating[]
+  id         String       @id @default(cuid())
+  createdAt  DateTime     @default(now()) @map("created_at")
+  updatedAt  DateTime     @updatedAt @map("updated_at")
+  name       String       @unique
+  price      Int
+  rating     Int          @default(0)
+  img        String
+  brandId    String?
+  typeId     String?
+  basketId   String?
+  basket     Basket?      @relation(fields: [basketId], references: [id])
+  Brand      Brand?       @relation(fields: [brandId], references: [id])
+  Type       Type?        @relation(fields: [typeId], references: [id])
+  deviceInfo DeviceInfo[]
+  ratings    Rating[]
+
+  @@map("device")
 }
 
 model DeviceInfo {
-  id          Int     @id @default(autoincrement())
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
   title       String
   description String
-  Device      Device? @relation(fields: [deviceId], references: [id])
-  deviceId    Int?
+  deviceId    String?
+  Device      Device?  @relation(fields: [deviceId], references: [id])
+
+  @@map("device_info")
+}
+
+model Rating {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  rate      Int
+  userId    String?
+  deviceId  String?
+  Device    Device?  @relation(fields: [deviceId], references: [id])
+  User      User?    @relation(fields: [userId], references: [id])
+
+  @@map("rating")
 }
 
 model Brand {
-  id        Int         @id @default(autoincrement())
-  name      String
+  id        String      @id @default(cuid())
+  createdAt DateTime    @default(now()) @map("created_at")
+  updatedAt DateTime    @updatedAt @map("updated_at")
+  name      String      @unique
+  brandType BrandType[]
   devices   Device[]
-  type      Type[]
-  BrandType BrandType[]
+  types     Type[]      @relation("BrandToType")
+
+  @@map("brand")
 }
 
 model Type {
-  id        Int         @id @default(autoincrement())
+  id        String      @id @default(cuid())
+  createdAt DateTime    @default(now()) @map("created_at")
+  updatedAt DateTime    @updatedAt @map("updated_at")
   name      String      @unique
-  devices   Device[]
-  brands    Brand[]
   BrandType BrandType[]
+  devices   Device[]
+  brands    Brand[]     @relation("BrandToType")
+
+  @@map("type")
 }
 
 model BrandType {
-  id      Int   @id @default(autoincrement())
-  type    Type  @relation(fields: [typeId], references: [id])
-  typeId  Int
-  brand   Brand @relation(fields: [brandId], references: [id])
-  brandId Int
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  typeId    String
+  brandId   String
+  Brand     Brand    @relation(fields: [brandId], references: [id])
+  type      Type     @relation(fields: [typeId], references: [id])
 
   @@unique([typeId, brandId])
+  @@map("brand_type")
 }

@@ -13,7 +13,7 @@ class DeviceController {
         const device = await prisma.device.create({
             data: {
                 name,
-                price,
+                price: Number(price),
                 brandId,
                 typeId,
                 img: fileName,
@@ -28,7 +28,13 @@ class DeviceController {
     }
 
     async getOne(req: any, res: any) {
-
+        const {id} = req.params;
+        const device = await prisma.device.findUnique({
+            where: {
+                id
+            }
+        })
+        return res.json(device);
     }
 }
 
