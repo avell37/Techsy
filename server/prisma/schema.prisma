@@ -11,7 +11,7 @@ model User {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
-  username  String   @default("Аноним")
+  username  String
   email     String   @unique
   password  String?
   picture   String
@@ -70,11 +70,13 @@ model Rating {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
   rate      Int
+  comment   String?
   userId    String?
   deviceId  String?
   Device    Device?  @relation(fields: [deviceId], references: [id])
   User      User?    @relation(fields: [userId], references: [id])
 
+  @@index([userId])
   @@map("rating")
 }
 
