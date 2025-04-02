@@ -1,5 +1,5 @@
-import { Input } from "@/shared/components/Input/Input"
-import { Button } from "@/shared/components/Button/Button"
+import { Input } from "@/shared/ui/Input/Input"
+import { Button } from "@/shared/ui/Button/Button"
 
 export const Login = () => {
     return (

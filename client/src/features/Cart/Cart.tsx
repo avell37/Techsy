@@ -1,4 +1,4 @@
-import { Button } from "@/shared/components/Button/Button"
+import { Button } from "@/shared/ui/Button/Button"
 
 export const Cart = () => {
     return (

@@ -1,15 +1,19 @@
-import { ProfilePage } from "@/pages/ProfilePage/ProfilePage"
-import { ShopPage } from "@/pages/ShopPage/ShopPage"
-import { BasketPage } from "@/pages/BasketPage/BasketPage"
-import { RegistrationPage } from "@/pages/RegistrationPage/RegistrationPage"
-import { LoginPage } from "@/pages/LoginPage/LoginPage"
+import { ProfilePage } from "@/pages/ProfilePage/ui/ProfilePage"
+import { ShopPage } from "@/pages/ShopPage/ui/ShopPage"
+import { BasketPage } from "@/pages/BasketPage/ui/BasketPage"
+import { AuthPage } from "@/pages/AuthPage/ui/AuthPage"
+import { CardPage } from "@/pages/CardPage/ui/CardPage"
+import { ErrorPage } from "@/pages/ErrorPage/ui/ErrorPage"
+import { AdminPage } from "@/pages/AdminPage/ui/AdminPage"
 
 export const App = () => {
     return (
-        <ShopPage />
+        // <ShopPage />
         // <ProfilePage /> 
         // <BasketPage />
-        // <RegistrationPage />
-        // <LoginPage />
+        <AuthPage />
+        // <CardPage /> 
+        // <ErrorPage />
+        // <AdminPage />
     )
 }

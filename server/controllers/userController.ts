@@ -1,3 +1,4 @@
+const ApiError = require('../error/apiError');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const {PrismaClient} = require('@prisma/client')
@@ -12,16 +13,27 @@ const generateJWT = (username: string, email: string, picture: string, role: str
 }
 
 class UserController {
-    async registration(req: any, res: any) {
+    async registration(req: any, res: any, next: any) {
         const {username, email, password, role} = req.body;
+        if (!username || !email || !password) {
+            return next(ApiError.badRequest('Некорректные данные'))
+        }
         const avatar = 'http://localhost:4000/default-user.png'
-        const registrated = await prisma.user.findUnique({
+        const candidate = await prisma.user.findUnique({
             where: {
                 email
             }
         })
-        if (registrated) {
-            return res.json('Ты зареган, ты чего хоть')
+        const uniqueUsername = await prisma.user.findUnique({
+            where: {
+                username
+            }
+        })
+        if (uniqueUsername) {
+            return next(ApiError.badRequest('Данное имя пользователя уже занято'))
+        }
+        if (candidate) {
+            return next(ApiError.badRequest('Пользователь с таким email адресом уже существует'))
         }
         const hashPassword = await bcrypt.hash(password, 4)
         const user = await prisma.user.create({
@@ -42,7 +54,7 @@ class UserController {
         return res.json({token})
     }
     
-    async login(req: any, res: any) {
+    async login(req: any, res: any, next: any) {
         const {email, password} = req.body;
         const user = await prisma.user.findUnique({
             where: {
@@ -50,11 +62,11 @@ class UserController {
             }
         })
         if (!user) {
-            return res.json('Пользователя с таким e-mail адресом не существует')
+            return next(ApiError.badRequest('Пользователя с таким e-mail адресом не существует'))
         }
         const comparePassword = bcrypt.compareSync(password, user.password);
         if (!comparePassword) {
-            return res.json('Неверно указан пароль')
+            return next(ApiError.badRequest('Неверный пароль'))
         }
         const token = generateJWT(user.username, user.email, user.avatar, user.role)
         return res.json({token});

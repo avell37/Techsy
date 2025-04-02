@@ -1,11 +1,11 @@
-import { Header } from "@/widgets/Header/Header"
-import { Profile } from "@/features/Profile/Profile"
+import { Header } from "@/widgets/Header/ui/Header"
+import { UserProfile } from "@/features/UserProfile/UserProfile"
 
 export const ProfilePage: React.FC = () => {
     return (
         <div className="flex flex-col gap-[50px]">
             <Header />
-            <Profile />
+            <UserProfile />
         </div>
     )
 }

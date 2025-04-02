@@ -1,8 +1,8 @@
 import icon from './default-user.png';
-import { Input } from '@/shared/components/Input/Input';
-import { Button } from '@/shared/components/Button/Button';
+import { Input } from '@/shared/ui/Input/Input';
+import { Button } from '@/shared/ui/Button/Button';
 
-export const Profile: React.FC = () => {
+export const UserProfile: React.FC = () => {
     return (
         <div className='flex justify-center w-full gap-[100px]'>
             <div className='flex flex-col gap-[20px] items-center justify-center'>

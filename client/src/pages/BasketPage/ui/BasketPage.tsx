@@ -1,5 +1,5 @@
-import { BasketCard } from "@/shared/components/BasketCard/BasketCard"
-import { Header } from "@/widgets/Header/Header"
+import { BasketCard } from "@/shared/ui/BasketCard/BasketCard"
+import { Header } from "@/widgets/Header/ui/Header"
 import { Cart } from "@/features/Cart/Cart"
 
 export const BasketPage = () => {

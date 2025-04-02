@@ -1,5 +1,5 @@
-import { Header } from "@/widgets/Header/Header"
-import { ProductFilters } from "@/widgets/ProductFilters/ProductFilters"
+import { Header } from "@/widgets/Header/ui/Header"
+import { ProductFilters } from "@/widgets/ProductFilters/ui/ProductFilters"
 import { FilteredSearch } from "@/features/FilteredSearch/FilteredSearch"
 import { ProductList } from "@/entities/ProductList/ProductList"
 

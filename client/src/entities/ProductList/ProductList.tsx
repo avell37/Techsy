@@ -1,4 +1,4 @@
-import { Card } from "@/shared/components/Card/Card"
+import { Card } from "@/shared/ui/Card/Card"
 
 export const ProductList: React.FC = () => {
     return (
