@@ -1,16 +1,15 @@
-interface InputProps {
-    className: string,
-    type: string,
-    placeholder: string,
-    required?: string
+import { InputHTMLAttributes } from "react";
+
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+    className: string;
+    children?: React.ReactNode;
 }
 
-export const Input: React.FC<InputProps> = ({className, type, placeholder}) => {
+export const Input: React.FC<InputProps> = ({ children, ...props }) => {
     return (
-        <input
-            className={className}
-            type={type}
-            placeholder={placeholder}
-        />
-    )
-}
+        <div className="relative">
+            {children}
+            <input {...props} />
+        </div>
+    );
+};

@@ -1,10 +1,20 @@
 interface ButtonProps {
-    className: string,
-    text: string
+    className: string;
+    text?: string;
+    children?: React.ReactNode;
+    onClick?: () => void;
 }
 
-export const Button: React.FC<ButtonProps> = ({ className, text}) => {
+export const Button: React.FC<ButtonProps> = ({
+    className,
+    text,
+    children,
+    onClick,
+}) => {
     return (
-        <button className={className}>{text}</button>
-    )
-}
+        <button className={className} onClick={onClick}>
+            {text}
+            {children}
+        </button>
+    );
+};
