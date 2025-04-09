@@ -7,16 +7,22 @@ import { EmailIcon } from "../../../public/icons/EmailIcon";
 import { PasswordIcon } from "../../../public/icons/PasswordIcon";
 import { ShowPasswordIcon } from "../../../public/icons/ShowPasswordIcon";
 import { HidePasswordIcon } from "../../../public/icons/HidePasswordIcon";
+import { GoogleIcon } from "../../../public/icons/GoogleIcon";
+import { GithubIcon } from "../../../public/icons/GithubIcon";
+import { Link, useNavigate } from "react-router-dom";
+import { LOGIN_ROUTE, SHOP_ROUTE } from "@/shared/config/consts";
 
 export const Registration = () => {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(true);
+    const navigate = useNavigate();
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: React.ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
         await registration(username, email, password);
+        navigate(SHOP_ROUTE);
     };
 
     const toggleShowPassword = () => {
@@ -36,7 +42,7 @@ export const Registration = () => {
                 >
                     <p className="text-white">Username</p>
                     <Input
-                        className="w-[500px] h-[40px] bg-[#111729] rounded-full border-gray-700 border-2 pl-8 text-white focus:border-[#4F45E4] outline-none"
+                        className="max-w-[500px] w-full h-[40px] bg-[#111729] rounded-full border-gray-700 border-2 pl-8 text-white focus:border-[#4F45E4] outline-none"
                         value={username}
                         onChange={(e) => {
                             setUsername(e.target.value);
@@ -48,7 +54,7 @@ export const Registration = () => {
                     </Input>
                     <p className="text-white">E-mail</p>
                     <Input
-                        className="w-[500px] h-[40px] bg-[#111729] rounded-full text-white pl-8 border-gray-700 border-2 focus:border-[#4F45E4] outline-none"
+                        className="max-w-[500px] w-full h-[40px] bg-[#111729] rounded-full text-white pl-8 border-gray-700 border-2 focus:border-[#4F45E4] outline-none"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         type="email"
@@ -58,7 +64,7 @@ export const Registration = () => {
                     </Input>
                     <p className="text-white">Password</p>
                     <Input
-                        className="w-[500px] h-[40px] bg-[#111729] rounded-full border-gray-700 border-2 text-white pl-8 focus:border-[#4F45E4] outline-none"
+                        className="max-w-[500px] w-full h-[40px] bg-[#111729] rounded-full border-gray-700 border-2 text-white pl-8 focus:border-[#4F45E4] outline-none"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         type={showPassword ? "password" : "text"}
@@ -66,7 +72,7 @@ export const Registration = () => {
                     >
                         <PasswordIcon className="absolute top-3 left-3" />
                         <Button
-                            className="absolute right-3 top-3"
+                            className="absolute right-5 top-3"
                             onClick={toggleShowPassword}
                         >
                             {showPassword ? (
@@ -76,17 +82,34 @@ export const Registration = () => {
                             )}
                         </Button>
                     </Input>
+                    <div className="flex justify-center items-center gap-[10px]">
+                        <Button
+                            className="relative flex justify-center items-center pl-4 w-[245px] h-[40px] border-gray-700 border-1 bg-[#111729] text-white rounded-full"
+                            text="Войти с помощью Google"
+                        >
+                            <GoogleIcon className="absolute left-2 bottom-[11px]" />
+                        </Button>
+                        <Button
+                            className="relative flex justify-center items-center pl-4 w-[245px] h-[40px] border-gray-700 border-1 bg-[#111729] text-white rounded-full"
+                            text="Войти с помощью Github"
+                        >
+                            <GithubIcon className="absolute left-2 bottom-[10px]" />
+                        </Button>
+                    </div>
                     <Button
-                        className="w-[500px] h-[40px] bg-[#5120B8] text-white rounded-full"
+                        className="max-w-[500px] w-full h-[40px] bg-[#5120B8] text-white rounded-full"
                         text="Зарегистрироваться"
                     />
                 </form>
-                <p className="text-white text-center">
-                    Уже есть аккаунт?{" "}
-                    <a className="text-[#5120B8]" href="#">
+                <div className="flex flex-col items-center">
+                    <p className="text-white">Уже есть аккаунт?</p>
+                    <Link
+                        className="mt-[5px] font-bold text-[#5120B8]"
+                        to={LOGIN_ROUTE}
+                    >
                         Войти
-                    </a>{" "}
-                </p>
+                    </Link>
+                </div>
             </div>
         </div>
     );

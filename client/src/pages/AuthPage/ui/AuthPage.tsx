@@ -1,18 +1,17 @@
-import { Welcome } from "@/shared/ui/welcome/Welcome";
-import { Login } from "@/features/Login/Login";
 import { Registration } from "@/features/Registration/Registration";
+import { Login } from "@/features/Login/Login";
+import { Welcome } from "@/shared/ui/Welcome/Welcome";
+import { useLocation } from "react-router-dom";
+import { LOGIN_ROUTE } from "@/shared/config/consts";
 
 export const AuthPage = () => {
-    const userIsAuth = false;
-
-    // if (localStorage.getItem('token')) {
-
-    // }
+    const location = useLocation();
+    const isLogin = location.pathname === LOGIN_ROUTE;
 
     return (
         <div className="flex">
             <Welcome />
-            {userIsAuth ? <Login /> : <Registration />}
+            {isLogin ? <Login /> : <Registration />}
         </div>
     );
 };

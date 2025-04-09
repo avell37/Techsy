@@ -1,8 +1,8 @@
 import { Header } from "@/widgets/Header/ui/Header";
 import { Button } from "@/shared/ui/Button/Button";
-import qwe from "./image.png";
-import ewq from "./star.png";
-import user from "./default-user.png";
+import qwe from "../image.png";
+import ewq from "../star.png";
+import user from "../default-user.png";
 
 export const DevicePage = () => {
     return (

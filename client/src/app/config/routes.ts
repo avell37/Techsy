@@ -7,7 +7,12 @@ import { ShopPage } from "@/pages/ShopPage/ui/ShopPage";
 import { ErrorPage } from "@/pages/ErrorPage/ui/ErrorPage";
 import { ProfilePage } from "@/pages/ProfilePage/ui/ProfilePage";
 
-export const authRoutes = [
+interface RoutesProps {
+    path: string,
+    Component: React.ComponentType
+}
+
+export const authRoutes: RoutesProps[] = [
     {
         path: ADMIN_ROUTE,
         Component: AdminPage
