@@ -10,6 +10,11 @@ export const fetchTypes = async () => {
     return data;
 }
 
+export const fetchOneType = async (id: string) => {
+    const {data} = await $host.get('/api/type' + "/" + id)
+    return data;
+}
+
 export const createBrand = async (brand: string) => {
     const {data} = await $authHost.post('/api/brand', brand)
     return data;
@@ -17,6 +22,11 @@ export const createBrand = async (brand: string) => {
 
 export const fetchBrands = async () => {
     const {data} = await $host.get('/api/brand');
+    return data;
+}
+
+export const fetchOneBrand = async (id: string) => {
+    const {data} = await $host.get('/api/brand' + "/" + id)
     return data;
 }
 
@@ -31,6 +41,6 @@ export const fetchDevices = async () => {
 }
 
 export const fetchOneDevice = async (id: string) => {
-    const {data} = await $host.get('/api/device' + id);
+    const {data} = await $host.get('/api/device' + '/' + id);
     return data;
 }

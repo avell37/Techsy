@@ -8,6 +8,8 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/shared/ui/Button/Button";
 import Cookies from "js-cookie";
+import axios from "axios";
+import { checkRole } from "@/shared/api/userApi";
 
 export const Header: React.FC = () => {
     const navigate = useNavigate();

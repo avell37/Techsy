@@ -4,9 +4,9 @@ const jwt = require('jsonwebtoken');
 const {PrismaClient} = require('@prisma/client')
 const prisma = new PrismaClient();
 
-const generateJWT = (username: string, email: string, picture: string, role: string = 'User') => {
+const generateJWT = (id: string, username: string, email: string, role: string = 'User', picture?: string) => {
     return jwt.sign(
-        {username, email, role, picture},
+        {id, username, email, role, picture},
         process.env.JWT_SECRET_KEY,
         {expiresIn: "24h"}
     )
@@ -50,7 +50,7 @@ class UserController {
                 userId: user.id
             }
         })
-        const token = generateJWT(user.username, user.email, user.avatar, user.role)
+        const token = generateJWT(user.id, user.username, user.email, user.role, user.avatar)
         return res.json({token})
     }
     
@@ -68,13 +68,61 @@ class UserController {
         if (!comparePassword) {
             return next(ApiError.badRequest('Неверный пароль'))
         }
-        const token = generateJWT(user.username, user.email, user.avatar, user.role)
+        const token = generateJWT(user.id, user.username, user.email, user.role, user.picture)
         return res.json({token});
     }
 
     async check(req: any, res: any) {
-        const token = generateJWT(req.user.username, req.user.email, req.user.avatar, req.user.role)
+        const token = generateJWT(req.user.id, req.user.username, req.user.email, req.user.role, req.user.picture)
         return res.json({token})
+    }
+
+    async getUserData(req: any, res: any) {
+        const token = generateJWT(req.user.id, req.user.username, req.user.email, req.user.role, req.user.picture)
+        return res.json({token})
+    }
+
+    async changeUserData(req: any, res: any, next: any) {
+        try {
+            const {id, role} = req.user;
+            const {username, email} = req.body
+
+            if (!username || !email) {
+                next(ApiError.badRequest('Нет данных'))
+            }
+
+
+            const updatedUser = await prisma.user.update({
+                where: {id},
+                data: {username, email}
+            })
+
+            const token = generateJWT(id, updatedUser.username, updatedUser.email, role)
+            return res.json({token});
+        } catch (err) {
+            next(ApiError.badRequest(err));
+        }
+    }
+
+    async uploadAvatar(req: any, res: any, next: any) {
+        try {
+            if (!req.file) {
+                res.json({message: 'все плохо'})
+            }
+
+            const userId = req.user.id;
+            const avatarPath = `/static/avatar/${req.file.filename}`
+
+            const updatedUser = await prisma.user.update({
+                where: {id: userId},
+                data: {picture: avatarPath}
+            })
+
+            const token = generateJWT(updatedUser.id, updatedUser.username, updatedUser.email, updatedUser.role, updatedUser.picture)
+            return res.json({token});
+        } catch (err) {
+            next(ApiError.badRequest('все оч плоххо'));
+        }
     }
 }
 

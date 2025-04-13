@@ -1,10 +1,16 @@
-import iphone from "./image.png";
-import star from "./star.png";
+import star from "../../../../public/icons/star.png";
 import { Button } from "../Button/Button";
+import { useNavigate } from "react-router-dom";
+import { DEVICE_ROUTE } from "@/shared/config/consts";
 
 export const Card = ({ device }) => {
+    const navigate = useNavigate();
+
     return (
-        <div className="relative flex flex-col max-w-[250px] border-1 border-[#3A177F] rounded-xl hover:border-[#8A4FFF] hover:bg-[#1A1238]/30 transition-all">
+        <div
+            onClick={() => navigate(DEVICE_ROUTE + "/" + device.id)}
+            className="relative flex flex-col justify-between items-center max-w-[250px] min-h-[300px] w-full border-1 border-[#3A177F] rounded-xl hover:border-[#8A4FFF] hover:bg-[#1A1238]/30 transition-all"
+        >
             <div className="relative flex w-full">
                 <img
                     className="absolute text-white top-2 right-5 w-[15px] h-[15px]"
@@ -15,7 +21,7 @@ export const Card = ({ device }) => {
                 </span>
             </div>
             <img
-                className=""
+                className="max-w-[200px] max-h-[200px]"
                 src={import.meta.env.VITE_API_URL + "/" + device.img}
             />
             <div className="relative flex flex-col w-full gap-[5px] pb-[8px]">

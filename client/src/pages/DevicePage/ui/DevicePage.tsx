@@ -1,41 +1,62 @@
 import { Header } from "@/widgets/Header/ui/Header";
 import { Button } from "@/shared/ui/Button/Button";
-import qwe from "../image.png";
 import ewq from "../star.png";
 import user from "../default-user.png";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { fetchOneDevice } from "@/shared/api/deviceApi";
 
 export const DevicePage = () => {
+    const { id } = useParams();
+    console.log(id);
+    const [device, setDevice] = useState({});
+
+    useEffect(() => {
+        getData();
+    }, []);
+
+    const getData = () => {
+        fetchOneDevice(id)
+            .then((data) => setDevice(data))
+            .then((data) => console.log(data))
+            .catch((err) => console.log(err));
+        console.log(device);
+    };
+
     return (
         <div className="flex flex-col gap-[50px]">
             <Header />
-            <div className="flex border-b border-[#5120B8]/30">
+            <div className="pt-8 pb-8 flex justify-around items-center border-b border-[#5120B8]/30">
                 <img
-                    src={qwe}
-                    className="min-w-[100px] max-w-[500px] max-h-[500px] min-h-[100px] h-full w-full"
+                    src={import.meta.env.VITE_API_URL + "/" + device.img}
+                    className="ml-[50px] min-w-[100px] max-w-[500px] w-full"
                 />
-                <div className="flex flex-col mt-[50px] gap-[30px]">
+                <div className="flex flex-col gap-[30px]">
                     <p className="text-white font-bold text-3xl">
-                        IPhone 16 PRO MAX
+                        {device?.name}
                     </p>
-                    <div className="flex items-center gap-[5px]">
+                    <div className="flex gap-[5px]">
                         <img src={ewq} className="w-[20px] h-[20px]" />
-                        <span className="text-white font-bold text-2xl">5</span>
+                        <span className="text-white font-bold text-2xl">
+                            {device.rating}
+                        </span>
                     </div>
                     <p className="text-white text-xl">
-                        <span className="font-bold">Цена:</span> 129,999 Р.
+                        <span className="font-bold">Цена:</span> {device.price}{" "}
+                        Р.
                     </p>
                     <p className="text-white text-xl">
-                        <span className="font-bold">Бренд:</span> Apple
+                        <span className="font-bold">Тип:</span> {device?.brand}
                     </p>
                     <p className="text-white text-xl">
-                        <span className="font-bold">Цвет:</span> черный
+                        <span className="font-bold">Бренд:</span> {device.type}
                     </p>
                     <Button
                         className="w-[200px] h-[40px] bg-[#5120B8] text-white rounded-xl font-bold"
                         text="Добавить в корзину"
                     />
                 </div>
-                <div className="mt-8 ml-36 border-1 border-[#5120B8]/30 rounded-xl w-[500px] max-h-[490px] h-full">
+                <div className="border-1 border-[#5120B8]/30 rounded-xl max-w-[500px] max-h-[490px] w-full h-full">
                     <p className="text-white text-center font-bold mt-[5px]">
                         Характеристики:
                     </p>

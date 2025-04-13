@@ -14,6 +14,16 @@ class TypeController {
         const types = await prisma.type.findMany()
         return res.json(types);
     }
+
+    async getOne(req: any, res: any) {
+        const {id} = req.params;
+        const type = await prisma.type.findUnique({
+            where: {
+                id
+            }
+        })
+        return res.json(type);
+    }
 }
 
 module.exports = new TypeController();

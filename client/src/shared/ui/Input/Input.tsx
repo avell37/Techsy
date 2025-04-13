@@ -1,18 +1,20 @@
-import { InputHTMLAttributes } from "react";
+import { forwardRef, InputHTMLAttributes } from "react";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-    className: string;
+    className?: string;
     children?: React.ReactNode;
     noWrap?: boolean;
 }
 
-export const Input: React.FC<InputProps> = ({ noWrap, children, ...props }) => {
-    if (noWrap) return <input {...props} />;
+export const Input = forwardRef<HTMLInputElement, InputProps>(
+    ({ noWrap, children, ...props }, ref) => {
+        if (noWrap) return <input ref={ref} {...props} />;
 
-    return (
-        <div className="relative">
-            {children}
-            <input {...props} />
-        </div>
-    );
-};
+        return (
+            <div className="relative">
+                {children}
+                <input ref={ref} {...props} />
+            </div>
+        );
+    }
+);
