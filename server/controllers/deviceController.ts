@@ -2,14 +2,26 @@ const { PrismaClient } = require('@prisma/client');
 const uuid = require('uuid');
 const path = require('path');
 const prisma = new PrismaClient();
+const fs = require('fs');
 
 class DeviceController {
     async create(req: any, res: any) {
         const {name, price, brandId, typeId} = req.body;
-        const {img} = req.files;
-        let fileName = uuid.v4() + ".jpg";
-        img.mv(path.resolve(__dirname, '..', 'static', fileName))
+        const file = req.file;
+        if (!file) {
+            return res.status(400).json({ message: "Файл не загружен" });
+        }
+        if (!file.originalname) {
+            return res.status(400).json({ message: 'Неверный формат файла' });
+        }
+        const fileName = uuid.v4() + path.extname(file.originalname);
+        const filePath = path.resolve(__dirname, '..', 'uploads', fileName);
 
+        try {
+            fs.renameSync(file.path, filePath);
+        } catch(err) {
+            return res.status(400).json({message: "ОшибОЧКА", error: err})
+        }
         const device = await prisma.device.create({
             data: {
                 name,
@@ -32,9 +44,18 @@ class DeviceController {
         const device = await prisma.device.findUnique({
             where: {
                 id
+            },
+            include: {
+                Brand: true, 
+                Type: true,  
+                deviceInfo: true
             }
         })
-        return res.json(device);
+        return res.json({
+            ...device,
+            brand: device.Brand?.name,
+            type: device.Type?.name
+        });
     }
 }
 

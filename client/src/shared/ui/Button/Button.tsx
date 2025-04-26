@@ -3,6 +3,8 @@ interface ButtonProps {
     text?: string;
     children?: React.ReactNode;
     onClick?: () => void;
+    type?: "submit";
+    noWrap?: boolean;
 }
 
 export const Button: React.FC<ButtonProps> = ({
@@ -10,9 +12,17 @@ export const Button: React.FC<ButtonProps> = ({
     text,
     children,
     onClick,
+    type,
+    noWrap,
 }) => {
+    if (noWrap)
+        return (
+            <button type={type} className={className} onClick={onClick}>
+                {text}
+            </button>
+        );
     return (
-        <button className={className} onClick={onClick}>
+        <button type={type} className={className} onClick={onClick}>
             {text}
             {children}
         </button>

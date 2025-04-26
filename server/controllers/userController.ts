@@ -18,7 +18,7 @@ class UserController {
         if (!username || !email || !password) {
             return next(ApiError.badRequest('Некорректные данные'))
         }
-        const avatar = 'http://localhost:4000/default-user.png'
+        const avatar = 'default-user.png'
         const candidate = await prisma.user.findUnique({
             where: {
                 email
@@ -50,7 +50,7 @@ class UserController {
                 userId: user.id
             }
         })
-        const token = generateJWT(user.id, user.username, user.email, user.role, user.avatar)
+        const token = generateJWT(user.id, user.username, user.email, user.role, user.picture)
         return res.json({token})
     }
     
@@ -97,7 +97,7 @@ class UserController {
                 data: {username, email}
             })
 
-            const token = generateJWT(id, updatedUser.username, updatedUser.email, role)
+            const token = generateJWT(id, updatedUser.username, updatedUser.email, role, updatedUser.picture)
             return res.json({token});
         } catch (err) {
             next(ApiError.badRequest(err));
@@ -111,11 +111,11 @@ class UserController {
             }
 
             const userId = req.user.id;
-            const avatarPath = `/static/avatar/${req.file.filename}`
+            const newAvatar = req.file.filename;
 
             const updatedUser = await prisma.user.update({
                 where: {id: userId},
-                data: {picture: avatarPath}
+                data: {picture: newAvatar}
             })
 
             const token = generateJWT(updatedUser.id, updatedUser.username, updatedUser.email, updatedUser.role, updatedUser.picture)

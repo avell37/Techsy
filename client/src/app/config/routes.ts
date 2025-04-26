@@ -1,11 +1,13 @@
-import { AdminPage } from "@pages/AdminPage/ui/AdminPage";
-import {ADMIN_ROUTE, BASKET_ROUTE, DEVICE_ROUTE, ERROR_ROUTE, LOGIN_ROUTE, PROFILE_ROUTE, REGISTRATION_ROUTE, SHOP_ROUTE} from "@/shared/config/consts";
-import { BasketPage } from "@/pages/BasketPage/ui/BasketPage";
-import { AuthPage } from "@/pages/AuthPage/ui/AuthPage";
-import { DevicePage } from "@/pages/DevicePage/ui/DevicePage";
-import { ShopPage } from "@/pages/ShopPage/ui/ShopPage";
-import { ErrorPage } from "@/pages/ErrorPage/ui/ErrorPage";
-import { ProfilePage } from "@/pages/ProfilePage/ui/ProfilePage";
+import { AdminPage } from "@/pages/AdminPage/AdminPage";
+import {ADMIN_ROUTE, BASKET_ROUTE, DEVICE_ROUTE, 
+        ERROR_ROUTE, LOGIN_ROUTE, PROFILE_ROUTE, 
+        REGISTRATION_ROUTE, SHOP_ROUTE} from "@/shared/config/consts";
+import { BasketPage } from "@/pages/BasketPage/BasketPage";
+import { AuthPage } from "@/pages/AuthPage/AuthPage";
+import { DevicePage } from "@/pages/DevicePage/DevicePage";
+import { ShopPage } from "@/pages/ShopPage/ShopPage";
+import { ErrorPage } from "@/pages/ErrorPage/ErrorPage";
+import { ProfilePage } from "@/pages/ProfilePage/ProfilePage";
 
 interface RoutesProps {
     path: string,

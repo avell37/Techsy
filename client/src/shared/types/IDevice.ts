@@ -8,5 +8,7 @@ export interface IDevice {
     typeId: string,
     createdAt: string,
     updatedAt: string,
-    basketId?: boolean
+    basketId?: boolean,
+    brand: string,
+    type: string
 }
