@@ -1,78 +1,16 @@
-import { Input } from "@/shared/ui/Input/Input";
-import { Button } from "@/shared/ui/Button/Button";
-import { useEffect, useState } from "react";
-import { Dropdown } from "@/shared/ui/Dropdown/Dropdown";
-import { useAppSelector } from "@/shared/types/useAppSelector";
-import { filtersDropdownItems } from "@/shared/model/filtersDropdownItems";
-import { useAppDispatch } from "@/shared/types/useAppDispatch";
-import { fetchAllBrands } from "@/entities/Brand";
-import { fetchAllTypes } from "@/entities/Type/model/typeSlice";
-import { formDataUtils } from "../../model/formDataUtils";
-import { createDevice } from "@/shared/api/deviceApi";
-import { toast } from "react-toastify";
+import { Input, Button, Dropdown } from "@/shared/ui";
+import { FormProps } from "../types";
+import { useDeviceForm } from "../../model/useDeviceForm";
 
-export const DeviceForm = ({ onClose }) => {
-    const dispatch = useAppDispatch();
-    const { brands } = useAppSelector((state) => state.brandReducer);
-    const { types } = useAppSelector((state) => state.typeReducer);
-    const [device, setDevice] = useState({
-        name: "",
-        price: "",
-        brandId: "",
-        brandName: "Выберите бренд",
-        typeId: "",
-        typeName: "Выберите тип",
-        img: null as File | null,
-    });
-
-    useEffect(() => {
-        dispatch(fetchAllBrands());
-        dispatch(fetchAllTypes());
-    }, []);
-
-    const handleBrandSelect = (id: string, name: string) => {
-        setDevice({ ...device, brandId: id, brandName: name });
-    };
-
-    const handleTypeSelect = (id: string, name: string) => {
-        setDevice({ ...device, typeId: id, typeName: name });
-    };
-
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const selectedFile = e.target.files?.[0];
-        if (selectedFile) {
-            setDevice({ ...device, img: selectedFile });
-        }
-    };
-
-    const handleSubmitForm = async (e: React.FormEvent) => {
-        e.preventDefault();
-        if (device.img) {
-            try {
-                const formData = formDataUtils(device);
-                await createDevice(formData);
-                toast.success("Устройство успешно добавлено!");
-            } catch (error) {
-                console.error(error);
-                toast.error(
-                    "Ошибка при добавлении устройства. Попробуй еще раз :)"
-                );
-            }
-        } else {
-            toast.warn("Выберите фотографию");
-        }
-    };
-
-    const brandItems = filtersDropdownItems({
-        list: brands,
-        onSelect: handleBrandSelect,
-    });
-
-    const typeItems = filtersDropdownItems({
-        list: types,
-        onSelect: handleTypeSelect,
-    });
-    console.log(device);
+export const DeviceForm = ({ onClose }: FormProps) => {
+    const {
+        device,
+        brandItems,
+        typeItems,
+        handleChange,
+        handleFileChange,
+        handleSubmitForm,
+    } = useDeviceForm();
 
     return (
         <form
@@ -85,6 +23,7 @@ export const DeviceForm = ({ onClose }) => {
             <Dropdown
                 trigger={
                     <Button
+                        type="button"
                         className="w-[175px] h-[40px] text-center text-white rounded-md border-1 border-[#5120B8]/30 hover:border-[#5120B8] hover:bg-[#1A1238]/30 focus:border-[#4F45E4] transition"
                         text={device.brandName}
                     />
@@ -95,6 +34,7 @@ export const DeviceForm = ({ onClose }) => {
             <Dropdown
                 trigger={
                     <Button
+                        type="button"
                         className="w-[175px] h-[40px] text-center text-white rounded-md border-1 border-[#5120B8]/30 hover:border-[#5120B8] hover:bg-[#1A1238]/30 focus:border-[#4F45E4] transition"
                         text={device.typeName}
                     />
@@ -108,19 +48,14 @@ export const DeviceForm = ({ onClose }) => {
                     className="max-w-[450px] w-full h-[40px] bg-[#111729] rounded-xl border-gray-700 border-2 text-white pl-2 text-sm focus:border-[#4F45E4] outline-none"
                     placeholder="Название устройства"
                     value={device.name}
-                    onChange={(e) =>
-                        setDevice({ ...device, name: e.target.value })
-                    }
+                    onChange={(e) => handleChange("name", e.target.value)}
                 />
                 <Input
                     noWrap
                     className="max-w-[450px] w-full h-[40px] bg-[#111729] rounded-xl border-gray-700 border-2 text-white pl-2 text-sm focus:border-[#4F45E4] outline-none"
                     placeholder="Цена"
                     value={device.price}
-                    onChange={(e) => {
-                        const value = e.target.value.replace(/\D/g, "");
-                        setDevice({ ...device, price: Number(value) });
-                    }}
+                    onChange={(e) => handleChange("price", e.target.value)}
                 />
                 <label className="max-w-[175px] flex flex-col text-white gap-[10px]">
                     {device.img && (

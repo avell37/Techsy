@@ -1,12 +1,15 @@
-import { Input } from "@/shared/ui/Input/Input";
-import { Button } from "@/shared/ui/Button/Button";
-import { EmailIcon } from "@shared/assets/EmailIcon";
-import { PasswordIcon } from "@shared/assets/PasswordIcon";
-import { ShowPasswordIcon } from "@shared/assets/ShowPasswordIcon";
-import { HidePasswordIcon } from "@shared/assets/HidePasswordIcon";
+import { Input, Button } from "@/shared/ui";
 import { Link } from "react-router-dom";
 import { REGISTRATION_ROUTE } from "@/shared/config/consts";
 import { LoginProps } from "./types";
+import { GoogleAuth } from "../GoogleAuth/GoogleAuth";
+import {
+    GithubIcon,
+    HidePasswordIcon,
+    ShowPasswordIcon,
+    PasswordIcon,
+    EmailIcon,
+} from "@/shared/assets";
 
 export const LoginView = ({
     handleSubmit,
@@ -44,7 +47,7 @@ export const LoginView = ({
                     >
                         <PasswordIcon className="absolute top-3 left-3" />
                         <Button
-                            className="absolute right-3 top-3"
+                            className="absolute right-5 top-3"
                             onClick={toggleShowPassword}
                         >
                             {showPassword ? (
@@ -54,6 +57,15 @@ export const LoginView = ({
                             )}
                         </Button>
                     </Input>
+                    <div className="flex justify-center items-center gap-[10px]">
+                        <GoogleAuth />
+                        <Button
+                            className="relative flex justify-center items-center pl-4 w-[245px] h-[40px] border-gray-700 border-1 bg-[#111729] text-white rounded-full"
+                            text="Войти с помощью Github"
+                        >
+                            <GithubIcon className="absolute left-2 bottom-[10px]" />
+                        </Button>
+                    </div>
                     <Button
                         className="max-w-[500px] w-full h-[40px] bg-[#5120B8] text-white rounded-full"
                         text="Войти"

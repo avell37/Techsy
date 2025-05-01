@@ -12,13 +12,21 @@ export const fetchAllBrands = createAsyncThunk(
 
 const initialState: BrandState = {
     brands: [],
+    selectedBrand: {
+        id: '',
+        name: 'Бренд'
+    },
     loading: "idle",
 }
 
 const brandSlice = createSlice({
     name: 'brands',
     initialState,
-    reducers: {},
+    reducers: {
+        setSelectedBrand(state, action) {
+            state.selectedBrand = action.payload;
+        }
+    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchAllBrands.pending, (state) => {
@@ -33,5 +41,7 @@ const brandSlice = createSlice({
             })
     }
 })
+
+export const {setSelectedBrand} = brandSlice.actions;
 
 export const brandReducer = brandSlice.reducer;

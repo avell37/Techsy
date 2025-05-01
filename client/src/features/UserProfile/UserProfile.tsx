@@ -3,11 +3,14 @@ import {
     fetchUserData,
     uploadAvatar,
 } from "@/shared/api/userApi";
+import {
+    useAppSelector,
+    useAppDispatch,
+    useNotification,
+} from "@/shared/hooks";
 import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAppSelector } from "@/shared/types/useAppSelector";
 import { UserProfileView } from "./UserProfileView";
-import { useAppDispatch } from "@/shared/types/useAppDispatch";
 import { updateAvatar } from "@/entities/User/model/userSlice";
 
 export const UserProfile: React.FC = () => {
@@ -15,6 +18,7 @@ export const UserProfile: React.FC = () => {
     const navigate = useNavigate();
     const fileInputRef = useRef<HTMLInputElement>(null);
     const dispatch = useAppDispatch();
+    const { notifySuccess, notifyError } = useNotification();
 
     const [userData, setUserData] = useState({
         username: "",
@@ -48,8 +52,10 @@ export const UserProfile: React.FC = () => {
             await uploadAvatar(file);
             const newData = await fetchUserData();
             dispatch(updateAvatar(newData.picture));
+            notifySuccess("Аватар был изменен :)");
         } catch (err) {
             console.error(err);
+            notifyError("Что-то пошло не так... Попробуй еще раз!");
         }
     };
 
@@ -70,8 +76,10 @@ export const UserProfile: React.FC = () => {
                         role: string;
                     };
                     setUserData({ username, email, role });
+                    notifySuccess("Данные успешно изменены!");
                 } else {
                     console.error("error");
+                    notifyError("Что-то пошло не так... Попробуй еще раз!");
                 }
             }
         } catch (err) {

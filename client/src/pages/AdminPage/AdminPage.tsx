@@ -1,5 +1,5 @@
 import { Header } from "@/widgets/Header/ui/Header";
-import { Button } from "@/shared/ui/Button/Button";
+import { Button } from "@/shared/ui";
 import { Modal } from "@/features/ManageModal/ui/Modal";
 import { useModal } from "@/features/ManageModal/model/useModal";
 

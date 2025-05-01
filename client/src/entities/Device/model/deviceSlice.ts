@@ -13,11 +13,7 @@ export const fetchAllDevices = createAsyncThunk(
 const initialState: DeviceState = {
     devices: [],
     loading: 'idle',
-    filters: {
-        search: '',
-        brand: null,
-        type: null
-    }
+    search: ''
 }
 
 const deviceSlice = createSlice({
@@ -25,7 +21,7 @@ const deviceSlice = createSlice({
     initialState,
     reducers: {
         setSearchFilter: (state, action) => {
-            state.filters.search = action.payload
+            state.search = action.payload
         }
     },
     extraReducers: (builder) => {

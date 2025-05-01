@@ -1,13 +1,26 @@
-import { Input } from "@/shared/ui/Input/Input";
-import { Button } from "@/shared/ui/Button/Button";
+import { Input, Button } from "@/shared/ui";
 import { useState } from "react";
+import { createBrand } from "@/shared/api/deviceApi";
+import { useNotification } from "@/shared/hooks/useNotification";
+import { FormProps } from "../types";
 
-export const BrandForm = ({ onClose }) => {
+export const BrandForm = ({ onClose }: FormProps) => {
     const [brandName, setBrandName] = useState("");
+    const { notifySuccess, notifyWarn, notifyError } = useNotification();
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log(brandName);
+        try {
+            if (brandName.length <= 0) {
+                return notifyWarn("Поле обязательно для заполнения");
+            }
+            await createBrand(brandName);
+            notifySuccess("Отлично! Бренд уже на сайте!");
+            setBrandName("");
+        } catch (err) {
+            console.log(err);
+            notifyError("Ошибка... Попробуй еще раз :)");
+        }
     };
 
     return (

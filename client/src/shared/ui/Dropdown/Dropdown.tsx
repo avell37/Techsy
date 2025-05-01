@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
 import { Button } from "@shared/ui/Button/Button";
-import { DropdownProps } from "@shared/ui/types";
+import { DropdownProps } from "./model/types";
 import { useDropdownClickOutside } from "@/shared/hooks/useDropdownClickOutside";
 
 export const Dropdown: FC<DropdownProps> = ({ trigger, items, className }) => {

@@ -1,7 +1,7 @@
 import { $authHost, $host } from "./index";
 
 export const createType = async (type: string) => {
-    const {data} = await $authHost.post('/api/type', type)
+    const {data} = await $authHost.post('/api/type', {name: type})
     return data;
 }
 
@@ -16,7 +16,7 @@ export const fetchOneType = async (id: string) => {
 }
 
 export const createBrand = async (brand: string) => {
-    const {data} = await $authHost.post('/api/brand', brand)
+    const {data} = await $authHost.post('/api/brand', {name: brand})
     return data;
 }
 

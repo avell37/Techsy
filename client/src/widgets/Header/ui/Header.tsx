@@ -1,15 +1,14 @@
 import { LOGIN_ROUTE, SHOP_ROUTE } from "@/shared/config/consts";
 import { useNavigate } from "react-router-dom";
-import { Button } from "@/shared/ui/Button/Button";
+import { Button, Dropdown } from "@/shared/ui";
 import Cookies from "js-cookie";
-import { useAppSelector } from "@/shared/types/useAppSelector";
-import defaultUserAvatar from "@shared/assets/default-user.png";
-import { Dropdown } from "@/shared/ui/Dropdown/Dropdown";
+import { useAppSelector, useAppDispatch } from "@/shared/hooks";
 import { userDropdownItems } from "../model/userDropdownItems";
-import { ArrowDown } from "@/shared/assets/ArrowDown";
+import { defaultUser, ArrowDown } from "@/shared/assets";
 
 export const Header: React.FC = () => {
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
     const userIsAuth = Cookies.get("token");
     const currentUser = useAppSelector(
         (state) => state.userReducer.currentUser
@@ -34,24 +33,30 @@ export const Header: React.FC = () => {
                                         <img
                                             className="w-[50px] h-[50px]"
                                             src={
-                                                import.meta.env.VITE_API_URL +
-                                                "/avatars/" +
-                                                picture
+                                                picture.startsWith("http")
+                                                    ? picture
+                                                    : import.meta.env
+                                                          .VITE_API_URL +
+                                                      "/avatars/" +
+                                                      picture
                                             }
                                         />
                                     </div>
                                     <ArrowDown width="20px" height="20px" />
                                 </div>
                             ) : (
-                                <div className="w-[50px] h-[50px] border-2 border-[#3A177F] rounded-full bg-transparent overflow-hidden">
-                                    <img
-                                        className="w-[50px] h-[50px]"
-                                        src={defaultUserAvatar}
-                                    />
+                                <div className="flex items-center justify-center gap-[5px]">
+                                    <div className="w-[50px] h-[50px] border-2 border-[#3A177F] rounded-full bg-transparent overflow-hidden">
+                                        <img
+                                            className="w-[50px] h-[50px]"
+                                            src={defaultUser}
+                                        />
+                                    </div>
+                                    <ArrowDown width="20px" height="20px" />
                                 </div>
                             )
                         }
-                        items={userDropdownItems(navigate)}
+                        items={userDropdownItems(navigate, dispatch)}
                         className="right-2"
                     />
                 </div>

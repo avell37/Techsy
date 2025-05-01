@@ -1,15 +1,16 @@
-import { Input } from "@/shared/ui/Input/Input";
-import { Button } from "@/shared/ui/Button/Button";
-import { UserIcon } from "@shared/assets/UserIcon";
-import { EmailIcon } from "@shared/assets/EmailIcon";
-import { PasswordIcon } from "@shared/assets/PasswordIcon";
-import { ShowPasswordIcon } from "@shared/assets/ShowPasswordIcon";
-import { HidePasswordIcon } from "@shared/assets/HidePasswordIcon";
-import { GoogleIcon } from "@shared/assets/GoogleIcon";
-import { GithubIcon } from "@shared/assets/GithubIcon";
+import { Input, Button } from "@/shared/ui";
 import { Link } from "react-router-dom";
 import { LOGIN_ROUTE } from "@/shared/config/consts";
 import { RegistrationProps } from "./types";
+import {
+    GithubIcon,
+    PasswordIcon,
+    EmailIcon,
+    ShowPasswordIcon,
+    HidePasswordIcon,
+    GoogleIcon,
+    UserIcon,
+} from "@shared/assets";
 
 export const RegistrationView = ({
     username,
@@ -33,7 +34,6 @@ export const RegistrationView = ({
                     className="flex flex-col gap-[20px]"
                     onSubmit={handleSubmit}
                 >
-                    <p className="text-white">Username</p>
                     <Input
                         className="max-w-[500px] w-full h-[40px] bg-[#111729] rounded-full border-gray-700 border-2 pl-8 text-white focus:border-[#4F45E4] outline-none"
                         value={username}
@@ -45,7 +45,6 @@ export const RegistrationView = ({
                     >
                         <UserIcon className="absolute top-3 left-3" />
                     </Input>
-                    <p className="text-white">E-mail</p>
                     <Input
                         className="max-w-[500px] w-full h-[40px] bg-[#111729] rounded-full text-white pl-8 border-gray-700 border-2 focus:border-[#4F45E4] outline-none"
                         value={email}
@@ -55,7 +54,6 @@ export const RegistrationView = ({
                     >
                         <EmailIcon className="absolute top-3 left-3" />
                     </Input>
-                    <p className="text-white">Password</p>
                     <Input
                         className="max-w-[500px] w-full h-[40px] bg-[#111729] rounded-full border-gray-700 border-2 text-white pl-8 focus:border-[#4F45E4] outline-none"
                         value={password}

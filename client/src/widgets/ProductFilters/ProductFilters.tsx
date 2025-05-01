@@ -1,27 +1,48 @@
-import { useAppSelector } from "@/shared/types/useAppSelector";
-import { Dropdown } from "@/shared/ui/Dropdown/Dropdown";
-import { Button } from "@/shared/ui/Button/Button";
+import { Dropdown, Button } from "@/shared/ui";
 import { filtersDropdownItems } from "@shared/model/filtersDropdownItems";
-import { ArrowDown } from "@/shared/assets/ArrowDown";
+import { ArrowDown } from "@/shared/assets";
+import {
+    useAppDispatch,
+    useNotification,
+    useAppSelector,
+} from "@/shared/hooks";
+import { setSelectedBrand, setSelectedType } from "@/entities";
 
 export const ProductFilters = () => {
-    const typeFilters = useAppSelector((state) => state.typeReducer.types);
-    const brandFilters = useAppSelector((state) => state.brandReducer.brands);
+    const dispatch = useAppDispatch();
+    const { notifySuccess } = useNotification();
+
+    const { types, selectedType } = useAppSelector(
+        (state) => state.typeReducer
+    );
+    const { brands, selectedBrand } = useAppSelector(
+        (state) => state.brandReducer
+    );
+
+    const isFilterActive =
+        selectedBrand.name !== "Бренд" || selectedType.name !== "Тип";
 
     const handleTypeSelect = (id: string, name: string) => {
-        console.log(`Выбран тип: ${name}`);
+        dispatch(setSelectedType({ id, name }));
     };
 
     const handleBrandSelect = (id: string, name: string) => {
-        console.log(`Выбран бренд: ${name}`);
+        dispatch(setSelectedBrand({ id, name }));
+    };
+
+    const handleResetFilters = () => {
+        dispatch(setSelectedBrand({ id: "", name: "Бренд" }));
+        dispatch(setSelectedType({ id: "", name: "Тип" }));
+        notifySuccess("Фильтры сброшены");
     };
 
     const typeItems = filtersDropdownItems({
-        list: typeFilters,
+        list: types,
         onSelect: handleTypeSelect,
     });
+
     const brandItems = filtersDropdownItems({
-        list: brandFilters,
+        list: brands,
         onSelect: handleBrandSelect,
     });
 
@@ -31,7 +52,7 @@ export const ProductFilters = () => {
                 <Dropdown
                     trigger={
                         <Button
-                            text="Тип"
+                            text={selectedType.name}
                             className="w-[175px] h-[40px] text-center text-white rounded-md border-1 border-[#5120B8]/30 hover:border-[#5120B8] hover:bg-[#1A1238]/30 focus:border-[#4F45E4] transition"
                         >
                             <ArrowDown
@@ -46,7 +67,7 @@ export const ProductFilters = () => {
                 <Dropdown
                     trigger={
                         <Button
-                            text="Бренд"
+                            text={selectedBrand.name}
                             className="w-[175px] h-[40px] text-center text-white rounded-md border-1 border-[#5120B8]/30 hover:border-[#5120B8] hover:bg-[#1A1238]/30 focus:border-[#4F45E4] transition"
                         >
                             <ArrowDown
@@ -58,6 +79,13 @@ export const ProductFilters = () => {
                     }
                     items={brandItems}
                 />
+                {isFilterActive && (
+                    <Button
+                        className="w-[175px] h-[40px] text-center text-white rounded-md border-1 border-[#5120B8]/30 hover:border-[#5120B8] hover:bg-[#1A1238]/30 transition"
+                        text="Сбросить всё"
+                        onClick={handleResetFilters}
+                    />
+                )}
             </div>
         </div>
     );

@@ -1,5 +1,5 @@
 import { fetchUser } from "@/entities/User/model/userSlice";
-import { useAppDispatch } from "@/shared/types/useAppDispatch";
+import { useAppDispatch } from "@/shared/hooks/useAppDispatch";
 import Cookies from "js-cookie";
 import { useEffect } from "react";
 

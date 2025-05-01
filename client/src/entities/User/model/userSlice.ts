@@ -23,6 +23,9 @@ const userSlice = createSlice({
             if (state.currentUser) {
                 state.currentUser = {...state.currentUser, picture: action.payload}
             }
+        },
+        logout: (state) => {
+            state.currentUser = null;
         }
     },
     extraReducers: (builder) => {
@@ -42,4 +45,4 @@ const userSlice = createSlice({
 
 export const userReducer = userSlice.reducer;
 
-export const {updateAvatar} = userSlice.actions;
+export const {updateAvatar, logout} = userSlice.actions;

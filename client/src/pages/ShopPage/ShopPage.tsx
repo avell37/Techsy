@@ -1,12 +1,10 @@
 import { Header } from "@/widgets/Header/ui/Header";
-import { ProductFilters } from "@/widgets/ProductFilters/ui/ProductFilters";
+import { ProductFilters } from "@/widgets/ProductFilters/ProductFilters";
 import { FilteredSearch } from "@/features/FilteredSearch/FilteredSearch";
 import { ProductList } from "@/features/ProductList/ProductList";
 import { useEffect } from "react";
-import { fetchAllDevices } from "@/entities/Device";
-import { useAppDispatch } from "@/shared/types/useAppDispatch";
-import { fetchAllTypes } from "@/entities/Type/model/typeSlice";
-import { fetchAllBrands } from "@/entities/Brand";
+import { useAppDispatch } from "@/shared/hooks/useAppDispatch";
+import { fetchAllTypes, fetchAllBrands, fetchAllDevices } from "@/entities";
 
 export const ShopPage = () => {
     const dispatch = useAppDispatch();

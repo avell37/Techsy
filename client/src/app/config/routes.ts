@@ -1,13 +1,14 @@
-import { AdminPage } from "@/pages/AdminPage/AdminPage";
 import {ADMIN_ROUTE, BASKET_ROUTE, DEVICE_ROUTE, 
-        ERROR_ROUTE, LOGIN_ROUTE, PROFILE_ROUTE, 
+        ERROR_ROUTE, FAVORITES_ROUTE, LOGIN_ROUTE, PROFILE_ROUTE, 
         REGISTRATION_ROUTE, SHOP_ROUTE} from "@/shared/config/consts";
+import { AdminPage } from "@/pages/AdminPage/AdminPage";
 import { BasketPage } from "@/pages/BasketPage/BasketPage";
 import { AuthPage } from "@/pages/AuthPage/AuthPage";
 import { DevicePage } from "@/pages/DevicePage/DevicePage";
 import { ShopPage } from "@/pages/ShopPage/ShopPage";
 import { ErrorPage } from "@/pages/ErrorPage/ErrorPage";
 import { ProfilePage } from "@/pages/ProfilePage/ProfilePage";
+import { FavoritesPage } from "@/pages/FavoritesPage/FavoritesPage";
 
 interface RoutesProps {
     path: string,
@@ -26,6 +27,10 @@ export const authRoutes: RoutesProps[] = [
     {
         path: PROFILE_ROUTE,
         Component: ProfilePage
+    },
+    {
+        path: FAVORITES_ROUTE,
+        Component: FavoritesPage
     },
 ]
 

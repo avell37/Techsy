@@ -1,5 +1,5 @@
-import { Card } from "@/shared/ui/Card/Card";
-import { useAppSelector } from "@/shared/types/useAppSelector";
+import { Card } from "@/shared/ui";
+import { useAppSelector } from "@/shared/hooks/useAppSelector";
 import { selectFilteredDevices } from "@/entities/Device/model/selectors";
 
 export const ProductList = () => {

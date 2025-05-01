@@ -50,3 +50,17 @@ export const uploadAvatar = async (file: File) => {
     Cookies.set('token', data.token);
     return jwtDecode<IUser>(data.token);
 }
+
+export const loginWithOAuth = async (code: string) => {
+    if (!code) {
+        console.error('Нет кодика - пошел нахуй')
+        return;
+    }
+    try {
+        const {data} = await $host.post('/api/auth/google', {code})
+        Cookies.set('token', data.token);
+        return jwtDecode(data.token);
+    } catch(err) {
+        console.error(err);
+    }
+}

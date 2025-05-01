@@ -3,7 +3,7 @@ interface ButtonProps {
     text?: string;
     children?: React.ReactNode;
     onClick?: () => void;
-    type?: "submit";
+    type?: "submit" | "button";
     noWrap?: boolean;
 }
 

@@ -1,13 +1,10 @@
-import star from "@shared/assets/star.png";
-import { Button } from "@/shared/ui/Button/Button";
+import { Button } from "@/shared/ui";
 import { useNavigate } from "react-router-dom";
 import { DEVICE_ROUTE } from "@/shared/config/consts";
+import { StarIcon, LikeIcon } from "@shared/assets";
 
 export const Card = ({ device }) => {
     const navigate = useNavigate();
-    console.log(device);
-
-    console.log(import.meta.env.VITE_API_URL + "/uploads/" + device.img);
 
     return (
         <div
@@ -15,15 +12,22 @@ export const Card = ({ device }) => {
                 if (e.target.closest("button")) return;
                 navigate(DEVICE_ROUTE + "/" + device.id);
             }}
-            className="relative flex flex-col justify-between items-center max-w-[250px] 
+            className="relative flex flex-col justify-between items-center max-w-[275px] 
             min-h-[300px] w-full border-1 border-[#3A177F] rounded-xl hover:border-[#8A4FFF] 
             hover:bg-[#1A1238]/30 transition-all"
         >
             <div className="relative flex w-full">
-                <img
-                    className="absolute top-2 right-5 w-[15px] h-[15px]"
-                    src={star}
-                    alt="rating star"
+                <Button>
+                    <LikeIcon
+                        width="25px"
+                        height="25px"
+                        className="absolute top-[5px] left-1 hover:border-[#8A4FFF]"
+                    />
+                </Button>
+                <StarIcon
+                    width="20px"
+                    height="20px"
+                    className="absolute top-[6px] right-[18px]"
                 />
                 <span className="absolute top-[6px] right-2 text-white text-sm">
                     {device.rating}

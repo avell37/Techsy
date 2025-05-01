@@ -1,16 +1,8 @@
 const ApiError = require('../error/apiError');
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
 const {PrismaClient} = require('@prisma/client')
 const prisma = new PrismaClient();
-
-const generateJWT = (id: string, username: string, email: string, role: string = 'User', picture?: string) => {
-    return jwt.sign(
-        {id, username, email, role, picture},
-        process.env.JWT_SECRET_KEY,
-        {expiresIn: "24h"}
-    )
-}
+const generateJWT = require('../utils/generateJWT');
 
 class UserController {
     async registration(req: any, res: any, next: any) {
@@ -24,14 +16,6 @@ class UserController {
                 email
             }
         })
-        const uniqueUsername = await prisma.user.findUnique({
-            where: {
-                username
-            }
-        })
-        if (uniqueUsername) {
-            return next(ApiError.badRequest('Данное имя пользователя уже занято'))
-        }
         if (candidate) {
             return next(ApiError.badRequest('Пользователь с таким email адресом уже существует'))
         }

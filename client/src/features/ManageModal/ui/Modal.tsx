@@ -1,13 +1,7 @@
 import { BrandForm } from "./ModalForms/BrandForm";
 import { TypeForm } from "./ModalForms/TypeForm";
 import { DeviceForm } from "./ModalForms/DeviceForm";
-import { ModalContentType } from "../model/useModal";
-
-interface ModalProps {
-    isOpen: boolean;
-    onClose: () => void;
-    contentType: ModalContentType;
-}
+import { ModalProps } from "./types";
 
 export const Modal = ({ isOpen, onClose, contentType }: ModalProps) => {
     if (!isOpen) return null;

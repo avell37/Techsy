@@ -1,7 +1,6 @@
 import { Header } from "@/widgets/Header/ui/Header";
 import { Button } from "@/shared/ui/Button/Button";
-import star from "@shared/assets/star.png";
-import user from "@shared/assets/default-user.png";
+import { StarIcon, defaultUser } from "@/shared/assets";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { fetchOneDevice } from "@/shared/api/deviceApi";
@@ -36,8 +35,8 @@ export const DevicePage = () => {
                     <p className="text-white font-bold text-3xl">
                         {device?.name}
                     </p>
-                    <div className="flex gap-[5px]">
-                        <img src={star} className="w-[20px] h-[20px]" />
+                    <div className="flex items-center gap-[3px]">
+                        <StarIcon width="30px" height="30px" className="" />
                         <span className="text-white font-bold text-2xl">
                             {device?.rating}
                         </span>
@@ -78,7 +77,7 @@ export const DevicePage = () => {
                 <div className="border-1 border-[#5120B8]/30 rounded-xl max-w-[1000px] w-full">
                     <div className="flex p-6 gap-[20px]">
                         <img
-                            src={user}
+                            src={defaultUser}
                             className="max-w-[70px] max-h-[70px] border-2 border-[#3A177F] rounded-full"
                         />
                         <div className="flex flex-col">
@@ -86,9 +85,10 @@ export const DevicePage = () => {
                             <div className="flex items-center gap-[8px]">
                                 <span className="text-white">оценка:</span>
                                 <div className="flex items-center">
-                                    <img
-                                        src={star}
-                                        className="w-[15px] h-[15px]"
+                                    <StarIcon
+                                        width="15px"
+                                        height="15px"
+                                        className=""
                                     />
                                     <span className="text-white text-lg ml-[4px]">
                                         5
@@ -111,7 +111,7 @@ export const DevicePage = () => {
                 <div className="border-1 border-[#5120B8]/30 rounded-xl max-w-[1000px] w-full">
                     <div className="flex p-6 gap-[20px]">
                         <img
-                            src={user}
+                            src={defaultUser}
                             className="max-w-[70px] max-h-[70px] border-2 border-[#3A177F] rounded-full"
                         />
                         <div className="flex flex-col">
@@ -119,9 +119,10 @@ export const DevicePage = () => {
                             <div className="flex items-center gap-[8px]">
                                 <span className="text-white">оценка:</span>
                                 <div className="flex items-center">
-                                    <img
-                                        src={star}
-                                        className="w-[15px] h-[15px]"
+                                    <StarIcon
+                                        width="15px"
+                                        height="15px"
+                                        className=""
                                     />
                                     <span className="text-white text-lg ml-[4px]">
                                         5
@@ -137,7 +138,7 @@ export const DevicePage = () => {
                 <div className="border-1 border-[#5120B8]/30 rounded-xl max-w-[1000px] w-full">
                     <div className="flex p-6 gap-[20px]">
                         <img
-                            src={user}
+                            src={defaultUser}
                             className="max-w-[70px] max-h-[70px] border-2 border-[#3A177F] rounded-full"
                         />
                         <div className="flex flex-col">
@@ -145,9 +146,10 @@ export const DevicePage = () => {
                             <div className="flex items-center gap-[8px]">
                                 <span className="text-white">оценка:</span>
                                 <div className="flex items-center">
-                                    <img
-                                        src={star}
-                                        className="w-[15px] h-[15px]"
+                                    <StarIcon
+                                        width="15px"
+                                        height="15px"
+                                        className=""
                                     />
                                     <span className="text-white text-lg ml-[4px]">
                                         5

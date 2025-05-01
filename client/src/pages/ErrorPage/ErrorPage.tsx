@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { SHOP_ROUTE } from "@/shared/config/consts";
-import { ArrowIcon } from "@shared/assets/ArrowIcon";
+import { ArrowIcon } from "@shared/assets";
 
 export const ErrorPage = () => {
     return (

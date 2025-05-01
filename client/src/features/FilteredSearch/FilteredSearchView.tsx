@@ -1,6 +1,6 @@
-import { Button } from "@/shared/ui/Button/Button";
-import { Input } from "@/shared/ui/Input/Input";
+import { Button, Input, Dropdown } from "@/shared/ui";
 import { FilteredSearchProps } from "./types";
+import { dropdownItemsWithFilters } from "./model/dropdownItemsWithFilters";
 
 export const FilteredSearchView = ({
     value,
@@ -16,9 +16,14 @@ export const FilteredSearchView = ({
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
             />
-            <Button
-                className="w-[150px] h-[40px] bg-[#5120B8] text-center text-white rounded-md"
-                text="Фильтры"
+            <Dropdown
+                trigger={
+                    <Button
+                        className="w-[150px] h-[40px] bg-[#5120B8] text-center text-white rounded-md"
+                        text="Фильтры"
+                    />
+                }
+                items={dropdownItemsWithFilters()}
             />
         </div>
     );

@@ -1,5 +1,4 @@
-import { Input } from "@/shared/ui/Input/Input";
-import { Button } from "@/shared/ui/Button/Button";
+import { Input, Button } from "@/shared/ui";
 import { ADMIN_ROUTE } from "@/shared/config/consts";
 import { UserProfileProps } from "./types";
 
@@ -20,9 +19,11 @@ export const UserProfileView = ({
                     {user?.picture && (
                         <img
                             src={
-                                import.meta.env.VITE_API_URL +
-                                "/avatars/" +
-                                user?.picture
+                                user.picture.startsWith("http")
+                                    ? user.picture
+                                    : import.meta.env.VITE_API_URL +
+                                      "/avatars/" +
+                                      user?.picture
                             }
                             className="w-[150px] h-[150px]"
                         />
