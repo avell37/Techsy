@@ -7,5 +7,6 @@ const { uploadSingle } = require('../middleware/fileMiddleware');
 router.post('/', checkRole('Admin'), uploadSingle, DeviceController.create);
 router.get('/', DeviceController.getAll);
 router.get('/:id', DeviceController.getOne);
+router.delete('/:id', checkRole('Admin'), DeviceController.deleteOne);
 
 module.exports = router;

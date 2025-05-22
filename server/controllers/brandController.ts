@@ -11,8 +11,12 @@ class BrandController {
     }
 
     async getAll(req: any, res: any) {
-        const brands = await prisma.brand.findMany()
-        return res.json(brands);
+        try {
+            const brands = await prisma.brand.findMany()
+            return res.json(brands);
+        } catch (err) {
+            return res.status(404).json({message: "Бренды не найдены"})
+        }
     }
 
     async getOne(req: any, res: any) {
@@ -23,6 +27,20 @@ class BrandController {
             }
         })
         return res.json(brand);
+    }
+    
+    async deleteOne(req: any, res: any) {
+        const {id} = req.params;
+        try {
+            const deleted = await prisma.brand.delete({
+                where: {id}
+            })
+
+            res.json({message: "Бренд удален", deleted})
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({error: "Ошибка сервера"})
+        }
     }
 }
 

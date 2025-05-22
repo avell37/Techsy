@@ -6,7 +6,7 @@ const fs = require('fs');
 
 class DeviceController {
     async create(req: any, res: any) {
-        const {name, price, brandId, typeId} = req.body;
+        let {name, price, brandId, typeId, info} = req.body;
         const file = req.file;
         if (!file) {
             return res.status(400).json({ message: "Файл не загружен" });
@@ -31,12 +31,38 @@ class DeviceController {
                 img: fileName,
             }
         })
+
+        if (info) {
+            info = JSON.parse(info);
+            const deviceInfo = info.map((i: any) => ({
+                title: i.title,
+                description: i.description,
+                deviceId: device.id
+            }))
+            await prisma.deviceInfo.createMany({
+                data: deviceInfo
+            })
+        }
         return res.json(device);
     }
 
     async getAll(req: any, res: any) {
-        const devices = await prisma.device.findMany();
-        return res.json(devices)
+        const userId = req.user?.id;
+        
+        const devices = await prisma.device.findMany({
+            include: userId ? {
+                favoriteDevice: {
+                    where: {userId},
+                    select: {id: true}
+                }
+            } : {}
+        });
+        const favoriteDevices = devices.map((device: typeof devices[number]) => ({
+            ...device,
+            isFavorite: userId ? device.favoriteDevices.length > 0 : false,
+        }));
+
+        return res.json(favoriteDevices)
     }
 
     async getOne(req: any, res: any) {
@@ -56,6 +82,25 @@ class DeviceController {
             brand: device.Brand?.name,
             type: device.Type?.name
         });
+    }
+
+    async deleteOne(req: any, res: any) {
+        const {id} = req.params;
+        try {
+            const deletedFavorite = await prisma.favoriteDevice.deleteMany({
+                where: {
+                    deviceId: id
+                }
+            })
+            const deleted = await prisma.device.delete({
+                where: {id}
+            })
+
+            res.json({message: "Девайс удален", deleted})
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({error: "Ошибка сервера"})
+        }
     }
 }
 

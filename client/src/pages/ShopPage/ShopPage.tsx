@@ -1,10 +1,13 @@
-import { Header } from "@/widgets/Header/ui/Header";
-import { ProductFilters } from "@/widgets/ProductFilters/ProductFilters";
-import { FilteredSearch } from "@/features/FilteredSearch/FilteredSearch";
-import { ProductList } from "@/features/ProductList/ProductList";
+import { Header } from "@/widgets/Header";
+import { ProductFilters } from "@/widgets/ProductFilters";
+import { FilteredSearch } from "@/features/FilteredSearch";
+import { ProductList } from "@/features/ProductList";
 import { useEffect } from "react";
-import { useAppDispatch } from "@/shared/hooks/useAppDispatch";
-import { fetchAllTypes, fetchAllBrands, fetchAllDevices } from "@/entities";
+import { useAppDispatch } from "@/shared/hooks";
+import { fetchAllBrands } from "@/entities/Brand";
+import { fetchAllTypes } from "@/entities/Type";
+import { fetchAllDevices } from "@/entities/Device";
+import { fetchAllFavoriteDevices } from "@/features/Favorites";
 
 export const ShopPage = () => {
     const dispatch = useAppDispatch();
@@ -13,6 +16,7 @@ export const ShopPage = () => {
         dispatch(fetchAllDevices());
         dispatch(fetchAllTypes());
         dispatch(fetchAllBrands());
+        dispatch(fetchAllFavoriteDevices());
     }, [dispatch]);
 
     return (

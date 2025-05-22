@@ -15,11 +15,14 @@ interface RoutesProps {
     Component: React.ComponentType
 }
 
-export const authRoutes: RoutesProps[] = [
+export const adminRoutes = [
     {
         path: ADMIN_ROUTE,
         Component: AdminPage
-    },
+    }
+]
+
+export const authRoutes: RoutesProps[] = [
     {
         path: BASKET_ROUTE,
         Component: BasketPage

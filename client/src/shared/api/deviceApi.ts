@@ -15,6 +15,11 @@ export const fetchOneType = async (id: string) => {
     return data;
 }
 
+export const deleteOneType = async (id: string) => {
+    const {data} = await $authHost.delete('/api/type' + '/' + id);
+    return data;
+}
+
 export const createBrand = async (brand: string) => {
     const {data} = await $authHost.post('/api/brand', {name: brand})
     return data;
@@ -30,6 +35,11 @@ export const fetchOneBrand = async (id: string) => {
     return data;
 }
 
+export const deleteOneBrand = async (id: string) => {
+    const {data} = await $authHost.delete('/api/brand' + '/' + id)
+    return data;
+}
+
 export const createDevice = async (device: object) => {
     const {data} = await $authHost.post('/api/device', device);
     return data;
@@ -42,5 +52,35 @@ export const fetchDevices = async () => {
 
 export const fetchOneDevice = async (id: string) => {
     const {data} = await $host.get('/api/device' + '/' + id);
+    return data;
+}
+
+export const deleteOneDevice = async (id: string) => {
+    const {data} = await $authHost.delete('/api/device' + '/' + id)
+    return data;
+}
+
+export const fetchFavoriteDevices = async () => {
+    const {data} = await $authHost.get('/api/favorite' + '/');
+    return data;
+}
+
+export const toggleFavoriteDevice = async (deviceId: string) => {
+    const {data} = await $authHost.post('/api/favorite', {deviceId})
+    return data;
+}
+
+export const fetchReviews = async (deviceId: string) => {
+    const {data} = await $host.get('/api/review' + '/' + deviceId);
+    return data;
+}
+
+export const createReview = async (deviceId: string, rate: number, comment: string) => {
+    const {data} = await $authHost.post('/api/review', {deviceId, rate, comment});
+    return data;
+}
+
+export const deleteReview = async (reviewId: string) => {
+    const {data} = await $authHost.delete('/api/review' + '/' + reviewId);
     return data;
 }

@@ -1,24 +1,49 @@
-import { Header } from "@/widgets/Header/ui/Header";
-import { Button } from "@/shared/ui/Button/Button";
-import { StarIcon, defaultUser } from "@/shared/assets";
+import { Header } from "@/widgets/Header";
+import { Button } from "@/shared/ui";
+import { StarIcon } from "@/shared/assets";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { fetchOneDevice } from "@/shared/api/deviceApi";
-import { IDevice } from "@/shared/types/IDevice";
+import { deleteReview, fetchOneDevice } from "@/shared/api/deviceApi";
+import { IDevice } from "@/shared/types";
+import { useAppSelector, useModal, useNotification } from "@/shared/hooks";
+import { Modal } from "@/features/ManageModal";
+import { useAppDispatch } from "@/shared/hooks";
+import { fetchDeviceReviews } from "@/entities/Review";
+import { ReviewCard } from "@/shared/ui/ReviewCard/ReviewCard";
 
 export const DevicePage = () => {
     const { id } = useParams();
+    const dispatch = useAppDispatch();
     const [device, setDevice] = useState<IDevice | null>(null);
-    console.log(device);
+    const { isOpen, contentType, openModal, closeModal } = useModal();
+    const { reviews } = useAppSelector((state) => state.reviewReducer);
+    const { currentUser } = useAppSelector((state) => state.userReducer);
+    const { notifySuccess, notifyError } = useNotification();
 
     useEffect(() => {
         getData();
+        if (id) {
+            dispatch(fetchDeviceReviews(id));
+        }
     }, []);
 
     const getData = async () => {
         if (!id) return;
         const data = await fetchOneDevice(id);
         setDevice(data);
+    };
+
+    const handleDeleteReview = async (reviewId: string) => {
+        try {
+            await deleteReview(reviewId);
+            if (id) {
+                dispatch(fetchDeviceReviews(id));
+            }
+            notifySuccess("Отзыв успешно удален");
+        } catch (err) {
+            console.log(err);
+            notifyError("Произошла ошибка... Попробуй еще раз :)");
+        }
     };
 
     return (
@@ -36,7 +61,11 @@ export const DevicePage = () => {
                         {device?.name}
                     </p>
                     <div className="flex items-center gap-[3px]">
-                        <StarIcon width="30px" height="30px" className="" />
+                        <StarIcon
+                            width="30px"
+                            height="30px"
+                            className="fill-[#ffe500]"
+                        />
                         <span className="text-white font-bold text-2xl">
                             {device?.rating}
                         </span>
@@ -62,106 +91,55 @@ export const DevicePage = () => {
                     <p className="text-white text-center font-bold mt-[5px]">
                         Характеристики:
                     </p>
-                    <div className="flex flex-col gap-[10px] ml-[7px] mb-[20px]">
-                        <p className="text-white">Тип: Смартфон</p>
-                        <p className="text-white">Бренд: Apple</p>
-                        <p className="text-white">Модель: Apple IPhone 16</p>
-                        <p className="text-white">
-                            Процессор: Apple A16 Bionic
-                        </p>
+                    <div className="flex flex-col gap-[10px] mb-[20px]">
+                        {device?.deviceInfo?.length !== 0 ? (
+                            device?.deviceInfo?.map((info) => (
+                                <div
+                                    key={info.id}
+                                    className="flex border-b border-[#5120B8]/20 pb-2"
+                                >
+                                    <p className="text-white text-semibold ml-[7px]">
+                                        {info.title}:
+                                    </p>
+                                    <p className="text-white text-semibold ml-[7px]">
+                                        {info.description}
+                                    </p>
+                                </div>
+                            ))
+                        ) : (
+                            <div className="text-white text-center mt-6 mb-6 font-bold">
+                                Упс... Мы не нашли описание товара.
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
             <div className="flex flex-col pl-20 gap-[30px]">
+                <Button
+                    onClick={() => openModal("addReview")}
+                    className="w-[200px] h-[40px] text-center text-white rounded-md border-1 border-[#5120B8]/30 hover:border-[#5120B8] hover:bg-[#1A1238]/30 focus:border-[#4F45E4] transition"
+                    text="Хотите оставить отзыв?"
+                />
+                <Modal
+                    isOpen={isOpen}
+                    onClose={closeModal}
+                    contentType={contentType}
+                />
                 <h1 className="text-white text-2xl font-bold">Отзывы:</h1>
-                <div className="border-1 border-[#5120B8]/30 rounded-xl max-w-[1000px] w-full">
-                    <div className="flex p-6 gap-[20px]">
-                        <img
-                            src={defaultUser}
-                            className="max-w-[70px] max-h-[70px] border-2 border-[#3A177F] rounded-full"
+                {reviews && reviews.length > 0 ? (
+                    reviews.map((review) => (
+                        <ReviewCard
+                            key={review.id}
+                            currentUser={currentUser}
+                            review={review}
+                            handleDeleteReview={() =>
+                                handleDeleteReview(review.id)
+                            }
                         />
-                        <div className="flex flex-col">
-                            <p className="text-white font-bold">avell37</p>
-                            <div className="flex items-center gap-[8px]">
-                                <span className="text-white">оценка:</span>
-                                <div className="flex items-center">
-                                    <StarIcon
-                                        width="15px"
-                                        height="15px"
-                                        className=""
-                                    />
-                                    <span className="text-white text-lg ml-[4px]">
-                                        5
-                                    </span>
-                                </div>
-                            </div>
-                            <p className="text-white">
-                                Айфон как айфон, че бухтеть?!?!?!Айфон как
-                                айфон, че бухтеть?!?!?!Айфон как айфон, че
-                                бухтеть?!?!?!Айфон как айфон, че
-                                бухтеть?!?!?!Айфон как айфон, че
-                                бухтеть?!?!?!Айфон как айфон, че
-                                бухтеть?!?!?!Айфон как айфон, че
-                                бухтеть?!?!?!Айфон как айфон, че
-                                бухтеть?!?!?!Айфон как айфон, че бухтеть?!?!?!
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div className="border-1 border-[#5120B8]/30 rounded-xl max-w-[1000px] w-full">
-                    <div className="flex p-6 gap-[20px]">
-                        <img
-                            src={defaultUser}
-                            className="max-w-[70px] max-h-[70px] border-2 border-[#3A177F] rounded-full"
-                        />
-                        <div className="flex flex-col">
-                            <p className="text-white font-bold">avell37</p>
-                            <div className="flex items-center gap-[8px]">
-                                <span className="text-white">оценка:</span>
-                                <div className="flex items-center">
-                                    <StarIcon
-                                        width="15px"
-                                        height="15px"
-                                        className=""
-                                    />
-                                    <span className="text-white text-lg ml-[4px]">
-                                        5
-                                    </span>
-                                </div>
-                            </div>
-                            <p className="text-white">
-                                Айфон как айфон, че бухтеть?!?!?!
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div className="border-1 border-[#5120B8]/30 rounded-xl max-w-[1000px] w-full">
-                    <div className="flex p-6 gap-[20px]">
-                        <img
-                            src={defaultUser}
-                            className="max-w-[70px] max-h-[70px] border-2 border-[#3A177F] rounded-full"
-                        />
-                        <div className="flex flex-col">
-                            <p className="text-white font-bold">avell37</p>
-                            <div className="flex items-center gap-[8px]">
-                                <span className="text-white">оценка:</span>
-                                <div className="flex items-center">
-                                    <StarIcon
-                                        width="15px"
-                                        height="15px"
-                                        className=""
-                                    />
-                                    <span className="text-white text-lg ml-[4px]">
-                                        5
-                                    </span>
-                                </div>
-                            </div>
-                            <p className="text-white">
-                                Айфон как айфон, че бухтеть?!?!?!
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                    ))
+                ) : (
+                    <div className="text-white">Отзывов пока что нет...</div>
+                )}
             </div>
         </div>
     );

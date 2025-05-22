@@ -8,16 +8,17 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-  username  String
-  email     String   @unique
-  password  String?
-  picture   String
-  role      String   @default("User")
-  basket    Basket?
-  ratings   Rating[]
+  id              String           @id @default(cuid())
+  createdAt       DateTime         @default(now()) @map("created_at")
+  updatedAt       DateTime         @updatedAt @map("updated_at")
+  username        String
+  email           String           @unique
+  password        String?
+  picture         String
+  role            String           @default("User")
+  basket          Basket?
+  reviews         Review[]
+  favoriteDevices FavoriteDevice[]
 
   @@map("user")
 }
@@ -34,21 +35,22 @@ model Basket {
 }
 
 model Device {
-  id         String       @id @default(cuid())
-  createdAt  DateTime     @default(now()) @map("created_at")
-  updatedAt  DateTime     @updatedAt @map("updated_at")
-  name       String       @unique
-  price      Int
-  rating     Int          @default(0)
-  img        String
-  brandId    String?
-  typeId     String?
-  basketId   String?
-  basket     Basket?      @relation(fields: [basketId], references: [id])
-  Brand      Brand?       @relation(fields: [brandId], references: [id])
-  Type       Type?        @relation(fields: [typeId], references: [id])
-  deviceInfo DeviceInfo[]
-  ratings    Rating[]
+  id              String           @id @default(cuid())
+  createdAt       DateTime         @default(now()) @map("created_at")
+  updatedAt       DateTime         @updatedAt @map("updated_at")
+  name            String           @unique
+  price           Int
+  rating          Int              @default(0)
+  img             String
+  brandId         String?
+  typeId          String?
+  basketId        String?
+  basket          Basket?          @relation(fields: [basketId], references: [id])
+  Brand           Brand?           @relation(fields: [brandId], references: [id])
+  Type            Type?            @relation(fields: [typeId], references: [id])
+  deviceInfo      DeviceInfo[]
+  reviews         Review[]
+  favoriteDevices FavoriteDevice[]
 
   @@map("device")
 }
@@ -65,19 +67,20 @@ model DeviceInfo {
   @@map("device_info")
 }
 
-model Rating {
+model Review {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
   rate      Int
-  userId    String?
-  deviceId  String?
   comment   String?
-  Device    Device?  @relation(fields: [deviceId], references: [id])
-  User      User?    @relation(fields: [userId], references: [id])
+  userId    String
+  deviceId  String
+  Device    Device   @relation(fields: [deviceId], references: [id])
+  User      User     @relation(fields: [userId], references: [id])
 
+  @@unique([userId, deviceId])
   @@index([userId])
-  @@map("rating")
+  @@map("review")
 }
 
 model Brand {
@@ -115,4 +118,19 @@ model BrandType {
 
   @@unique([typeId, brandId])
   @@map("brand_type")
+}
+
+model FavoriteDevice {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  userId   String
+  deviceId String
+
+  user   User   @relation(fields: [userId], references: [id])
+  device Device @relation(fields: [deviceId], references: [id])
+
+  @@unique([userId, deviceId])
+  @@map("favorite_device")
 }

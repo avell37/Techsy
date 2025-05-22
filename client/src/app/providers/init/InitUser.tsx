@@ -1,5 +1,5 @@
-import { fetchUser } from "@/entities/User/model/userSlice";
-import { useAppDispatch } from "@/shared/hooks/useAppDispatch";
+import { fetchUser } from "@/entities/User";
+import { useAppDispatch } from "@/shared/hooks";
 import Cookies from "js-cookie";
 import { useEffect } from "react";
 
@@ -13,6 +13,8 @@ export const InitUser = ({ children }: initProps) => {
     useEffect(() => {
         if (Cookies.get("token")) {
             dispatch(fetchUser());
+        } else {
+            console.log("error token");
         }
     }, [dispatch]);
 

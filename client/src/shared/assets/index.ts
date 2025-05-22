@@ -1,17 +1,18 @@
-import img1 from './default-user.png';
-import img2 from './star.png';
+import img1 from './icons/default-user.png';
 
-export * from './ArrowDown';
-export * from './ArrowIcon';
-export * from './EmailIcon';
-export * from './GithubIcon';
-export * from './GoogleIcon';
-export * from './HidePasswordIcon';
-export * from './LikeIcon';
-export * from './PasswordIcon';
-export * from './ShowPasswordIcon';
-export * from './Spinner';
-export * from './UserIcon';
-export * from './StarIcon'
+export * from './icons/ArrowDown';
+export * from './icons/ArrowIcon';
+export * from './icons/EmailIcon';
+export * from './icons/GithubIcon';
+export * from './icons/GoogleIcon';
+export * from './icons/HidePasswordIcon';
+export * from './icons/LikeIcon';
+export * from './icons/PasswordIcon';
+export * from './icons/ShowPasswordIcon';
+export * from './icons/Spinner';
+export * from './icons/UserIcon';
+export * from './icons/StarIcon'
+export * from './icons/XMarkIcon';
+export * from './icons/PlusIcon';
+export * from './icons/MinusIcon';
 export const defaultUser = img1;
-export const star = img2

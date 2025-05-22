@@ -1,10 +1,10 @@
 import { Input, Button } from "@/shared/ui";
 import { useState } from "react";
-import { useNotification } from "@/shared/hooks/useNotification";
+import { useNotification } from "@/shared/hooks";
 import { createType } from "@/shared/api/deviceApi";
-import { FormProps } from "../types";
+import { FormSchema } from "@features/ManageModal";
 
-export const TypeForm = ({ onClose }: FormProps) => {
+export const TypeForm = ({ onClose }: FormSchema) => {
     const [typeName, setTypeName] = useState("");
 
     const { notifySuccess, notifyWarn, notifyError } = useNotification();

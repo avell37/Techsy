@@ -11,8 +11,12 @@ class TypeController {
     }
 
     async getAll(req: any, res: any) {
-        const types = await prisma.type.findMany()
-        return res.json(types);
+        try {
+            const types = await prisma.type.findMany()
+            return res.json(types);
+        } catch (err) {
+            return res.status(404).json({message: 'Типы не найдены'})
+        }
     }
 
     async getOne(req: any, res: any) {
@@ -23,6 +27,20 @@ class TypeController {
             }
         })
         return res.json(type);
+    }
+
+    async deleteOne(req: any, res: any) {
+        const {id} = req.params;
+        try {
+            const deleted = await prisma.type.delete({
+                where: {id}
+            })
+
+            res.json({message: "Тип удален", deleted})
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({error: "Ошибка сервера"})
+        }
     }
 }
 

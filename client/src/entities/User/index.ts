@@ -1,1 +1,2 @@
-export * from './model/userSlice';
+export * from './model/slice/userSlice';
+export * from './model/types/userStateSchema';

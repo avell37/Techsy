@@ -17,7 +17,7 @@ export const ErrorPage = () => {
                     Эта страница не найдена...
                     <Link
                         to={SHOP_ROUTE}
-                        className="flex justify-center items-center mt-[10px] font-extrabold"
+                        className="flex justify-center items-center mt-[10px] gap-[2px] font-extrabold"
                     >
                         <ArrowIcon />
                         Назад?

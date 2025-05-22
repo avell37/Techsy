@@ -1,5 +1,5 @@
-import { Header } from "@/widgets/Header/ui/Header";
-import { UserProfile } from "@/features/UserProfile/UserProfile";
+import { Header } from "@/widgets/Header";
+import { UserProfile } from "@/features/UserProfile";
 
 export const ProfilePage: React.FC = () => {
     return (

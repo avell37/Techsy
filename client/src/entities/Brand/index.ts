@@ -1,1 +1,2 @@
-export * from './model/brandSlice';
+export * from './model/slice/brandSlice';
+export * from './model/types/brandStateSchema';

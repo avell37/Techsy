@@ -1,1 +1,2 @@
-export * from './model/typeSlice';
+export * from './model/slice/typeSlice';
+export * from './model/types/typeStateSchema';

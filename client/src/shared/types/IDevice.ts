@@ -1,3 +1,7 @@
+import { IBrand } from "./IBrand"
+import { IDeviceInfo } from "./IDeviceInfo"
+import { IType } from "./IType"
+
 export interface IDevice {
     id: string,
     name: string,
@@ -8,7 +12,8 @@ export interface IDevice {
     typeId: string,
     createdAt: string,
     updatedAt: string,
-    basketId?: boolean,
-    brand: string,
-    type: string
+    basketId?: boolean | null,
+    deviceInfo?: IDeviceInfo[],
+    Brand?: IBrand,
+    Type?: IType,
 }

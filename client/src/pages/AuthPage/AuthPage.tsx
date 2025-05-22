@@ -1,5 +1,5 @@
-import { Registration } from "@/features/Registration/Registration";
-import { Login } from "@/features/Login/Login";
+import { Registration } from "@/features/Registration";
+import { Login } from "@/features/Login";
 import { Welcome } from "@/shared/ui";
 import { useLocation } from "react-router-dom";
 import { LOGIN_ROUTE } from "@/shared/config/consts";

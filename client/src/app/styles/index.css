@@ -23,6 +23,49 @@ body {
     height: 100vh;
 }
 
+.scrollable {
+    overflow-y: auto;
+    max-height: 125px;
+    scrollbar-width: thin;
+    scrollbar-color: #4F45E4 transparent;
+}
+
+.scrollable::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.scrollable::-webkit-scrollbar-thumb {
+    background-color: #4F45E4;
+    border-radius: 10px;
+}
+
+.scrollable::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.custom-overflow::-webkit-scrollbar {
+    width: 6px;
+}
+
+.custom-overflow::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.custom-overflow::-webkit-scrollbar-thumb {
+    background-color: #5120B8;
+    border-radius: 4px;
+}
+
+.custom-overflow::-webkit-scrollbar-thumb:hover {
+    background-color: #6a34ff;
+}
+
+.custom-overflow {
+    scrollbar-width: thin;
+    scrollbar-color: #5120B8 transparent;
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;

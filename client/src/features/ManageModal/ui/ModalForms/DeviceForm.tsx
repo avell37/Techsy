@@ -1,8 +1,10 @@
+import { XMarkIcon } from "@/shared/assets";
 import { Input, Button, Dropdown } from "@/shared/ui";
-import { FormProps } from "../types";
-import { useDeviceForm } from "../../model/useDeviceForm";
+import { useDeviceForm, FormSchema } from "@features/ManageModal";
+import React from "react";
+import { DeviceInfoItemSchema } from "../../model/types/DeviceInfoSchema";
 
-export const DeviceForm = ({ onClose }: FormProps) => {
+export const DeviceForm = ({ onClose }: FormSchema) => {
     const {
         device,
         brandItems,
@@ -10,7 +12,44 @@ export const DeviceForm = ({ onClose }: FormProps) => {
         handleChange,
         handleFileChange,
         handleSubmitForm,
+        info,
+        handleAddInfo,
+        handleChangeInfo,
+        handleRemoveInfo,
     } = useDeviceForm();
+    console.log("rerender");
+
+    const DeviceInfoItem = React.memo(
+        ({ item, onChange, onRemove }: DeviceInfoItemSchema) => {
+            return (
+                <div className="flex items-center gap-[10px]">
+                    <Input
+                        value={item.title}
+                        className="w-[175px] w-full h-[40px] bg-[#111729] rounded-md border-gray-700 border-2 text-white pl-2 text-sm focus:border-[#4F45E4] outline-none"
+                        placeholder="Название свойства"
+                        onChange={(e) =>
+                            onChange(item.id, "title", e.target.value)
+                        }
+                    />
+                    <Input
+                        value={item.description}
+                        className="w-[175px] w-full h-[40px] bg-[#111729] rounded-md border-gray-700 border-2 text-white pl-2 text-sm focus:border-[#4F45E4] outline-none"
+                        placeholder="Описание свойства"
+                        onChange={(e) =>
+                            onChange(item.id, "description", e.target.value)
+                        }
+                    />
+                    <Button type="button" onClick={() => onRemove(item.id)}>
+                        <XMarkIcon
+                            width="20px"
+                            height="20px"
+                            className="stroke-red-500"
+                        />
+                    </Button>
+                </div>
+            );
+        }
+    );
 
     return (
         <form
@@ -24,23 +63,25 @@ export const DeviceForm = ({ onClose }: FormProps) => {
                 trigger={
                     <Button
                         type="button"
-                        className="w-[175px] h-[40px] text-center text-white rounded-md border-1 border-[#5120B8]/30 hover:border-[#5120B8] hover:bg-[#1A1238]/30 focus:border-[#4F45E4] transition"
+                        className="w-[175px] h-[40px] cursor-pointer text-center text-white rounded-md border-1 border-[#5120B8]/30 hover:border-[#5120B8] hover:bg-[#1A1238]/30 focus:border-[#4F45E4] transition"
                         text={device.brandName}
                     />
                 }
                 items={brandItems}
                 className="left"
+                triggerClassname="max-w-[175px]"
             />
             <Dropdown
                 trigger={
                     <Button
                         type="button"
-                        className="w-[175px] h-[40px] text-center text-white rounded-md border-1 border-[#5120B8]/30 hover:border-[#5120B8] hover:bg-[#1A1238]/30 focus:border-[#4F45E4] transition"
+                        className="w-[175px] h-[40px] cursor-pointer text-center text-white rounded-md border-1 border-[#5120B8]/30 hover:border-[#5120B8] hover:bg-[#1A1238]/30 focus:border-[#4F45E4] transition"
                         text={device.typeName}
                     />
                 }
                 items={typeItems}
                 className="left"
+                triggerClassname="max-w-[175px]"
             />
             <div className="w-full flex flex-col gap-[15px]">
                 <Input
@@ -57,7 +98,7 @@ export const DeviceForm = ({ onClose }: FormProps) => {
                     value={device.price}
                     onChange={(e) => handleChange("price", e.target.value)}
                 />
-                <label className="max-w-[175px] flex flex-col text-white gap-[10px]">
+                <label className="max-w-[175px] flex flex-col text-white gap-[10px] cursor-pointer">
                     {device.img && (
                         <div className="border-2 border-[#5120B8] p-2 rounded-md">
                             <img
@@ -78,6 +119,24 @@ export const DeviceForm = ({ onClose }: FormProps) => {
                         onChange={handleFileChange}
                     />
                 </label>
+                <div>
+                    <Button
+                        type="button"
+                        onClick={handleAddInfo}
+                        className="w-[175px] h-[40px] cursor-pointer text-center text-white rounded-md border-1 border-[#5120B8]/30 hover:border-[#5120B8] hover:bg-[#1A1238]/30 focus:border-[#4F45E4] transition"
+                        text="Добавить свойства"
+                    />
+                    <div className="flex flex-col gap-[10px] mt-[20px]">
+                        {info.map((i) => (
+                            <DeviceInfoItem
+                                key={i.id}
+                                item={i}
+                                onChange={handleChangeInfo}
+                                onRemove={handleRemoveInfo}
+                            />
+                        ))}
+                    </div>
+                </div>
             </div>
             <div className="flex justify-end mb-6 mr-2 gap-[10px]">
                 <Button

@@ -1,10 +1,10 @@
 import { Input, Button } from "@/shared/ui";
 import { useState } from "react";
 import { createBrand } from "@/shared/api/deviceApi";
-import { useNotification } from "@/shared/hooks/useNotification";
-import { FormProps } from "../types";
+import { useNotification } from "@/shared/hooks";
+import { FormSchema } from "@features/ManageModal";
 
-export const BrandForm = ({ onClose }: FormProps) => {
+export const BrandForm = ({ onClose }: FormSchema) => {
     const [brandName, setBrandName] = useState("");
     const { notifySuccess, notifyWarn, notifyError } = useNotification();
 
