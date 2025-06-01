@@ -4,5 +4,4 @@ export interface DeviceStateSchema {
     devices: IDevice[],
     loading: boolean,
     error: boolean,
-    search: '',
 }

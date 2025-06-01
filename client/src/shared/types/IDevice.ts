@@ -12,8 +12,8 @@ export interface IDevice {
     typeId: string,
     createdAt: string,
     updatedAt: string,
-    basketId?: boolean | null,
+    basketId?: string | null,
     deviceInfo?: IDeviceInfo[],
-    Brand?: IBrand,
-    Type?: IType,
+    Brand: IBrand,
+    Type: IType,
 }

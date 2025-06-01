@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback } from "react";
 import { fetchAllBrands } from "@/entities/Brand";
 import { fetchAllTypes } from "@/entities/Type";
 import { deviceInitialState } from "../model/types/deviceInitialState";
-import { formDataUtils } from "../../../shared/lib/Form/formDataUtils";
+import { formDataUtils } from "../../../shared/lib/formDataUtils/formDataUtils";
 import { filtersDropdownItems } from "@/widgets/ProductFilters";
 import { createDevice } from "@/shared/api/deviceApi";
 import { DeviceInfoSchema } from "../model/types/DeviceInfoSchema";
@@ -67,6 +67,7 @@ export const useDeviceForm = () => {
             await createDevice(formData);
             notifySuccess("Отлично! Устройство создано!");
             setDevice(deviceInitialState);
+            setInfo([]);
         } catch (error) {
             console.error(error);
             notifyError(

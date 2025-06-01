@@ -1,6 +1,5 @@
 import { toggleFavoriteDevice } from "@/shared/api/deviceApi";
-import { toggleFavoritesSchema } from "../../../features/Favorites/model/types/toggleFavoritesSchema";
-import { addFavorite, removeFavorite } from "@/features/Favorites";
+import { addFavorite, removeFavorite, toggleFavoritesSchema } from "@/features/Favorites";
 
 export const toggleFavorites = async ({device, notifySuccess, notifyError, dispatch}: toggleFavoritesSchema) => {
     try {

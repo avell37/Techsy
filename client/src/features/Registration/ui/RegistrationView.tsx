@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { LOGIN_ROUTE } from "@/shared/config/consts";
 import { RegistrationSchema } from "@features/Registration";
 import {
-    GithubIcon,
     PasswordIcon,
     EmailIcon,
     ShowPasswordIcon,
@@ -73,29 +72,27 @@ export const RegistrationView = ({
                             )}
                         </Button>
                     </Input>
-                    <div className="flex justify-center items-center gap-[10px]">
-                        <GoogleAuth />
-                        <Button
-                            className="relative flex justify-center items-center pl-4 w-[245px] h-[40px] border-gray-700 border-1 bg-[#111729] text-white rounded-full"
-                            text="Войти с помощью Github"
-                        >
-                            <GithubIcon className="absolute left-2 bottom-[10px]" />
-                        </Button>
-                    </div>
                     <Button
                         className="max-w-[500px] w-full h-[40px] bg-[#5120B8] text-white rounded-full"
                         text="Зарегистрироваться"
                     />
+                    <div className="flex flex-col items-center">
+                        <Link
+                            className="mt-[5px] font-bold text-[#5120B8]"
+                            to={LOGIN_ROUTE}
+                        >
+                            Уже есть аккаунт?
+                        </Link>
+                    </div>
+                    <div className="border-t-1 border-gray-700">
+                        <p className="mt-4 text-white text-center text-sm">
+                            продолжить с помощью:
+                        </p>
+                    </div>
+                    <div className="flex justify-center items-center gap-[10px]">
+                        <GoogleAuth />
+                    </div>
                 </form>
-                <div className="flex flex-col items-center">
-                    <p className="text-white">Уже есть аккаунт?</p>
-                    <Link
-                        className="mt-[5px] font-bold text-[#5120B8]"
-                        to={LOGIN_ROUTE}
-                    >
-                        Войти
-                    </Link>
-                </div>
             </div>
         </div>
     );

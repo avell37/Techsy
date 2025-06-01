@@ -1,6 +1,6 @@
 import { Button, Input } from "@/shared/ui";
 import { FormSchema } from "../../model/types/ModalSchema";
-import { StarRating } from "@/shared/ui/StarRating/StarRating";
+import { StarRating } from "@/features/StarRating/ui/StarRating";
 import { useState } from "react";
 import { useNotification } from "@/shared/hooks";
 import { useParams } from "react-router-dom";

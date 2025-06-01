@@ -1,7 +1,7 @@
 import { FilteredSearchView } from "./FilteredSearchView";
 import { useState } from "react";
 import { useAppDispatch } from "@/shared/hooks";
-import { setSearchFilter } from "@/entities/Device";
+import { setSearchFilter } from "../model/slice/sortSlice";
 
 export const FilteredSearch = () => {
     const dispatch = useAppDispatch();

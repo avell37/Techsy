@@ -108,6 +108,45 @@ class UserController {
             next(ApiError.badRequest('все оч плоххо'));
         }
     }
+
+    async getShippingInfo(req: any, res: any) {
+        const userId = req.user.id;
+
+        try {
+            const info = await prisma.shippingInfo.findUnique({where: {userId}});
+            return res.json(info);
+        } catch (err) {
+            console.log(err);
+            return res.status(500).json({message: 'Oshibka'})
+        }
+    }
+
+    async saveShippingInfo(req: any, res: any) {
+        const userId = req.user.id;
+        const {firstName, lastName, phone, country, region, zipCode, city, address} = req.body;
+
+        try {
+            const existing = await prisma.shippingInfo.findUnique({ where: {userId} })
+
+            if (existing) {
+                const updated = await prisma.shippingInfo.update({
+                    where: {userId},
+                    data: {firstName, lastName, phone, country, region, zipCode, city, address}
+                })
+                return res.json(updated);
+            } else {
+                const created = await prisma.shippingInfo.create({
+                    data: {firstName, lastName, phone, country, region, zipCode, city, address, 
+                        user: { connect: {id: userId} }
+                    }
+                })
+                return res.json(created);
+            }
+        } catch (err) {
+            console.log(err);
+            return res.status(500).json({message: "Oshibka"})
+        }
+    }
 }
 
 module.exports = new UserController();

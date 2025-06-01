@@ -1,12 +1,8 @@
-import React from "react";
-
 interface HidePasswordProps {
     className?: string;
 }
 
-export const HidePasswordIcon: React.FC<HidePasswordProps> = ({
-    className,
-}) => {
+export const HidePasswordIcon = ({ className }: HidePasswordProps) => {
     return (
         <svg
             width="18px"

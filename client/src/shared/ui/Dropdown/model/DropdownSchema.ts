@@ -1,11 +1,8 @@
-export interface DropdownItemSchema {
-    text: string,
-    onClick: () => void
-}
+import { IDropdownItem } from "@/shared/types/IDropdownItem";
 
 export interface DropdownSchema {
     trigger: React.ReactNode;
-    items: DropdownItemSchema[],
+    items: IDropdownItem[],
     className?: string,
     triggerClassname?: string
 }

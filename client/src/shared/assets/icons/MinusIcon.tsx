@@ -2,9 +2,10 @@ interface Props {
     width: string;
     height: string;
     className?: string;
+    onClick?: () => void;
 }
 
-export const MinusIcon = ({ width, height, className }: Props) => {
+export const MinusIcon = ({ width, height, className, onClick }: Props) => {
     return (
         <svg
             width={width}
@@ -13,6 +14,7 @@ export const MinusIcon = ({ width, height, className }: Props) => {
             fill="#fff"
             viewBox="0 0 24 24"
             className={className}
+            onClick={onClick}
         >
             <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14" />
         </svg>

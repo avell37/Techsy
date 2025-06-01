@@ -13,8 +13,8 @@ export const UserProfileView = ({
     handleSave,
 }: ProfileSchema) => {
     return (
-        <div className="flex justify-center w-full gap-[100px]">
-            <div className="flex flex-col gap-[20px] items-center justify-center">
+        <div className="flex justify-center w-full gap-[100px] h-full mt-[50px]">
+            <div className="flex flex-col gap-[20px] items-center">
                 <div className="w-[150px] h-[150px] border-2 border-[#3A177F] rounded-full bg-transparent overflow-hidden">
                     {user?.picture && (
                         <img

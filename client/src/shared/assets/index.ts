@@ -3,7 +3,6 @@ import img1 from './icons/default-user.png';
 export * from './icons/ArrowDown';
 export * from './icons/ArrowIcon';
 export * from './icons/EmailIcon';
-export * from './icons/GithubIcon';
 export * from './icons/GoogleIcon';
 export * from './icons/HidePasswordIcon';
 export * from './icons/LikeIcon';

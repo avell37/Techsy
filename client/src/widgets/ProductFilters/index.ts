@@ -1,3 +1,5 @@
 export * from './ui/ProductFilters';
-export * from './model/FiltersDropdownSchema';
-export * from './model/filtersDropdownItems';
+export * from './ui/ProductFiltersView';
+export * from './lib/filtersDropdownItems';
+export * from './model/types/filtersDropdownSchema';
+export * from './model/types/productFiltersSchema';

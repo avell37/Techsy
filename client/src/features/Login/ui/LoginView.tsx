@@ -4,7 +4,6 @@ import { REGISTRATION_ROUTE } from "@/shared/config/consts";
 import { LoginSchema } from "../model/types/LoginSchema";
 import { GoogleAuth } from "@/features/GoogleAuth";
 import {
-    GithubIcon,
     HidePasswordIcon,
     ShowPasswordIcon,
     PasswordIcon,
@@ -57,29 +56,27 @@ export const LoginView = ({
                             )}
                         </Button>
                     </Input>
-                    <div className="flex justify-center items-center gap-[10px]">
-                        <GoogleAuth />
-                        <Button
-                            className="relative flex justify-center items-center pl-4 w-[245px] h-[40px] border-gray-700 border-1 bg-[#111729] text-white rounded-full"
-                            text="Войти с помощью Github"
-                        >
-                            <GithubIcon className="absolute left-2 bottom-[10px]" />
-                        </Button>
-                    </div>
                     <Button
                         className="max-w-[500px] w-full h-[40px] bg-[#5120B8] text-white rounded-full"
                         text="Войти"
                     />
+                    <div className="flex justify-center items-center gap-[10px]">
+                        <Link
+                            className="font-bold text-[#5120B8]"
+                            to={REGISTRATION_ROUTE}
+                        >
+                            Нет аккаунта?
+                        </Link>
+                    </div>
+                    <div className="border-t-1 border-gray-700">
+                        <p className="mt-4 text-white text-center text-sm">
+                            продолжить с помощью:
+                        </p>
+                    </div>
+                    <div className="flex justify-center items-center gap-[10px]">
+                        <GoogleAuth />
+                    </div>
                 </form>
-                <div className="flex flex-col text-center">
-                    <p className="text-white">У вас нет аккаунта?</p>
-                    <Link
-                        className="mt-[5px] font-bold text-[#5120B8]"
-                        to={REGISTRATION_ROUTE}
-                    >
-                        Зарегистрироваться
-                    </Link>
-                </div>
             </div>
         </div>
     );

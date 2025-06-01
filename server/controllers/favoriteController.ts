@@ -27,7 +27,11 @@ class FavoriteController {
                         userId: id,
                         deviceId
                     },
-                    include: {device: true}
+                    include: { device: {include: {
+                            Brand: true,
+                            Type: true
+                        }
+                    } }
                 })
                 return res.json({ added: true, favoriteDevice })
             }
@@ -43,7 +47,11 @@ class FavoriteController {
                 where: {
                     userId: id
                 },
-                include: { device: true }
+                include: { device: {include: {
+                        Brand: true,
+                        Type: true
+                    }
+                } }
             });
             return res.json(favoriteDevices);
         } catch (err) {

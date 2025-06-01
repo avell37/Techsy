@@ -13,8 +13,6 @@ export const InitUser = ({ children }: initProps) => {
     useEffect(() => {
         if (Cookies.get("token")) {
             dispatch(fetchUser());
-        } else {
-            console.log("error token");
         }
     }, [dispatch]);
 

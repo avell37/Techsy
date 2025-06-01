@@ -4,7 +4,12 @@ import { ErrorPage } from "@pages/ErrorPage/ErrorPage";
 import { useAppSelector } from "@/shared/hooks";
 import { Spinner } from "@/shared/assets";
 import Cookies from "js-cookie";
-import { LOGIN_ROUTE, SHOP_ROUTE } from "@/shared/config/consts";
+import {
+    CHECKOUT_ROUTE,
+    LOGIN_ROUTE,
+    SHOP_ROUTE,
+} from "@/shared/config/consts";
+import { CheckoutPage } from "@/pages/CheckoutPage/CheckoutPage";
 
 export const AppRouter = () => {
     const { currentUser } = useAppSelector((state) => state.userReducer);
@@ -44,6 +49,8 @@ export const AppRouter = () => {
                     )
                 }
             />
+
+            <Route path={CHECKOUT_ROUTE} element={<CheckoutPage />} />
 
             <Route path="/404" element={<ErrorPage />} />
 

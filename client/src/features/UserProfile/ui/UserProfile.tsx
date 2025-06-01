@@ -51,8 +51,10 @@ export const UserProfile: React.FC = () => {
         try {
             await uploadAvatar(file);
             const newData = await fetchUserData();
-            dispatch(updateAvatar(newData.picture));
-            notifySuccess("Аватар был изменен :)");
+            if (newData) {
+                dispatch(updateAvatar(newData.picture));
+                notifySuccess("Аватар был изменен :)");
+            }
         } catch (err) {
             console.error(err);
             notifyError("Что-то пошло не так... Попробуй еще раз!");

@@ -1,15 +1,4 @@
-export interface FavoriteDevice {
-    id: string,
-    createdAt: string,
-    updatedAt: string,
-    name: string,
-    price: number,
-    rating: 0,
-    img: string,
-    brandId: string,
-    typeId: string,
-    basketId?: null
-}
+import { IFavoriteDevice } from "@/shared/types"
 
 export interface FavoriteDevices {
     id: string,
@@ -17,7 +6,7 @@ export interface FavoriteDevices {
     updatedAt: string,
     userId: string,
     deviceId: string,
-    device: FavoriteDevice
+    device: IFavoriteDevice
 }
 
 export interface FavoriteStateSchema {

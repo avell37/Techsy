@@ -19,19 +19,37 @@ model User {
   basket          Basket?
   reviews         Review[]
   favoriteDevices FavoriteDevice[]
+  ShippingInfo    ShippingInfo[]
+  Order           Order[]
 
   @@map("user")
 }
 
 model Basket {
+  id           String         @id @default(cuid())
+  createdAt    DateTime       @default(now()) @map("created_at")
+  updatedAt    DateTime       @updatedAt @map("updated_at")
+  userId       String         @unique
+  user         User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Device       Device[]
+  BasketDevice BasketDevice[]
+
+  @@map("basket")
+}
+
+model BasketDevice {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
-  userId    String   @unique
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  Device    Device[]
+  basketId  String
+  deviceId  String
+  quantity  Int      @default(1)
 
-  @@map("basket")
+  basket Basket @relation(fields: [basketId], references: [id])
+  device Device @relation(fields: [deviceId], references: [id])
+
+  @@unique([basketId, deviceId])
+  @@map("basket_device")
 }
 
 model Device {
@@ -51,6 +69,7 @@ model Device {
   deviceInfo      DeviceInfo[]
   reviews         Review[]
   favoriteDevices FavoriteDevice[]
+  BasketDevice    BasketDevice[]
 
   @@map("device")
 }
@@ -133,4 +152,52 @@ model FavoriteDevice {
 
   @@unique([userId, deviceId])
   @@map("favorite_device")
+}
+
+model ShippingInfo {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  userId    String   @unique
+
+  firstName String
+  lastName  String
+  phone     String
+  country   String
+  region    String
+  zipCode   String
+  city      String
+  address   String
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("shipping_info")
+}
+
+model Order {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  userId    String
+
+  price     Int
+  isPaid    Boolean @default(false)
+  delivery  String
+  paymentId String?
+
+  user      User        @relation(fields: [userId], references: [id])
+  OrderItem OrderItem[]
+}
+
+model OrderItem {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  name     String
+  price    Int
+  img      String
+  quantity Int
+  order    Order  @relation(fields: [orderId], references: [id])
+  orderId  String
 }

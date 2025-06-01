@@ -1,14 +1,6 @@
-import { fetchUserData } from "@/shared/api/userApi";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { UserStateSchema } from "../types/userStateSchema";
-
-export const fetchUser = createAsyncThunk(
-    'user/fetchUser',
-    async () => {
-        const res = await fetchUserData();
-        return res
-    }
-)
+import { fetchUser } from "../services/fetchUser";
 
 const initialState: UserStateSchema = {
     currentUser: null,
@@ -35,7 +27,7 @@ const userSlice = createSlice({
                 state.loading = true;
             })
             .addCase(fetchUser.fulfilled, (state, action) => {
-                state.currentUser = action.payload
+                state.currentUser = action.payload ?? null;
                 state.loading = false;
             })
             .addCase(fetchUser.rejected, (state) => {

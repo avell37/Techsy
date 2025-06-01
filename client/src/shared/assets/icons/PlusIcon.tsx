@@ -2,9 +2,10 @@ interface Props {
     width: string;
     height: string;
     className?: string;
+    onClick?: () => void;
 }
 
-export const PlusIcon = ({ width, height, className }: Props) => {
+export const PlusIcon = ({ width, height, className, onClick }: Props) => {
     return (
         <svg
             width={width}
@@ -13,6 +14,7 @@ export const PlusIcon = ({ width, height, className }: Props) => {
             fill="#ffffff"
             viewBox="0 0 24 24"
             className={className}
+            onClick={onClick}
         >
             <path
                 strokeLinecap="round"

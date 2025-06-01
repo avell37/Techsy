@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { InternalAxiosRequestConfig } from 'axios';
 import Cookies from 'js-cookie';
 
 const $host = axios.create({
@@ -9,7 +9,7 @@ const $authHost = axios.create({
     baseURL: import.meta.env.VITE_API_URL
 });
 
-const authInterceptor = (config) => {
+const authInterceptor = (config: InternalAxiosRequestConfig) => {
     config.headers.authorization = `Bearer ${Cookies.get('token')}`
     return config
 }

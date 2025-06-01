@@ -4,9 +4,10 @@ import { LikeIcon } from "@/shared/assets";
 interface Props {
     onClick: () => void;
     isFavorite?: boolean;
+    className?: string;
 }
 
-export const DeviceLike = ({ onClick, isFavorite }: Props) => {
+export const DeviceLike = ({ onClick, isFavorite, className }: Props) => {
     return (
         <>
             <Button onClick={onClick}>
@@ -14,7 +15,7 @@ export const DeviceLike = ({ onClick, isFavorite }: Props) => {
                     isFavorite={isFavorite}
                     width="25px"
                     height="25px"
-                    className="absolute top-[5px] left-1"
+                    className={className}
                 />
             </Button>
         </>

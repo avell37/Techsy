@@ -1,14 +1,6 @@
-import { fetchReviews } from "@/shared/api/deviceApi";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { ReviewStateSchema } from "../types/reviewStateSchema";
-
-export const fetchDeviceReviews = createAsyncThunk(
-    'reviews/fetchDeviceReviews',
-    async (deviceId: string) => {
-        const res = await fetchReviews(deviceId);
-        return res || [];
-    }
-)
+import { fetchDeviceReviews } from "../services/fetchDeviceReviews";
 
 const initialState: ReviewStateSchema = {
     reviews: [],

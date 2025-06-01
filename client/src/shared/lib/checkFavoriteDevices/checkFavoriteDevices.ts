@@ -5,5 +5,8 @@ export const checkFavoriteDevices = ({
     deviceId: string;
     favoriteDevices: { device: {id: string} }[];
 }): boolean => {
-    return favoriteDevices.some((fav) => fav.device && fav.device.id === deviceId);
+    if (favoriteDevices) {
+        return favoriteDevices.some((fav) => fav.device && fav.device.id === deviceId);
+    }
+    return false;
 };

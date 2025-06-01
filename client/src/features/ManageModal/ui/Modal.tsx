@@ -6,6 +6,7 @@ import {
     BrandForm,
     DeleteForm,
     ReviewForm,
+    AddressForm,
 } from "@features/ManageModal";
 
 export const Modal = ({ isOpen, onClose, contentType }: ModalSchema) => {
@@ -27,6 +28,8 @@ export const Modal = ({ isOpen, onClose, contentType }: ModalSchema) => {
                 return <DeleteForm entityType="device" onClose={onClose} />;
             case "addReview":
                 return <ReviewForm onClose={onClose} />;
+            case "manageAddress":
+                return <AddressForm onClose={onClose} />;
             default:
                 return null;
         }

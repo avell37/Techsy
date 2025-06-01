@@ -1,4 +1,4 @@
-export * from './Input/Input';
+export * from './Input/ui/Input';
 export * from './Button/ui/Button';
 export * from './DeviceCard/ui/DeviceCard';
 export * from './DeviceCard/ui/DeviceImg';
@@ -6,4 +6,7 @@ export * from './DeviceCard/ui/DeviceLike';
 export * from './DeviceCard/ui/DeviceRating';
 export * from './DeviceCard/model/DeviceSchema';
 export * from './Welcome/Welcome';
-export * from './Dropdown/Dropdown';
+export * from './Dropdown/ui/Dropdown';
+export * from './ImagePreview/ImagePreview';
+export * from './FormattedDate/ui/FormattedDate';
+export * from './ReviewCard/ui/ReviewCard';

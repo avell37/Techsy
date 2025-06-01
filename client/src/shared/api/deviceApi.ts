@@ -16,8 +16,12 @@ export const fetchOneType = async (id: string) => {
 }
 
 export const deleteOneType = async (id: string) => {
-    const {data} = await $authHost.delete('/api/type' + '/' + id);
-    return data;
+    try {
+        const {data} = await $authHost.delete('/api/type' + '/' + id);
+        return data;
+    } catch (err) {
+        console.error(err);
+    }
 }
 
 export const createBrand = async (brand: string) => {
@@ -31,13 +35,21 @@ export const fetchBrands = async () => {
 }
 
 export const fetchOneBrand = async (id: string) => {
-    const {data} = await $host.get('/api/brand' + "/" + id)
-    return data;
+    try {
+        const {data} = await $host.get('/api/brand' + "/" + id)
+        return data;
+    } catch (err) {
+        console.error(err);
+    }
 }
 
 export const deleteOneBrand = async (id: string) => {
-    const {data} = await $authHost.delete('/api/brand' + '/' + id)
-    return data;
+    try {
+        const {data} = await $authHost.delete('/api/brand' + '/' + id)
+        return data;
+    } catch (err) {
+        console.error(err);
+    }
 }
 
 export const createDevice = async (device: object) => {
@@ -56,8 +68,12 @@ export const fetchOneDevice = async (id: string) => {
 }
 
 export const deleteOneDevice = async (id: string) => {
-    const {data} = await $authHost.delete('/api/device' + '/' + id)
-    return data;
+    try {
+        const {data} = await $authHost.delete('/api/device' + '/' + id)
+        return data;
+    } catch (err) {
+        console.error(err);
+    }
 }
 
 export const fetchFavoriteDevices = async () => {

@@ -1,14 +1,15 @@
-import {ADMIN_ROUTE, BASKET_ROUTE, DEVICE_ROUTE, 
+import {ADMIN_ROUTE, BASKET_ROUTE, CHECKOUT_ROUTE, DEVICE_ROUTE, 
         ERROR_ROUTE, FAVORITES_ROUTE, LOGIN_ROUTE, PROFILE_ROUTE, 
         REGISTRATION_ROUTE, SHOP_ROUTE} from "@/shared/config/consts";
 import { AdminPage } from "@/pages/AdminPage/AdminPage";
 import { BasketPage } from "@/pages/BasketPage/BasketPage";
 import { AuthPage } from "@/pages/AuthPage/AuthPage";
-import { DevicePage } from "@/pages/DevicePage/DevicePage";
+import { DevicePage } from "@/pages/DevicePage/ui/DevicePage";
 import { ShopPage } from "@/pages/ShopPage/ShopPage";
 import { ErrorPage } from "@/pages/ErrorPage/ErrorPage";
 import { ProfilePage } from "@/pages/ProfilePage/ProfilePage";
 import { FavoritesPage } from "@/pages/FavoritesPage/FavoritesPage";
+import { CheckoutPage } from "@/pages/CheckoutPage/CheckoutPage";
 
 interface RoutesProps {
     path: string,
@@ -53,6 +54,10 @@ export const publicRoutes = [
     {
         path: DEVICE_ROUTE + '/:id',
         Component: DevicePage
+    },
+    {
+        path: CHECKOUT_ROUTE,
+        Component: CheckoutPage
     },
     {
         path: ERROR_ROUTE,

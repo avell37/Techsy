@@ -1,14 +1,26 @@
-export const dropdownItemsWithFilters = () => [
+import { setSortType } from "../slice/sortSlice"
+import { dropdownFiltersSchema } from "../types/dropdownFiltersSchema"
+
+export const dropdownItemsWithFilters = ({dispatch, setFilter}: dropdownFiltersSchema) => [
     {
         text: "Цена ↑",
-        onClick: () => {console.log("lol")}
+        onClick: () => {
+            dispatch(setSortType('price-inc'))
+            setFilter('Цена ↑')
+        }
     },
     {
         text: "Цена ↓",
-        onClick: () => {console.log("lol")}
+        onClick: () => {
+            dispatch(setSortType('price-dec'))
+            setFilter('Цена ↓')
+        }
     },
     {
         text: "По рейтингу",
-        onClick: () => {console.log("lol")}
+        onClick: () => {
+            dispatch(setSortType('rating'))
+            setFilter('По рейтингу')
+        }
     },
 ]

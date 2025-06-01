@@ -1,9 +1,8 @@
-import { deviceReducer } from "@/entities/Device";
-import { userReducer } from "@/entities/User";
-import { brandReducer } from "@/entities/Brand";
-import { typeReducer } from "@/entities/Type";
-import { favoriteReducer } from "@/features/Favorites/model/slice/favoriteSlice";
-import { reviewReducer } from "@/entities/Review";
+import { 
+    deviceReducer, userReducer, brandReducer, 
+    typeReducer, reviewReducer, basketReducer, shippingReducer } from "@/entities"
+import { favoriteReducer } from "@/features/Favorites"
+import { sortReducer } from "@/features/FilteredSearch/model/slice/sortSlice"
 
 export const rootReducers = {
     deviceReducer,
@@ -11,5 +10,8 @@ export const rootReducers = {
     brandReducer,
     typeReducer,
     favoriteReducer,
-    reviewReducer
+    reviewReducer,
+    basketReducer,
+    shippingReducer, 
+    sortReducer
 }

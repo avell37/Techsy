@@ -1,14 +1,6 @@
-import { fetchFavoriteDevices } from "@/shared/api/deviceApi";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { FavoriteStateSchema } from "../types/favoriteStateSchema";
-
-export const fetchAllFavoriteDevices = createAsyncThunk(
-    'favoriteDevices/fetchAllFavoriteDevices',
-    async () => {
-        const res = await fetchFavoriteDevices();
-        return res;
-    }
-)
+import { fetchAllFavoriteDevices } from "../services/fetchAllFavoriteDevices";
 
 const initialState: FavoriteStateSchema = {
     favoriteDevices: [],

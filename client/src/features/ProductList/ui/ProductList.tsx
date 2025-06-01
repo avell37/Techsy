@@ -9,6 +9,7 @@ import { toggleFavorites } from "@/shared/lib/toggleFavorites/toggleFavorites";
 import { checkFavoriteDevices } from "@/shared/lib/checkFavoriteDevices/checkFavoriteDevices";
 import Cookies from "js-cookie";
 import { Spinner } from "@/shared/assets";
+import { addToBasket } from "@/shared/lib";
 
 export const ProductList = () => {
     const dispatch = useAppDispatch();
@@ -16,15 +17,14 @@ export const ProductList = () => {
     const { favoriteDevices, isLoaded } = useAppSelector(
         (state) => state.favoriteReducer
     );
-    const { notifySuccess, notifyError } = useNotification();
+    const { notifySuccess, notifyWarn, notifyError } = useNotification();
+    console.log(favoriteDevices);
 
     if (Cookies.get("token") && !isLoaded) {
         return (
-            <Spinner
-                width="100px"
-                height="100px"
-                className="flex justify-center items-center"
-            />
+            <div className="flex justify-center items-center h-[60%]">
+                <Spinner width="100px" height="100px" />
+            </div>
         );
     }
 
@@ -44,6 +44,14 @@ export const ProductList = () => {
                             notifySuccess,
                             notifyError,
                             dispatch,
+                        })
+                    }
+                    addToBasket={() =>
+                        addToBasket({
+                            id: device.id,
+                            notifySuccess,
+                            notifyWarn,
+                            notifyError,
                         })
                     }
                 />

@@ -1,14 +1,6 @@
-import { fetchTypes } from "@/shared/api/deviceApi";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { TypeStateSchema } from "../types/typeStateSchema";
-
-export const fetchAllTypes = createAsyncThunk(
-    'types/fetchAllTypes',
-    async () => {
-        const res = await fetchTypes();
-        return res
-    }
-)
+import { fetchAllTypes } from "../services/fetchAllTypes";
 
 const initialState: TypeStateSchema = {
     types: [],

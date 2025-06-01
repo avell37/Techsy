@@ -3,7 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { DEVICE_ROUTE } from "@/shared/config/consts";
 import { DeviceSchema, DeviceRating, DeviceLike, DeviceImg } from "@shared/ui";
 
-export const DeviceCard = ({ device, onClick, isFavorite }: DeviceSchema) => {
+export const DeviceCard = ({
+    device,
+    onClick,
+    isFavorite,
+    addToBasket,
+}: DeviceSchema) => {
     const navigate = useNavigate();
 
     return (
@@ -18,7 +23,11 @@ export const DeviceCard = ({ device, onClick, isFavorite }: DeviceSchema) => {
             hover:bg-[#1A1238]/30 transition-all"
         >
             <div className="relative flex w-full">
-                <DeviceLike onClick={onClick} isFavorite={isFavorite} />
+                <DeviceLike
+                    className="absolute top-[5px] left-1"
+                    onClick={onClick}
+                    isFavorite={isFavorite}
+                />
                 <DeviceRating
                     noWrap
                     rating={device.rating}
@@ -44,6 +53,7 @@ export const DeviceCard = ({ device, onClick, isFavorite }: DeviceSchema) => {
             <div className="w-full px-4 pb-4">
                 <Button
                     className="rounded-md w-full h-[40px] text-center border border-[#3A177F] text-white hover:border-[#8A4FFF] hover:bg-[#1A1238]/50 transition-all"
+                    onClick={() => addToBasket()}
                     text="Добавить в корзину"
                 />
             </div>

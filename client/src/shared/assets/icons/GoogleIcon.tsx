@@ -1,10 +1,8 @@
-import React from "react";
-
 interface GoogleProps {
-    className: string;
+    className?: string;
 }
 
-export const GoogleIcon: React.FC<GoogleProps> = ({ className }) => {
+export const GoogleIcon = ({ className }: GoogleProps) => {
     return (
         <svg
             width="15px"

@@ -1,14 +1,6 @@
-import { fetchBrands } from "@/shared/api/deviceApi";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { BrandStateSchema } from "../types/brandStateSchema";
-
-export const fetchAllBrands = createAsyncThunk(
-    'brands/fetchAllBrands',
-    async () => {
-        const res = await fetchBrands();
-        return res
-    }
-)
+import { fetchAllBrands } from "../services/fetchAllBrands";
 
 const initialState: BrandStateSchema = {
     brands: [],

@@ -35,7 +35,13 @@ class ReviewController {
                     deviceId: deviceId
                 },
                 include: {
-                    User: true,
+                    User: {
+                        select: {
+                            id: true,
+                            username: true,
+                            picture: true,
+                        }
+                    },
                     Device: true
                 }
             })
