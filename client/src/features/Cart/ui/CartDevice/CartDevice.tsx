@@ -13,8 +13,13 @@ import { useAppDispatch, useNotification } from "@/shared/hooks";
 import { Button, DeviceImg, DeviceLike } from "@/shared/ui";
 import { useNavigate } from "react-router-dom";
 import { DEVICE_ROUTE } from "@/shared/config/consts";
+import { CartDeviceSchema } from "../../model/types/CartSchema";
 
-export const CartDevice = ({ device, isFavorite, onClick }) => {
+export const CartDevice = ({
+    device,
+    isFavorite,
+    onClick,
+}: CartDeviceSchema) => {
     const { notifySuccess, notifyError } = useNotification();
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
