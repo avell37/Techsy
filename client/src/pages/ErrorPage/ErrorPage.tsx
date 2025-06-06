@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { SHOP_ROUTE } from "@/shared/config/consts";
 import { ArrowIcon } from "@shared/assets";
 
-export const ErrorPage = () => {
+const ErrorPage = () => {
     return (
         <div className="flex flex-col justify-center items-center h-[100vh] gap-[30px]">
             <Link
@@ -27,3 +27,5 @@ export const ErrorPage = () => {
         </div>
     );
 };
+
+export default ErrorPage;

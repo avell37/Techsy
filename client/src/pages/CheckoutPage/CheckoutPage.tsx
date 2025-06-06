@@ -2,7 +2,7 @@ import { Spinner } from "@/shared/assets";
 import { Header } from "@/widgets/Header";
 import { useSearchParams } from "react-router-dom";
 
-export const CheckoutPage = () => {
+const CheckoutPage = () => {
     const [params] = useSearchParams();
     const orderId = params.get("orderId");
 
@@ -18,3 +18,5 @@ export const CheckoutPage = () => {
         </div>
     );
 };
+
+export default CheckoutPage;

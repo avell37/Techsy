@@ -3,7 +3,7 @@ import { useAppDispatch } from "@/shared/hooks";
 import { Header } from "@/widgets/Header";
 import { useEffect } from "react";
 
-export const FavoritesPage = () => {
+const FavoritesPage = () => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -17,3 +17,5 @@ export const FavoritesPage = () => {
         </div>
     );
 };
+
+export default FavoritesPage;

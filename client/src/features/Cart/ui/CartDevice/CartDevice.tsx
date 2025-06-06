@@ -39,7 +39,6 @@ export const CartDevice = ({
         try {
             await incrementDevice(deviceId);
             dispatch(incrementBasketDevice(deviceId));
-            notifySuccess("Количество товара увеличено");
         } catch (err) {
             console.error(err);
             notifyError("Произошла ошибка... Попробуй еще раз :)");
@@ -55,7 +54,6 @@ export const CartDevice = ({
         try {
             await decrementDevice(deviceId);
             dispatch(decrementBasketDevice(deviceId));
-            notifySuccess("Количество товара уменьшено");
         } catch (err) {
             console.error(err);
             notifyError("Произошла ошибка... Попробуй еще раз :)");
@@ -106,13 +104,13 @@ export const CartDevice = ({
                 </div>
             </div>
             <DeviceLike
-                className="absolute top-[7px] right-10"
+                className="absolute top-[7px] right-10 cursor-pointer"
                 isFavorite={isFavorite}
                 onClick={onClick}
             />
             <Button
                 onClick={() => handleDelete(device.device.id)}
-                className="absolute top-2 right-2"
+                className="absolute top-2 right-2 cursor-pointer"
             >
                 <XMarkIcon
                     width="22px"

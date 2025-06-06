@@ -3,6 +3,13 @@ import { dropdownFiltersSchema } from "../types/dropdownFiltersSchema"
 
 export const dropdownItemsWithFilters = ({dispatch, setFilter}: dropdownFiltersSchema) => [
     {
+        text: "Фильтры",
+        onClick: () => {
+            dispatch(setSortType(null))
+            setFilter('Фильтры')
+        }
+    },
+    {
         text: "Цена ↑",
         onClick: () => {
             dispatch(setSortType('price-inc'))

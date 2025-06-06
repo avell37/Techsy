@@ -3,7 +3,7 @@ import { Button } from "@/shared/ui";
 import { Modal } from "@/features/ManageModal";
 import { useModal } from "@/shared/hooks";
 
-export const AdminPage = () => {
+const AdminPage = () => {
     const { isOpen, contentType, openModal, closeModal } = useModal();
 
     return (
@@ -60,3 +60,5 @@ export const AdminPage = () => {
         </div>
     );
 };
+
+export default AdminPage;

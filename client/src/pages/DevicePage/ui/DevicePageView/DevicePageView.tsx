@@ -10,6 +10,7 @@ export const DevicePageView = ({
     contentType,
     closeModal,
     openModal,
+    handleAddReview,
     handleDeleteReview,
 }: DevicePageSchema) => {
     return (
@@ -29,6 +30,7 @@ export const DevicePageView = ({
                     contentType={contentType}
                     currentUser={currentUser}
                     reviews={reviews}
+                    handleAddReview={handleAddReview}
                     handleDeleteReview={handleDeleteReview}
                     isOpen={isOpen}
                     openModal={openModal}

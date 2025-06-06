@@ -13,7 +13,7 @@ import { checkFavoriteDevices } from "@/shared/lib/checkFavoriteDevices/checkFav
 import { toggleFavorites } from "@/shared/lib/toggleFavorites/toggleFavorites";
 import { fetchShippingInfo } from "@/entities";
 
-export const BasketPage = () => {
+const BasketPage = () => {
     const dispatch = useAppDispatch();
     const { favoriteDevices } = useAppSelector(
         (state) => state.favoriteReducer
@@ -68,3 +68,5 @@ export const BasketPage = () => {
         </div>
     );
 };
+
+export default BasketPage;

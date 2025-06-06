@@ -24,7 +24,7 @@ export const DeviceCard = ({
         >
             <div className="relative flex w-full">
                 <DeviceLike
-                    className="absolute top-[5px] left-1"
+                    className="absolute top-[5px] left-1 cursor-pointer"
                     onClick={onClick}
                     isFavorite={isFavorite}
                 />
@@ -52,7 +52,7 @@ export const DeviceCard = ({
             </div>
             <div className="w-full px-4 pb-4">
                 <Button
-                    className="rounded-md w-full h-[40px] text-center border border-[#3A177F] text-white hover:border-[#8A4FFF] hover:bg-[#1A1238]/50 transition-all"
+                    className="rounded-md w-full h-[40px] text-center border border-[#3A177F] text-white hover:border-[#8A4FFF] hover:bg-[#1A1238]/50 transition-all cursor-pointer"
                     onClick={() => addToBasket()}
                     text="Добавить в корзину"
                 />

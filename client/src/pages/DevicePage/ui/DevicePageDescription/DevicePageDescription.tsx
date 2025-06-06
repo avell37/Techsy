@@ -31,7 +31,7 @@ export const DevicePageDescription = ({
                     {device && device?.Brand.name}
                 </p>
                 <Button
-                    className="w-[200px] h-[40px] bg-[#5120B8] text-white rounded-xl font-bold"
+                    className="rounded-md w-[175px] h-[40px] text-center border border-[#3A177F] text-white hover:border-[#8A4FFF] hover:bg-[#1A1238]/50 transition-all cursor-pointer"
                     text="Добавить в корзину"
                 />
             </div>

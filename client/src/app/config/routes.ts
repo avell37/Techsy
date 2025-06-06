@@ -1,15 +1,15 @@
 import {ADMIN_ROUTE, BASKET_ROUTE, CHECKOUT_ROUTE, DEVICE_ROUTE, 
         ERROR_ROUTE, FAVORITES_ROUTE, LOGIN_ROUTE, PROFILE_ROUTE, 
         REGISTRATION_ROUTE, SHOP_ROUTE} from "@/shared/config/consts";
-import { AdminPage } from "@/pages/AdminPage/AdminPage";
-import { BasketPage } from "@/pages/BasketPage/BasketPage";
-import { AuthPage } from "@/pages/AuthPage/AuthPage";
-import { DevicePage } from "@/pages/DevicePage/ui/DevicePage";
-import { ShopPage } from "@/pages/ShopPage/ShopPage";
-import { ErrorPage } from "@/pages/ErrorPage/ErrorPage";
-import { ProfilePage } from "@/pages/ProfilePage/ProfilePage";
-import { FavoritesPage } from "@/pages/FavoritesPage/FavoritesPage";
-import { CheckoutPage } from "@/pages/CheckoutPage/CheckoutPage";
+import { AdminPage } from "@/pages/AdminPage/AdminPage.lazy";
+import { BasketPage } from "@/pages/BasketPage/BasketPage.lazy";
+import { AuthPage } from "@/pages/AuthPage/AuthPage.lazy";
+import { DevicePage } from "@/pages/DevicePage/ui/DevicePage.lazy";
+import { ShopPage } from "@/pages/ShopPage/ShopPage.lazy";
+import { ErrorPage } from "@/pages/ErrorPage/ErrorPage.lazy";
+import { ProfilePage } from "@/pages/ProfilePage/ProfilePage.lazy";
+import { FavoritesPage } from "@/pages/FavoritesPage/FavoritesPage.lazy";
+import { CheckoutPage } from "@/pages/CheckoutPage/CheckoutPage.lazy";
 
 interface RoutesProps {
     path: string,

@@ -40,12 +40,12 @@ export const UserProfileView = ({
                     <Button
                         onClick={() => fileInputRef?.current?.click()}
                         text="Сменить аватарку"
-                        className="rounded-md w-[200px] h-[50px] bg-[#5120B8] font-bold focus:outline-none cursor-pointer text-white"
+                        className="w-[200px] h-[50px] font-bold text-white rounded-md border-1 border-[#5120B8]/30 hover:border-[#5120B8] hover:bg-[#1A1238]/30 transition cursor-pointer"
                     />
                 </div>
                 {userData?.role === "Admin" ? (
                     <Button
-                        className="rounded-md w-[200px] h-[50px] bg-[#5120B8] font-bold focus:outline-none cursor-pointer text-white"
+                        className="w-[200px] h-[50px] font-bold text-white rounded-md border-1 border-[#5120B8]/30 hover:border-[#5120B8] hover:bg-[#1A1238]/30 transition cursor-pointer"
                         text="Админ панель"
                         onClick={() => navigate(ADMIN_ROUTE)}
                     />

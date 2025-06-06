@@ -46,6 +46,7 @@ export const LoginView = ({
                     >
                         <PasswordIcon className="absolute top-3 left-3" />
                         <Button
+                            type="button"
                             className="absolute right-5 top-3"
                             onClick={toggleShowPassword}
                         >
@@ -57,7 +58,7 @@ export const LoginView = ({
                         </Button>
                     </Input>
                     <Button
-                        className="max-w-[500px] w-full h-[40px] bg-[#5120B8] text-white rounded-full"
+                        className="max-w-[500px] w-full h-[40px] bg-[#5120B8] text-white rounded-full cursor-pointer"
                         text="Войти"
                     />
                     <div className="flex justify-center items-center gap-[10px]">

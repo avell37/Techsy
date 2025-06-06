@@ -13,6 +13,7 @@
   "dependencies": {
     "@a2seven/yoo-checkout": "^1.1.4",
     "bcrypt": "^5.1.1",
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
     "dotenv": "^16.4.7",
@@ -22,6 +23,7 @@
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.2",
     "pg": "^8.13.3",
+    "ts-node": "^10.9.2",
     "uuid": "^11.1.0"
   },
   "devDependencies": {

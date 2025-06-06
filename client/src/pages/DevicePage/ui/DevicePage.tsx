@@ -7,8 +7,9 @@ import { useAppSelector, useModal, useNotification } from "@/shared/hooks";
 import { useAppDispatch } from "@/shared/hooks";
 import { fetchDeviceReviews } from "@/entities/Review";
 import { DevicePageView } from "./DevicePageView/DevicePageView";
+import Cookies from "js-cookie";
 
-export const DevicePage = () => {
+const DevicePage = () => {
     const { id } = useParams();
     const dispatch = useAppDispatch();
     const [device, setDevice] = useState<IDevice | null>(null);
@@ -31,6 +32,16 @@ export const DevicePage = () => {
             setDevice(data);
         } catch (err) {
             console.error(err);
+        }
+    };
+
+    const handleAddReview = () => {
+        if (!Cookies.get("token")) {
+            notifyError("Чтобы оставить отзыв, необходимо авторизоваться");
+            return;
+        }
+        if (id) {
+            openModal("addReview");
         }
     };
 
@@ -58,8 +69,11 @@ export const DevicePage = () => {
                 contentType={contentType}
                 closeModal={closeModal}
                 openModal={openModal}
+                handleAddReview={handleAddReview}
                 handleDeleteReview={handleDeleteReview}
             />
         </div>
     );
 };
+
+export default DevicePage;

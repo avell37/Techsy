@@ -34,7 +34,7 @@ export const ReviewCard = ({
                             <XMarkIcon
                                 width="15px"
                                 height="15px"
-                                className="stroke-[#fff] absolute right-4 top-4"
+                                className="stroke-[#fff] absolute right-4 top-4 cursor-pointer"
                             />
                         </Button>
                     )}

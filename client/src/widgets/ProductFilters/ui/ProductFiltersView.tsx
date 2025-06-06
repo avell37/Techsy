@@ -17,7 +17,7 @@ export const ProductFiltersView = ({
                     trigger={
                         <Button
                             text={selectedType.name}
-                            className="w-[175px] h-[40px] text-center text-white rounded-md border-1 border-[#5120B8]/30 hover:border-[#5120B8] hover:bg-[#1A1238]/30 focus:border-[#4F45E4] transition"
+                            className="w-[175px] h-[40px] text-center text-white rounded-md border-1 border-[#5120B8]/30 hover:border-[#5120B8] hover:bg-[#1A1238]/30 focus:border-[#4F45E4] transition cursor-pointer"
                         >
                             <ArrowDown
                                 width="20px"
@@ -32,7 +32,7 @@ export const ProductFiltersView = ({
                     trigger={
                         <Button
                             text={selectedBrand.name}
-                            className="w-[175px] h-[40px] text-center text-white rounded-md border-1 border-[#5120B8]/30 hover:border-[#5120B8] hover:bg-[#1A1238]/30 focus:border-[#4F45E4] transition"
+                            className="w-[175px] h-[40px] text-center text-white rounded-md border-1 border-[#5120B8]/30 hover:border-[#5120B8] hover:bg-[#1A1238]/30 focus:border-[#4F45E4] transition cursor-pointer"
                         >
                             <ArrowDown
                                 width="20px"
@@ -45,7 +45,7 @@ export const ProductFiltersView = ({
                 />
                 {isFilterActive && (
                     <Button
-                        className="w-[175px] h-[40px] text-center text-white rounded-md border-1 border-[#5120B8]/30 hover:border-[#5120B8] hover:bg-[#1A1238]/30 transition"
+                        className="w-[175px] h-[40px] text-center text-white rounded-md border-1 border-[#5120B8]/30 hover:border-[#5120B8] hover:bg-[#1A1238]/30 transition cursor-pointer"
                         text="Сбросить всё"
                         onClick={handleResetFilters}
                     />

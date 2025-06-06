@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { adminRoutes, authRoutes, publicRoutes } from "@/app/config/routes";
-import { ErrorPage } from "@pages/ErrorPage/ErrorPage";
+import { ErrorPage } from "@pages/ErrorPage/ErrorPage.lazy";
 import { useAppSelector } from "@/shared/hooks";
 import { Spinner } from "@/shared/assets";
 import Cookies from "js-cookie";
@@ -9,7 +9,7 @@ import {
     LOGIN_ROUTE,
     SHOP_ROUTE,
 } from "@/shared/config/consts";
-import { CheckoutPage } from "@/pages/CheckoutPage/CheckoutPage";
+import { CheckoutPage } from "@/pages/CheckoutPage/CheckoutPage.lazy";
 
 export const AppRouter = () => {
     const { currentUser } = useAppSelector((state) => state.userReducer);

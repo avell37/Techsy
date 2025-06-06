@@ -9,7 +9,7 @@ import { fetchAllTypes } from "@/entities/Type";
 import { fetchAllDevices } from "@/entities/Device";
 import { fetchAllFavoriteDevices } from "@/features/Favorites";
 
-export const ShopPage = () => {
+const ShopPage = () => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -34,3 +34,5 @@ export const ShopPage = () => {
         </div>
     );
 };
+
+export default ShopPage;

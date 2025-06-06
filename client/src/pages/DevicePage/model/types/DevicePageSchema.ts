@@ -12,6 +12,7 @@ export interface DevicePageReviewsSchema {
     contentType: ModalContentType,
     closeModal: () => void,
     openModal: (type: ModalContentType) => void,
+    handleAddReview: () => void,
     handleDeleteReview: (reviewId: string) => void
 }
 

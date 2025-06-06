@@ -62,6 +62,7 @@ export const RegistrationView = ({
                     >
                         <PasswordIcon className="absolute top-3 left-3" />
                         <Button
+                            type="button"
                             className="absolute right-5 top-3"
                             onClick={toggleShowPassword}
                         >
@@ -73,7 +74,7 @@ export const RegistrationView = ({
                         </Button>
                     </Input>
                     <Button
-                        className="max-w-[500px] w-full h-[40px] bg-[#5120B8] text-white rounded-full"
+                        className="max-w-[500px] w-full h-[40px] bg-[#5120B8] text-white rounded-full cursor-pointer"
                         text="Зарегистрироваться"
                     />
                     <div className="flex flex-col items-center">

@@ -23,7 +23,7 @@ export const HeaderView = ({
                     <Dropdown
                         trigger={
                             picture ? (
-                                <div className="flex justify-center items-center gap-[5px]">
+                                <div className="flex justify-center items-center gap-[5px] cursor-pointer">
                                     <div className="w-[50px] h-[50px] border-2 border-[#3A177F] rounded-full bg-transparent overflow-hidden">
                                         <img
                                             className="w-[50px] h-[50px]"
