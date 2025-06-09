@@ -3,46 +3,23 @@ import {
     fetchUserData,
     uploadAvatar,
 } from "@/shared/api/userApi";
-import {
-    useAppSelector,
-    useAppDispatch,
-    useNotification,
-} from "@/shared/hooks";
-import { useEffect, useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useAppDispatch, useModal, useNotification } from "@/shared/hooks";
+import { useRef } from "react";
 import { updateAvatar } from "@/entities/User";
 import { UserProfileView } from "./UserProfileView";
+import { UserProfileSchema } from "../model/types/ProfileSchema";
 
-export const UserProfile: React.FC = () => {
-    const user = useAppSelector((state) => state.userReducer.currentUser);
-    const navigate = useNavigate();
+export const UserProfile = ({
+    user,
+    editedData,
+    setEditedData,
+    userData,
+    setUserData,
+}: UserProfileSchema) => {
     const fileInputRef = useRef<HTMLInputElement>(null);
     const dispatch = useAppDispatch();
     const { notifySuccess, notifyError } = useNotification();
-
-    const [userData, setUserData] = useState({
-        username: "",
-        email: "",
-        role: "",
-    });
-    const [editedData, setEditedData] = useState({
-        username: "",
-        email: "",
-    });
-
-    useEffect(() => {
-        if (user) {
-            setUserData({
-                username: user?.username,
-                email: user?.email,
-                role: user?.role,
-            });
-            setEditedData({
-                username: user?.username,
-                email: user?.email,
-            });
-        }
-    }, [user]);
+    const { isOpen, contentType, openModal, closeModal } = useModal();
 
     const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target?.files?.[0];
@@ -95,10 +72,13 @@ export const UserProfile: React.FC = () => {
             handleUpload={handleUpload}
             fileInputRef={fileInputRef}
             userData={userData}
-            navigate={navigate}
             editedData={editedData}
             setEditedData={setEditedData}
             handleSave={handleSave}
+            isOpen={isOpen}
+            contentType={contentType}
+            openModal={openModal}
+            closeModal={closeModal}
         />
     );
 };

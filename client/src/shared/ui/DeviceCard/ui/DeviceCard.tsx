@@ -39,11 +39,11 @@ export const DeviceCard = ({
                 <DeviceImg
                     name={device.name}
                     img={device.img}
-                    className="object-contain w-[200px] h-[200px] mt-6 mb-2"
+                    className="object-contain w-[150px] h-[150px] mt-6 mb-2"
                 />
             </div>
             <div className="flex flex-col w-full px-4 pb-2 text-white text-left gap-1">
-                <h3 className="text-base font-semibold truncate">
+                <h3 className="text-sm font-semibold truncate">
                     {device.name}
                 </h3>
                 <p className="text-lg font-bold text-[#8A4FFF]">

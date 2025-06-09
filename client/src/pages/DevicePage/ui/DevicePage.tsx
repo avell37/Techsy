@@ -8,6 +8,7 @@ import { useAppDispatch } from "@/shared/hooks";
 import { fetchDeviceReviews } from "@/entities/Review";
 import { DevicePageView } from "./DevicePageView/DevicePageView";
 import Cookies from "js-cookie";
+import { Container } from "@/shared/ui";
 
 const DevicePage = () => {
     const { id } = useParams();
@@ -61,17 +62,19 @@ const DevicePage = () => {
     return (
         <div className="flex flex-col gap-[50px]">
             <Header />
-            <DevicePageView
-                device={device}
-                currentUser={currentUser}
-                reviews={reviews}
-                isOpen={isOpen}
-                contentType={contentType}
-                closeModal={closeModal}
-                openModal={openModal}
-                handleAddReview={handleAddReview}
-                handleDeleteReview={handleDeleteReview}
-            />
+            <Container>
+                <DevicePageView
+                    device={device}
+                    currentUser={currentUser}
+                    reviews={reviews}
+                    isOpen={isOpen}
+                    contentType={contentType}
+                    closeModal={closeModal}
+                    openModal={openModal}
+                    handleAddReview={handleAddReview}
+                    handleDeleteReview={handleDeleteReview}
+                />
+            </Container>
         </div>
     );
 };

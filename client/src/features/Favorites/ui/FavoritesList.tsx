@@ -18,7 +18,7 @@ export const FavoritesList = () => {
     const { notifySuccess, notifyWarn, notifyError } = useNotification();
 
     return (
-        <div className="pl-20 pt-4">
+        <div className="pt-6">
             <h1 className="text-white text-2xl font-bold">Избранные товары:</h1>
             <div className="flex gap-[15px] pt-6">
                 {favoriteDevices.length > 0 ? (

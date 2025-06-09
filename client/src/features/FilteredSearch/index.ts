@@ -1,6 +1,4 @@
-export * from './model/constants/dropdownItemsWithFilters';
 export * from './model/types/filteredSearchSchema';
-export * from './model/types/dropdownFiltersSchema';
 export * from './model/types/sortStateSchema';
 export * from './model/slice/sortSlice';
 export * from './ui/FilteredSearch';

@@ -8,6 +8,7 @@ import {
     ReviewForm,
     AddressForm,
 } from "@features/ManageModal";
+import { ProfileForm } from "./ModalForms/ProfileForm";
 
 export const Modal = ({ isOpen, onClose, contentType }: ModalSchema) => {
     if (!isOpen) return null;
@@ -30,6 +31,8 @@ export const Modal = ({ isOpen, onClose, contentType }: ModalSchema) => {
                 return <ReviewForm onClose={onClose} />;
             case "manageAddress":
                 return <AddressForm onClose={onClose} />;
+            case "editProfile":
+                return <ProfileForm onClose={onClose} />;
             default:
                 return null;
         }

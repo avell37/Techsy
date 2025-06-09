@@ -3,11 +3,17 @@ import { jwtDecode } from 'jwt-decode';
 import Cookies from 'js-cookie';
 import { IUser } from "../types/IUser";
 
+const cookieOptions = {
+    secure: true,
+    sameSite: 'Strict' as const, 
+    path: '/', 
+};
+
 export const registration = async (username: string, email: string, password: string) => {
     try {
         const {data} = await $host.post('api/user/registration', 
             {username, email, password, role: 'Admin'})
-        Cookies.set('token', data.token);
+        Cookies.set('token', data.token, cookieOptions);
         return jwtDecode(data.token);
     } catch (err) {
         console.error(err);
@@ -17,7 +23,7 @@ export const registration = async (username: string, email: string, password: st
 export const login = async (email: string, password: string) => {
     try {
         const {data} = await $host.post('api/user/login', {email, password})
-        Cookies.set('token', data.token);
+        Cookies.set('token', data.token, cookieOptions);
         return jwtDecode(data.token);
     } catch (err) {
         console.error(err);
@@ -27,7 +33,7 @@ export const login = async (email: string, password: string) => {
 export const checkAuth = async () => {
     try {
         const {data} = await $authHost.get('/api/user/auth');
-        Cookies.set('token', data.token);
+        Cookies.set('token', data.token, cookieOptions);
         return jwtDecode(data.token);
     } catch (err) {
         console.error(err);
@@ -37,7 +43,7 @@ export const checkAuth = async () => {
 export const fetchUserData = async () => {
     try {
         const {data} = await $authHost.get('/api/user/user');
-        Cookies.set('token', data.token);
+        Cookies.set('token', data.token, cookieOptions);
         return jwtDecode<IUser>(data.token);
     } catch (err) {
         console.error(err);
@@ -47,7 +53,7 @@ export const fetchUserData = async () => {
 export const changeUserData = async (username: string, email: string) => {
     try {
         const {data} = await $authHost.patch('/api/user/update', {username, email});
-        Cookies.set('token', data.token);
+        Cookies.set('token', data.token, cookieOptions);
         return jwtDecode(data.token);
     } catch (err) {
         console.log(err);
@@ -65,7 +71,7 @@ export const uploadAvatar = async (file: File) => {
             },
         });
 
-        Cookies.set('token', data.token);
+        Cookies.set('token', data.token, cookieOptions);
         return jwtDecode<IUser>(data.token);
     } catch (err) {
         console.error(err);
@@ -79,7 +85,7 @@ export const loginWithOAuth = async (code: string) => {
     }
     try {
         const {data} = await $host.post('/api/auth/google', {code})
-        Cookies.set('token', data.token);
+        Cookies.set('token', data.token, cookieOptions);
         return jwtDecode(data.token);
     } catch(err) {
         console.error(err);

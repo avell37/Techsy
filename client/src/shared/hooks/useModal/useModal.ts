@@ -9,6 +9,7 @@ export type ModalContentType =
         'deleteDevice' |
         'addReview' |
         'manageAddress' |
+        'editProfile' |
         null;
 
 export const useModal = () => {

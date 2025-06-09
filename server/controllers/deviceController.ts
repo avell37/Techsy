@@ -6,44 +6,44 @@ const fs = require('fs');
 
 class DeviceController {
     async create(req: any, res: any) {
-        let {name, price, brandId, typeId, info} = req.body;
-        const file = req.file;
-        if (!file) {
-            return res.status(400).json({ message: "Файл не загружен" });
-        }
-        if (!file.originalname) {
-            return res.status(400).json({ message: 'Неверный формат файла' });
-        }
-        const fileName = uuid.v4() + path.extname(file.originalname);
-        const filePath = path.resolve(__dirname, '..', 'uploads', fileName);
-
         try {
-            fs.renameSync(file.path, filePath);
-        } catch(err) {
-            return res.status(400).json({message: "ОшибОЧКА", error: err})
-        }
-        const device = await prisma.device.create({
-            data: {
-                name,
-                price: Number(price),
-                brandId,
-                typeId,
-                img: fileName,
+            let {name, price, brandId, typeId, info} = req.body;
+            const file = req.file;
+            
+            if (!file) {
+                return res.status(400).json({ message: "Файл не загружен" });
             }
-        })
 
-        if (info) {
-            info = JSON.parse(info);
-            const deviceInfo = info.map((i: any) => ({
-                title: i.title,
-                description: i.description,
-                deviceId: device.id
-            }))
-            await prisma.deviceInfo.createMany({
-                data: deviceInfo
-            })
+            const device = await prisma.device.create({
+                data: {
+                    name,
+                    price: Number(price),
+                    brandId,
+                    typeId,
+                    img: file.filename,
+                }
+            });
+
+            if (info) {
+                info = JSON.parse(info);
+                const deviceInfo = info.map((i: any) => ({
+                    title: i.title,
+                    description: i.description,
+                    deviceId: device.id
+                }));
+                await prisma.deviceInfo.createMany({
+                    data: deviceInfo
+                });
+            }
+            
+            return res.json(device);
+        } catch (error: any) {
+            console.error('Error creating device:', error);
+            return res.status(500).json({ 
+                message: "Ошибка при создании устройства", 
+                error: error.message 
+            });
         }
-        return res.json(device);
     }
 
     async getAll(req: any, res: any) {

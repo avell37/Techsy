@@ -29,7 +29,7 @@ export const ProductList = () => {
     }
 
     return (
-        <div className="flex gap-[20px] flex-wrap max-w-[1200px] mt-[10px]">
+        <div className="grid grid-cols-4 gap-[20px] mt-[10px]">
             {filteredDevices?.map((device) => (
                 <DeviceCard
                     key={device.id}

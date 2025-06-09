@@ -26,7 +26,7 @@ export const ReviewCard = ({
                                   review.User.picture
                               }`
                     }
-                    className="max-w-[70px] max-h-[70px] border-2 border-[#3A177F] rounded-full"
+                    className="max-w-[50px] max-h-[50px] border-2 border-[#3A177F] rounded-full"
                 />
                 <div className="flex flex-col justify-end items-end gap-[10px] text-white text-sm">
                     {(isOwner || isAdmin) && (
@@ -47,7 +47,14 @@ export const ReviewCard = ({
                     <p className="text-white font-bold">
                         {review.User.username}
                     </p>
-                    <div className="flex items-center gap-[8px]">
+                </div>
+            </div>
+        </div>
+    );
+};
+
+{
+    /* <div className="flex items-center gap-[8px]">
                         <div className="flex items-center">
                             <StarIcon
                                 width="15px"
@@ -59,9 +66,5 @@ export const ReviewCard = ({
                             </span>
                         </div>
                     </div>
-                    <p className="text-white">{review.comment}</p>
-                </div>
-            </div>
-        </div>
-    );
-};
+                    <p className="text-white">{review.comment}</p> */
+}

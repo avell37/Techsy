@@ -1,5 +1,6 @@
 import { FavoritesList, fetchAllFavoriteDevices } from "@/features/Favorites";
 import { useAppDispatch } from "@/shared/hooks";
+import { Container } from "@/shared/ui";
 import { Header } from "@/widgets/Header";
 import { useEffect } from "react";
 
@@ -13,7 +14,9 @@ const FavoritesPage = () => {
     return (
         <div>
             <Header />
-            <FavoritesList />
+            <Container>
+                <FavoritesList />
+            </Container>
         </div>
     );
 };

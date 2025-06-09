@@ -1,22 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 @import "tailwindcss";
 
 @layer utilities {
     .bg-base-gradient {
-    backdrop-filter: blur(50%);
-    background-image: linear-gradient(
-        135deg,
-        #e3cbf9 5%,
-        #d497fb 15%,
-        #c37cfa 30%,
-        #9336ee 50%,
-        #1b0e8c 90%
-    );
+        backdrop-filter: blur(50%);
+        background-image: linear-gradient(
+            135deg,
+            #c37cfa 10%,
+            #9336ee 30%,
+            #1b0e8c 90%
+        );
     }
+
+    .filters-bg-gradient {
+        background-image: linear-gradient(
+            to bottom,
+            #08080e 0%,
+            #0b0b14 50%,
+            #0F0F1A 100%
+        );
+    }
+
+    .custom-checkbox {
+        @apply absolute left-1 top-[10px] w-5 h-5 bg-[#1A1238] border border-[#5120B8]/30 rounded transition-all pointer-events-none;
+    }
+
+    .custom-checkbox-check {
+        @apply after:content-[''] after:absolute after:hidden after:left-[6px] after:top-[2px]
+               after:w-[5px] after:h-[10px] after:border-r-2 after:border-b-2 after:border-white
+               after:rotate-45 peer-checked:after:block peer-checked:bg-[#5120B8];
+    }
+
+    .filter-label {
+        @apply flex items-center relative w-[250px] h-[40px] text-left pl-4 text-white 
+               transition cursor-pointer;
+    }
+
+    .filter-label:hover {
+        @apply border-[#5120B8] bg-[#1A1238];
+    }
+
+    .filter-label:focus-within {
+        @apply border-[#4F45E4];
+    }
+
+    .divider {
+        @apply border-1 border-[#5120B8]/30 h-[1px] w-full;
+    }
+}
+
+:root {
+    font-family: 'Open Sans', sans-serif;
 }
 
 body {
     background-color: #0F0F1A;
     height: 100vh;
+    font-family: 'Open Sans', sans-serif;
 }
 
 #root {

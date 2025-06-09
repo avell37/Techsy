@@ -9,4 +9,4 @@ export * from './Dropdown/ui/Dropdown';
 export * from './ImagePreview/ImagePreview';
 export * from './FormattedDate/ui/FormattedDate';
 export * from './ReviewCard/ui/ReviewCard';
-export * from './Welcome/ui/Welcome';
+export * from './Container/Container';
