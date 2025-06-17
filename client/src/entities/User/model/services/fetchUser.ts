@@ -1,4 +1,4 @@
-import { fetchUserData } from "@/shared/api/userApi";
+import { fetchUserData } from "@/entities/User/api/userApi";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const fetchUser = createAsyncThunk(

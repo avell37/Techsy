@@ -1,6 +1,6 @@
 import { useGoogleLogin } from "@react-oauth/google";
 import { GoogleAuthView } from "./GoogleAuthView";
-import { loginWithOAuth } from "@/shared/api/userApi";
+import { loginWithOAuth } from "@/entities/User/api/userApi";
 import { useNavigate } from "react-router-dom";
 import { SHOP_ROUTE } from "@/shared/config/consts";
 import { useNotification, useAppDispatch } from "@/shared/hooks";

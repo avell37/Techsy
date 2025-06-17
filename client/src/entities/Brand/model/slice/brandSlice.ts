@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { BrandStateSchema } from "../types/brandStateSchema";
 import { fetchAllBrands } from "../services/fetchAllBrands";
+import { BrandInitialState } from "../types/brandInitialState";
 
-const initialState: BrandStateSchema = {
+const initialState: BrandInitialState = {
     brands: [],
     selectedBrand: {
         id: '',
@@ -36,6 +36,6 @@ const brandSlice = createSlice({
     }
 })
 
-export const {setSelectedBrand} = brandSlice.actions;
+export const { setSelectedBrand } = brandSlice.actions;
 
 export const brandReducer = brandSlice.reducer;

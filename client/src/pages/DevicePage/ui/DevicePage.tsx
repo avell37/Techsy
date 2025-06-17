@@ -1,22 +1,29 @@
 import { Header } from "@/widgets/Header";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { deleteReview, fetchOneDevice } from "@/shared/api/deviceApi";
 import { IDevice } from "@/shared/types";
 import { useAppSelector, useModal, useNotification } from "@/shared/hooks";
 import { useAppDispatch } from "@/shared/hooks";
-import { fetchDeviceReviews } from "@/entities/Review";
+import { deleteReview, fetchDeviceReviews } from "@/entities/Review";
 import { DevicePageView } from "./DevicePageView/DevicePageView";
 import Cookies from "js-cookie";
 import { Container } from "@/shared/ui";
+import { checkFavoriteDevices, toggleFavorites } from "@/shared/lib";
+import { Spinner } from "@/shared/assets";
+import { Modal } from "@/features/ManageModal";
+import { fetchOneDevice } from "@/entities";
 
 const DevicePage = () => {
     const { id } = useParams();
     const dispatch = useAppDispatch();
     const [device, setDevice] = useState<IDevice | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
     const { isOpen, contentType, openModal, closeModal } = useModal();
     const { reviews } = useAppSelector((state) => state.reviewReducer);
     const { currentUser } = useAppSelector((state) => state.userReducer);
+    const { favoriteDevices } = useAppSelector(
+        (state) => state.favoriteReducer
+    );
     const { notifySuccess, notifyError } = useNotification();
 
     useEffect(() => {
@@ -29,10 +36,13 @@ const DevicePage = () => {
     const getData = async () => {
         if (!id) return;
         try {
+            setIsLoading(true);
             const data = await fetchOneDevice(id);
             setDevice(data);
         } catch (err) {
             console.error(err);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -60,21 +70,52 @@ const DevicePage = () => {
     };
 
     return (
-        <div className="flex flex-col gap-[50px]">
+        <div className="flex flex-col gap-[30px]">
             <Header />
             <Container>
-                <DevicePageView
-                    device={device}
-                    currentUser={currentUser}
-                    reviews={reviews}
-                    isOpen={isOpen}
-                    contentType={contentType}
-                    closeModal={closeModal}
-                    openModal={openModal}
-                    handleAddReview={handleAddReview}
-                    handleDeleteReview={handleDeleteReview}
-                />
+                {isLoading ? (
+                    <div className="flex justify-center items-center h-[60vh]">
+                        <Spinner width="100px" height="100px" />
+                    </div>
+                ) : (
+                    <DevicePageView
+                        device={device}
+                        currentUser={currentUser}
+                        reviews={reviews}
+                        isOpen={isOpen}
+                        contentType={contentType}
+                        closeModal={closeModal}
+                        openModal={openModal}
+                        handleAddReview={handleAddReview}
+                        handleDeleteReview={handleDeleteReview}
+                        dispatch={dispatch}
+                        notifySuccess={notifySuccess}
+                        notifyError={notifyError}
+                        isFavorite={
+                            device
+                                ? checkFavoriteDevices({
+                                    deviceId: device.id,
+                                    favoriteDevices,
+                                })
+                                : false
+                        }
+                        toggleFavorites={() =>
+                            device &&
+                            toggleFavorites({
+                                device,
+                                notifySuccess,
+                                notifyError,
+                                dispatch,
+                            })
+                        }
+                    />
+                )}
             </Container>
+            <Modal
+                isOpen={isOpen}
+                onClose={closeModal}
+                contentType={contentType}
+            />
         </div>
     );
 };

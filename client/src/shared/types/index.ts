@@ -7,3 +7,4 @@ export * from './IDropdownItem';
 export * from './IReview';
 export * from './IShipping';
 export * from './IFavoriteDevice';
+export * from './IBasketItem';

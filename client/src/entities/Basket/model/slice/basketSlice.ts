@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { BasketStateSchema } from "../types/basketStateSchema";
 import { fetchBasket } from "../services/fetchBasket";
+import { BasketInitialState } from "../types/basketInitialState";
 
-const initialState: BasketStateSchema = {
+const initialState: BasketInitialState = {
     basket: [],
     loading: false,
     error: false
@@ -17,11 +17,11 @@ const basketSlice = createSlice({
         },
         incrementBasketDevice: (state, action) => {
             state.basket = state.basket.map((item) => item.deviceId === action.payload
-                ? {...item, quantity: item.quantity + 1} : item);
+                ? { ...item, quantity: item.quantity + 1 } : item);
         },
         decrementBasketDevice: (state, action) => {
             state.basket = state.basket.map((item) => item.deviceId === action.payload && item.quantity > 1
-                ? {...item, quantity: item.quantity - 1} : item); 
+                ? { ...item, quantity: item.quantity - 1 } : item);
         }
     },
     extraReducers: (builder) => {
@@ -42,4 +42,4 @@ const basketSlice = createSlice({
 
 export const basketReducer = basketSlice.reducer;
 
-export const {deleteFromBasket, incrementBasketDevice, decrementBasketDevice} = basketSlice.actions;
+export const { deleteFromBasket, incrementBasketDevice, decrementBasketDevice } = basketSlice.actions;

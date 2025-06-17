@@ -14,4 +14,6 @@ export * from './icons/StarIcon'
 export * from './icons/XMarkIcon';
 export * from './icons/PlusIcon';
 export * from './icons/MinusIcon';
+export * from './icons/ChangePhotoIcon';
+export * from './icons/EditIcon'
 export const defaultUser = img1;

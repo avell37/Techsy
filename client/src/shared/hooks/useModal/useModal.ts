@@ -1,16 +1,17 @@
 import { useState } from "react";
 
-export type ModalContentType = 
-        'addBrand' | 
-        'addType' | 
-        'addDevice' | 
-        'deleteBrand' | 
-        'deleteType' | 
-        'deleteDevice' |
-        'addReview' |
-        'manageAddress' |
-        'editProfile' |
-        null;
+export type ModalContentType =
+    'addBrand' |
+    'addType' |
+    'addDevice' |
+    'deleteBrand' |
+    'deleteType' |
+    'deleteDevice' |
+    'addReview' |
+    'editUsername' |
+    'editEmail' |
+    'editPassword' |
+    null;
 
 export const useModal = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -28,8 +29,8 @@ export const useModal = () => {
 
     return {
         isOpen,
-        contentType, 
-        openModal, 
+        contentType,
+        openModal,
         closeModal
     }
 }

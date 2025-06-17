@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { fetchTypes } from "@/shared/api/deviceApi";
+import { fetchTypes } from "../../api/typeApi";
 
 export const fetchAllTypes = createAsyncThunk(
     'types/fetchAllTypes',

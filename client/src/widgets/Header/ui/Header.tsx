@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 import { useAppSelector, useAppDispatch } from "@/shared/hooks";
 import { HeaderView } from "./HeaderView";
 import { logout } from "@/entities";
-import { clearFavorite } from "@/features/Favorites";
+import { clearFavorite } from "@/entities/Favorites";
 
 export const Header = () => {
     const navigate = useNavigate();

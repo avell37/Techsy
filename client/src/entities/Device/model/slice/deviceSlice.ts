@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { DeviceStateSchema } from "../types/deviceStateSchema";
 import { fetchAllDevices } from "../services/fetchAllDevices";
+import { DeviceInitialState } from "../types/deviceInitialState";
 
-const initialState: DeviceStateSchema = {
+const initialState: DeviceInitialState = {
     devices: [],
     loading: false,
     error: false,

@@ -6,11 +6,13 @@ export interface ModalSchema {
     contentType: ModalContentType;
 }
 
-export interface FormSchema {
+export interface DeleteSchema {
+    entityType: "brand" | "type" | "device",
+    entityName: string,
     onClose: () => void;
 }
 
-export interface DeleteSchema {
-    entityType: "brand" | "type" | "device",
+export interface EditSchema {
     onClose: () => void;
+    edit?: "username" | "email" | "password";
 }

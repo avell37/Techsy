@@ -1,8 +1,7 @@
-import { BasketItemSchema } from "@/entities";
-import { ModalContentType } from "@/shared/hooks";
+import { BasketItem } from "@/shared/types";
 
 export interface CartDeviceSchema {
-    device: BasketItemSchema,
+    device: BasketItem,
     isFavorite: boolean,
     onClick: () => void,
 }
@@ -11,8 +10,4 @@ export interface CartSchema {
     setSelectedPayment: (paymentMethod: string) => void,
     totalPrice: number,
     handleCreateOrder: () => void,
-    isOpen: boolean,
-    contentType: ModalContentType,
-    closeModal: () => void,
-    openModal: (type: ModalContentType) => void,
 }

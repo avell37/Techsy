@@ -3,22 +3,20 @@ import { CartView } from "./CartView/CartView";
 import {
     useAppDispatch,
     useAppSelector,
-    useModal,
     useNotification,
 } from "@/shared/hooks";
-import { getTotalPrice } from "@/entities";
 import {
-    createNewOrder,
+    getTotalPrice, createNewOrder,
     createNewPayment,
-} from "@/features/Payment/model/services/paymentThunks";
+} from "@/entities";
 
 export const Cart = () => {
     const [selectedPayment, setSelectedPayment] = useState<string | null>(null);
     const totalPrice = useAppSelector(getTotalPrice);
+    const shipping = useAppSelector((state) => state.shippingReducer.shipping);
     const basket = useAppSelector((state) => state.basketReducer.basket);
     const dispatch = useAppDispatch();
     const { notifyWarn } = useNotification();
-    const { isOpen, contentType, openModal, closeModal } = useModal();
 
     const orderItems = basket.map((device) => ({
         id: device.id,
@@ -28,8 +26,6 @@ export const Cart = () => {
         quantity: device.quantity ?? 1,
     }));
 
-    console.log(basket);
-
     const handleCreateOrder = async () => {
         if (!selectedPayment) {
             notifyWarn("Пожалуйста, выберите способ оплаты");
@@ -37,7 +33,7 @@ export const Cart = () => {
         }
 
         try {
-            if (selectedPayment === "yoomoney") {
+            if (selectedPayment === "yoomoney" && shipping) {
                 const order = await dispatch(
                     createNewOrder({
                         items: orderItems,
@@ -62,10 +58,6 @@ export const Cart = () => {
                 handleCreateOrder={handleCreateOrder}
                 setSelectedPayment={setSelectedPayment}
                 totalPrice={totalPrice}
-                isOpen={isOpen}
-                contentType={contentType}
-                openModal={openModal}
-                closeModal={closeModal}
             />
         </div>
     );

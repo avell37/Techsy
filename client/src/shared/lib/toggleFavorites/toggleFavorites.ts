@@ -1,8 +1,7 @@
-import { toggleFavoriteDevice } from "@/shared/api/deviceApi";
-import { addFavorite, removeFavorite, toggleFavoritesSchema } from "@/features/Favorites";
+import { addFavorite, removeFavorite, toggleFavoriteDevice, toggleFavoritesSchema } from "@/entities/Favorites";
 import Cookies from "js-cookie";
 
-export const toggleFavorites = async ({device, notifySuccess, notifyError, dispatch}: toggleFavoritesSchema) => {
+export const toggleFavorites = async ({ device, notifySuccess, notifyError, dispatch }: toggleFavoritesSchema) => {
     try {
         if (!Cookies.get("token")) return notifyError("Чтобы добавить устройство в избранное, необходимо авторизоваться");
         const data = await toggleFavoriteDevice(device.id);

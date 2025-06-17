@@ -1,17 +1,22 @@
 const { PrismaClient } = require('@prisma/client');
-const uuid = require('uuid');
-const path = require('path');
 const prisma = new PrismaClient();
-const fs = require('fs');
+const ApiError = require('../error/apiError');
 
 class DeviceController {
-    async create(req: any, res: any) {
+    async create(req: any, res: any, next: any) {
         try {
-            let {name, price, brandId, typeId, info} = req.body;
+            let { name, price, brandId, typeId, info } = req.body;
             const file = req.file;
-            
+            if (!name || !price || !brandId || !typeId || !info) {
+                return next(ApiError.badRequest('Переданы не все данные.'))
+            }
             if (!file) {
-                return res.status(400).json({ message: "Файл не загружен" });
+                return next(ApiError.badRequest('Файл не загружен'))
+            }
+            const isExisting = await prisma.device.findUnique({ where: { name } });
+
+            if (isExisting) {
+                return next(ApiError.badRequest('Такое устройство уже есть'))
             }
 
             const device = await prisma.device.create({
@@ -35,71 +40,88 @@ class DeviceController {
                     data: deviceInfo
                 });
             }
-            
+
             return res.json(device);
-        } catch (error: any) {
-            console.error('Error creating device:', error);
-            return res.status(500).json({ 
-                message: "Ошибка при создании устройства", 
-                error: error.message 
-            });
+        } catch (err) {
+            return next(ApiError.internal('Произошла ошибка на сервере. Попробуйте позже.'))
         }
     }
 
-    async getAll(req: any, res: any) {
-        const userId = req.user?.id;
-        
-        const devices = await prisma.device.findMany({
-            include: userId ? {
-                favoriteDevice: {
-                    where: {userId},
-                    select: {id: true}
-                }
-            } : {}
-        });
-        const favoriteDevices = devices.map((device: typeof devices[number]) => ({
-            ...device,
-            isFavorite: userId ? device.favoriteDevices.length > 0 : false,
-        }));
-
-        return res.json(favoriteDevices)
-    }
-
-    async getOne(req: any, res: any) {
-        const {id} = req.params;
-        const device = await prisma.device.findUnique({
-            where: {
-                id
-            },
-            include: {
-                Brand: true, 
-                Type: true,  
-                deviceInfo: true
-            }
-        })
-        return res.json({
-            ...device,
-            brand: device.Brand?.name,
-            type: device.Type?.name
-        });
-    }
-
-    async deleteOne(req: any, res: any) {
-        const {id} = req.params;
+    async getAll(req: any, res: any, next: any) {
         try {
+            if (!req.user) {
+                const devices = await prisma.device.findMany({});
+                return res.json(devices);
+            }
+            const userId = req?.user.id;
+            const devices = await prisma.device.findMany({
+                include: userId ? {
+                    favoriteDevice: {
+                        where: { userId },
+                        select: { id: true }
+                    }
+                } : {}
+            });
+
+            const favoriteDevices = devices.map((device: typeof devices[number]) => ({
+                ...device,
+                isFavorite: userId ? device.favoriteDevices.length > 0 : false,
+            }));
+
+            return res.json(favoriteDevices)
+        } catch (err) {
+            return next(ApiError.internal('Произошла ошибка на сервере. Попробуйте позже.'))
+        }
+    }
+
+    async getOne(req: any, res: any, next: any) {
+        try {
+            const { id } = req.params;
+            if (!id) {
+                return next(ApiError.notFound('Не найден ID устройства'))
+            }
+            const device = await prisma.device.findUnique({
+                where: {
+                    id
+                },
+                include: {
+                    Brand: true,
+                    Type: true,
+                    deviceInfo: true
+                }
+            })
+            if (!device) {
+                return next(ApiError.notFound('Устройство не найдено'))
+            }
+
+            return res.json({
+                ...device,
+                brand: device.Brand?.name,
+                type: device.Type?.name
+            });
+        } catch (err) {
+            return next(ApiError.internal('Произошла ошибка на сервере. Попробуйте позже.'))
+        }
+    }
+
+    async deleteOne(req: any, res: any, next: any) {
+        try {
+            const { id } = req.params;
+            if (!id) {
+                return next(ApiError.notFound('Не найден ID устройства'))
+            }
             const deletedFavorite = await prisma.favoriteDevice.deleteMany({
                 where: {
                     deviceId: id
                 }
             })
             const deleted = await prisma.device.delete({
-                where: {id}
+                where: { id }
             })
 
-            res.json({message: "Девайс удален", deleted})
+            return res.json({ message: "Девайс удален", deleted })
         } catch (err) {
-            console.error(err);
-            res.status(500).json({error: "Ошибка сервера"})
+            return next(ApiError.internal('Произошла ошибка на сервере. Попробуйте позже.'))
         }
     }
 }

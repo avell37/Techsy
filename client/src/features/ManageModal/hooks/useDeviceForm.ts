@@ -4,10 +4,10 @@ import { fetchAllBrands } from "@/entities/Brand";
 import { fetchAllTypes } from "@/entities/Type";
 import { deviceInitialState } from "../model/types/deviceInitialState";
 import { formDataUtils } from "../../../shared/lib/formDataUtils/formDataUtils";
-import { createDevice } from "@/shared/api/deviceApi";
 import { DeviceInfoSchema } from "../model/types/DeviceInfoSchema";
 import { nanoid } from "nanoid";
 import { filtersDropdownItems } from "@/features/ProductFilters";
+import { createDevice } from "@/entities";
 
 export const useDeviceForm = () => {
     const dispatch = useAppDispatch();
@@ -20,7 +20,7 @@ export const useDeviceForm = () => {
     useEffect(() => {
         dispatch(fetchAllBrands());
         dispatch(fetchAllTypes());
-    }, []);
+    }, [dispatch]);
 
     const handleBrandSelect = (id: string, name: string) => {
         setDevice((prev) => ({ ...prev, brandId: id, brandName: name }));
@@ -36,9 +36,9 @@ export const useDeviceForm = () => {
             setDevice((prev) => ({ ...prev, img: selectedFile }));
         }
     };
-    
+
     const handleAddInfo = () => {
-        setInfo([...info, {id: nanoid(), title: '', description: ''}])
+        setInfo([...info, { id: nanoid(), title: '', description: '' }])
     }
 
     const handleChangeInfo = useCallback((id: string, key: string, value: string) => {
@@ -52,7 +52,7 @@ export const useDeviceForm = () => {
     const handleRemoveInfo = (id: string) => {
         setInfo(info.filter(i => i.id !== id))
     }
-        
+
     const handleSubmitForm = async (e: React.FormEvent) => {
         e.preventDefault();
 
@@ -77,7 +77,7 @@ export const useDeviceForm = () => {
     };
 
     const handleChange = (field: 'name' | 'price', value: string) => {
-        setDevice((prev) => ({...prev, [field]: value}))
+        setDevice((prev) => ({ ...prev, [field]: value }))
     }
 
     const brandItems = filtersDropdownItems({
@@ -91,9 +91,9 @@ export const useDeviceForm = () => {
     });
 
     return {
-        device, 
-        setDevice, 
-        brandItems, 
+        device,
+        setDevice,
+        brandItems,
         typeItems,
         handleChange,
         handleFileChange,

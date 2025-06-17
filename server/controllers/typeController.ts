@@ -1,45 +1,79 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
+const ApiError = require('../error/apiError');
 
 class TypeController {
-    async create(req: any, res: any) {
-        const {name} = req.body;
-        const type = await prisma.type.create({
-            data: {name}
-        })
-        return res.json(type);
-    }
-
-    async getAll(req: any, res: any) {
+    async create(req: any, res: any, next: any) {
         try {
-            const types = await prisma.type.findMany()
-            return res.json(types);
+            const { name } = req.body;
+            if (!name) {
+                return next(ApiError.badRequest('Название типа не передано.'))
+            }
+            const isExisting = await prisma.type.findUnique({ where: { name } })
+
+            if (isExisting) {
+                return next(ApiError.badRequest('Данный тип уже существует.'))
+            }
+            const type = await prisma.type.create({
+                data: { name }
+            })
+            return res.json(type);
         } catch (err) {
-            return res.status(404).json({message: 'Типы не найдены'})
+            return next(ApiError.internal('Произошла ошибка на сервере. Попробуйте позже.'))
         }
     }
 
-    async getOne(req: any, res: any) {
-        const {id} = req.params;
-        const type = await prisma.type.findUnique({
-            where: {
-                id
+    async getAll(req: any, res: any, next: any) {
+        try {
+            const types = await prisma.type.findMany()
+            if (!types) {
+                return next(ApiError.notFound('Не удалось получить список типов.'))
             }
-        })
-        return res.json(type);
+            return res.json(types);
+        } catch (err) {
+            return next(ApiError.internal('Произошла ошибка на сервере. Попробуйте позже.'))
+        }
     }
 
-    async deleteOne(req: any, res: any) {
-        const {id} = req.params;
+    async getOne(req: any, res: any, next: any) {
         try {
-            const deleted = await prisma.type.delete({
-                where: {id}
+            const { id } = req.params;
+
+            if (!id) {
+                return next(ApiError.badRequest('Не найден ID типа'))
+            }
+
+            const type = await prisma.type.findUnique({
+                where: {
+                    id
+                }
             })
 
-            res.json({message: "Тип удален", deleted})
+            if (!type) {
+                return next(ApiError.notFound('Тип не найден.'))
+            }
+
+            return res.json(type);
         } catch (err) {
-            console.error(err);
-            res.status(500).json({error: "Ошибка сервера"})
+            return next(ApiError.internal('Произошла ошибка на сервере. Попробуйте позже.'))
+        }
+    }
+
+    async deleteOne(req: any, res: any, next: any) {
+        try {
+            const { id } = req.params;
+
+            if (!id) {
+                return next(ApiError.badRequest('Не передан параметр ID'))
+            }
+
+            const deleted = await prisma.type.delete({
+                where: { id }
+            })
+
+            return res.json({ message: "Тип удален", deleted })
+        } catch (err) {
+            return next(ApiError.internal('Произошла ошибка на сервере. Попробуйте позже.'))
         }
     }
 }

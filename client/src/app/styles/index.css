@@ -4,21 +4,21 @@
 @layer utilities {
     .bg-base-gradient {
         backdrop-filter: blur(50%);
-        background-image: linear-gradient(
-            135deg,
-            #c37cfa 10%,
-            #9336ee 30%,
-            #1b0e8c 90%
-        );
+        background-image: linear-gradient(135deg,
+                #c37cfa 10%,
+                #9336ee 30%,
+                #1b0e8c 90%);
     }
 
     .filters-bg-gradient {
-        background-image: linear-gradient(
-            to bottom,
-            #08080e 0%,
-            #0b0b14 50%,
-            #0F0F1A 100%
-        );
+        background-image: linear-gradient(to bottom,
+                #08080e 0%,
+                #0b0b14 50%,
+                #0F0F1A 100%);
+    }
+
+    .custom-input {
+        @apply flex-1 border-1 border-[#5120B8]/30 hover:border-[#5120B8] hover:bg-[#1A1238]/30 focus:border-[#4F45E4] text-start rounded-lg text-white outline-none transition-all duration-300;
     }
 
     .custom-checkbox {
@@ -26,14 +26,15 @@
     }
 
     .custom-checkbox-check {
-        @apply after:content-[''] after:absolute after:hidden after:left-[6px] after:top-[2px]
-               after:w-[5px] after:h-[10px] after:border-r-2 after:border-b-2 after:border-white
-               after:rotate-45 peer-checked:after:block peer-checked:bg-[#5120B8];
+        @apply after:content-[''] after:absolute after:hidden after:left-[6px] after:top-[2px] after:w-[5px] after:h-[10px] after:border-r-2 after:border-b-2 after:border-white after:rotate-45 peer-checked:after:block peer-checked:bg-[#5120B8];
+    }
+
+    .custom-button {
+        @apply w-[250px] h-[50px] text-center text-white border-[#5120B8]/30 hover:border-[#5120B8] hover:bg-[#1A1238] focus:border-[#4F45E4] transition cursor-pointer
     }
 
     .filter-label {
-        @apply flex items-center relative w-[250px] h-[40px] text-left pl-4 text-white 
-               transition cursor-pointer;
+        @apply flex items-center relative max-w-[250px] h-[40px] text-left pl-4 text-white transition cursor-pointer;
     }
 
     .filter-label:hover {
@@ -47,6 +48,14 @@
     .divider {
         @apply border-1 border-[#5120B8]/30 h-[1px] w-full;
     }
+
+    .apply-button {
+        @apply rounded-md max-w-[100px] w-full h-[40px] bg-[#5120B8] focus:outline-none cursor-pointer text-white
+    }
+
+    .cancel-button {
+        @apply rounded-md max-w-[100px] w-full h-[40px] bg-red-900 focus:outline-none cursor-pointer text-white
+    }
 }
 
 :root {
@@ -55,11 +64,12 @@
 
 body {
     background-color: #0F0F1A;
-    height: 100vh;
     font-family: 'Open Sans', sans-serif;
 }
 
-#root {
+#root,
+body,
+html {
     height: 100vh;
 }
 

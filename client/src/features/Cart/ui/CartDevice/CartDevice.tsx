@@ -2,18 +2,17 @@ import {
     decrementBasketDevice,
     deleteFromBasket,
     incrementBasketDevice,
-} from "@/entities/Basket";
-import {
     decrementDevice,
     deleteDeviceFromBasket,
     incrementDevice,
-} from "@/shared/api/basketApi";
+} from "@/entities/Basket";
 import { PlusIcon, XMarkIcon, MinusIcon } from "@/shared/assets";
 import { useAppDispatch, useNotification } from "@/shared/hooks";
-import { Button, DeviceImg, DeviceLike } from "@/shared/ui";
+import { Button } from "@/shared/ui";
 import { useNavigate } from "react-router-dom";
 import { DEVICE_ROUTE } from "@/shared/config/consts";
 import { CartDeviceSchema } from "../../model/types/CartSchema";
+import { DeviceImg, DeviceLike } from "@/entities/Device";
 
 export const CartDevice = ({
     device,
@@ -67,7 +66,7 @@ export const CartDevice = ({
             hover:bg-[#1A1238]/30 transition-all"
         >
             <div
-                className="flex ml-4 gap-[20px] w-full cursor-pointer"
+                className="flex gap-[20px] w-full cursor-pointer"
                 onClick={() => {
                     navigate(DEVICE_ROUTE + "/" + device.device.id);
                 }}

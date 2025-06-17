@@ -1,6 +1,6 @@
 const generateJWT = require('../utils/generateJWT');
-const {OAuth2Client} = require('google-auth-library');
-const {PrismaClient} = require('@prisma/client');
+const { OAuth2Client } = require('google-auth-library');
+const { PrismaClient } = require('@prisma/client');
 const ApiError = require('../error/apiError')
 
 const prisma = new PrismaClient();
@@ -15,7 +15,7 @@ class OAuthController {
         try {
             const { code } = req.body;
             if (!code) {
-                return res.status(400).json({message: "А кода то нет, нахуй сьебался"})
+                return next(ApiError.badRequest('Не найден код для авторизации'))
             }
             const { tokens } = await client.getToken(code);
             client.setCredentials(tokens);
@@ -27,7 +27,7 @@ class OAuthController {
 
             const payload = ticket.getPayload();
 
-            const {sub, email, name, picture} = payload;
+            const { sub, email, name, picture } = payload;
 
             const user = await prisma.user.findUnique({
                 where: {
@@ -36,7 +36,7 @@ class OAuthController {
             })
             if (user) {
                 const token = generateJWT(user.id, user.username, user.email, user.role, user.picture)
-                return res.json({token});
+                return res.json({ token });
             }
             else if (!user) {
                 const newUser = await prisma.user.create({
@@ -47,13 +47,13 @@ class OAuthController {
                         picture
                     }
                 })
-    
+
                 const basket = await prisma.basket.create({
                     data: {
                         userId: newUser.id
                     }
                 })
-    
+
                 const token = generateJWT(
                     newUser.id,
                     newUser.username,
@@ -61,12 +61,11 @@ class OAuthController {
                     'Admin',
                     newUser.picture,
                 )
-    
-                return res.json({token});
+
+                return res.json({ token });
             }
         } catch (err) {
-            console.error(err);
-            return res.status(500).json({message: "Все пошло не так ваще"})
+            return next(ApiError.internal('Произошла ошибка на сервере. Попробуйте позже.'))
         }
     }
 }

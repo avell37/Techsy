@@ -1,4 +1,4 @@
-import { getBasket } from "@/shared/api/basketApi";
+import { getBasket } from "@/entities/Basket/api/basketApi";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const fetchBasket = createAsyncThunk(

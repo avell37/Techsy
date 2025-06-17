@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ReviewStateSchema } from "../types/reviewStateSchema";
 import { fetchDeviceReviews } from "../services/fetchDeviceReviews";
+import { ReviewInitialState } from "../types/reviewInitialState";
 
-const initialState: ReviewStateSchema = {
+const initialState: ReviewInitialState = {
     reviews: [],
     loading: false,
     error: false,

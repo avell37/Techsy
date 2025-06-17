@@ -1,6 +1,6 @@
 import { IUser } from "@/shared/types";
 
 export interface ProfileSidebarSchema {
-    onSelectTab: (tab: "profile" | "security" | "orders") => void;
+    onSelectTab: (tab: "main" | "security" | "orders" | "admin") => void;
     user: IUser | null;
 }

@@ -1,5 +1,5 @@
-import { getShippingInfo } from "@/shared/api/userApi";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { getShippingInfo } from "../../api/shippingApi";
 
 export const fetchShippingInfo = createAsyncThunk(
     "shipping/fetchShippinginfo",

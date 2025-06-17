@@ -5,3 +5,5 @@ export * from './User';
 export * from './Basket';
 export * from './Shipping';
 export * from './Review';
+export * from './Order';
+export * from './Favorites';

@@ -15,5 +15,8 @@ export default defineConfig({
       "@shared": path.resolve(__dirname, "src/shared"),
       "@widgets": path.resolve(__dirname, "src/widgets")
     }
-  }
+  },
+  server: {
+    host: '127.0.0.1',
+  },
 })

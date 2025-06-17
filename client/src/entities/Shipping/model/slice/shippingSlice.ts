@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchShippingInfo } from "../services/fetchShippingInfo";
-import { ShippingStateSchema } from "../types/shippingStateSchema";
+import { ShippingInitialState } from "../types/shippingInitialState";
 
-const initialState: ShippingStateSchema = {
+const initialState: ShippingInitialState = {
     shipping: {},
     loading: false,
     error: false
@@ -32,6 +32,6 @@ const shippingSlice = createSlice({
     }
 })
 
-export const {saveInfo} = shippingSlice.actions;
+export const { saveInfo } = shippingSlice.actions;
 
 export const shippingReducer = shippingSlice.reducer;

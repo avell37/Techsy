@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { TypeStateSchema } from "../types/typeStateSchema";
+import { TypeInitialState } from "../types/typeInitialState";
 import { fetchAllTypes } from "../services/fetchAllTypes";
 
-const initialState: TypeStateSchema = {
+const initialState: TypeInitialState = {
     types: [],
     loading: false,
     error: false,
@@ -17,7 +17,7 @@ const typeSlice = createSlice({
     initialState,
     reducers: {
         setSelectedType(state, action) {
-            state.selectedType = {...state.selectedType, ...action.payload};
+            state.selectedType = { ...state.selectedType, ...action.payload };
         }
     },
     extraReducers: (builder) => {
@@ -36,6 +36,6 @@ const typeSlice = createSlice({
     }
 })
 
-export const {setSelectedType} = typeSlice.actions;
+export const { setSelectedType } = typeSlice.actions;
 
 export const typeReducer = typeSlice.reducer;

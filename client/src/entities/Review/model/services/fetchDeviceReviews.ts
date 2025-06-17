@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { fetchReviews } from "@/shared/api/deviceApi";
+import { fetchReviews } from "../../api/reviewApi";
 
 export const fetchDeviceReviews = createAsyncThunk(
     'reviews/fetchDeviceReviews',
@@ -8,7 +8,7 @@ export const fetchDeviceReviews = createAsyncThunk(
             const res = await fetchReviews(deviceId);
             return res || [];
         } catch (err) {
-            console.error(err);        
+            console.error(err);
         }
     }
 )

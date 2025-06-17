@@ -13,8 +13,8 @@ export const ProductFiltersView = ({
     handleFilterChange,
 }: ProductFiltersSchema) => {
     return (
-        <div className="flex border-1 rounded-xl border-[#5120B8]/30 h-screen mt-5 filters-bg-gradient shadow-lg">
-            <div className="sticky top-30 flex flex-col gap-[10px] mt-[20px] mb-[20px]">
+        <div className="min-h-[750px] flex border-1 rounded-xl border-[#5120B8]/30 mt-5 filters-bg-gradient shadow-lg max-lg:max-w-[200px] max-md:max-w-[150px]">
+            <div className="flex flex-col gap-[10px] mt-[20px]">
                 <Dropdown
                     trigger={
                         <Button
@@ -47,7 +47,7 @@ export const ProductFiltersView = ({
                     items={brandItems}
                     className="w-[250px]"
                 />
-                <div className="divider" />
+                <div className="divider max-lg:max-w-[200px] max-md:max-w-[150px]" />
                 <label className="filter-label">
                     <input
                         type="checkbox"
@@ -56,7 +56,7 @@ export const ProductFiltersView = ({
                         onChange={() => handleFilterChange("priceLow")}
                     />
                     <span className="custom-checkbox custom-checkbox-check" />
-                    <span className="text-white ml-4">Сначала недорогие</span>
+                    <span className="text-white ml-4 max-sm:break-words max-sm:max-w-[100px]">Сначала недорогие</span>
                 </label>
                 <label className="filter-label">
                     <input
@@ -66,7 +66,7 @@ export const ProductFiltersView = ({
                         onChange={() => handleFilterChange("priceHigh")}
                     />
                     <span className="custom-checkbox custom-checkbox-check" />
-                    <span className="text-white ml-4">Сначала дорогие</span>
+                    <span className="text-white ml-4 max-sm:break-words max-sm:max-w-[100px]">Сначала дорогие</span>
                 </label>
                 <label className="filter-label">
                     <input
@@ -76,7 +76,7 @@ export const ProductFiltersView = ({
                         onChange={() => handleFilterChange("rating")}
                     />
                     <span className="custom-checkbox custom-checkbox-check" />
-                    <span className="text-white ml-4">По рейтингу</span>
+                    <span className="text-white ml-4 max-sm:break-words max-sm:max-w-[100px]">По рейтингу</span>
                 </label>
                 {isFilterActive && (
                     <Button

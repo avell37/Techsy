@@ -17,7 +17,7 @@ export const LikeIcon = ({
             height={height}
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
-            className={`stroke-[#3A177F] transition duration-200 ease-in-out hover:stroke-[#8A4FFF] ${className} ${
+            className={`stroke-[#3A177F] transition duration-200 ease-in-out ${className} ${
                 isFavorite ? "fill-[#3A177F]" : "fill-none"
             }`}
         >

@@ -1,7 +1,6 @@
-import {ADMIN_ROUTE, BASKET_ROUTE, CHECKOUT_ROUTE, DEVICE_ROUTE, 
+import {BASKET_ROUTE, CHECKOUT_ROUTE, DEVICE_ROUTE, 
         ERROR_ROUTE, FAVORITES_ROUTE, LOGIN_ROUTE, PROFILE_ROUTE, 
         REGISTRATION_ROUTE, SHOP_ROUTE} from "@/shared/config/consts";
-import { AdminPage } from "@/pages/AdminPage/AdminPage.lazy";
 import { BasketPage } from "@/pages/BasketPage/BasketPage.lazy";
 import { AuthPage } from "@/pages/AuthPage/AuthPage.lazy";
 import { DevicePage } from "@/pages/DevicePage/ui/DevicePage.lazy";
@@ -15,13 +14,6 @@ interface RoutesProps {
     path: string,
     Component: React.ComponentType
 }
-
-export const adminRoutes = [
-    {
-        path: ADMIN_ROUTE,
-        Component: AdminPage
-    }
-]
 
 export const authRoutes: RoutesProps[] = [
     {

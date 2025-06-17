@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import { adminRoutes, authRoutes, publicRoutes } from "@/app/config/routes";
+import { authRoutes, publicRoutes } from "@/app/config/routes";
 import { ErrorPage } from "@pages/ErrorPage/ErrorPage.lazy";
 import { useAppSelector } from "@/shared/hooks";
 import { Spinner } from "@/shared/assets";
@@ -31,11 +31,6 @@ export const AppRouter = () => {
 
             {currentUser &&
                 authRoutes.map(({ path, Component }) => (
-                    <Route key={path} path={path} element={<Component />} />
-                ))}
-
-            {currentUser?.role === "Admin" &&
-                adminRoutes.map(({ path, Component }) => (
                     <Route key={path} path={path} element={<Component />} />
                 ))}
 

@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 
-export const ImagePreview = ({ file }: { file: File | null }) => {
+interface ImagePreviewProps {
+    file: File | null;
+    className?: string;
+}
+
+export const ImagePreview = ({ file, className }: ImagePreviewProps) => {
     const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
     useEffect(() => {
@@ -19,13 +24,5 @@ export const ImagePreview = ({ file }: { file: File | null }) => {
 
     if (!file || !previewUrl) return null;
 
-    return (
-        <div className="border-2 border-[#5120B8] p-2 rounded-md">
-            <img
-                src={previewUrl}
-                alt="Предпросмотр"
-                className="w-[175px] h-40 object-contain"
-            />
-        </div>
-    );
+    return <img src={previewUrl} alt="Предпросмотр" className={className} />;
 };

@@ -159,7 +159,6 @@ model ShippingInfo {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
   userId    String   @unique
-
   firstName String
   lastName  String
   phone     String
@@ -181,7 +180,7 @@ model Order {
   userId    String
 
   price     Int
-  isPaid    Boolean @default(false)
+  status    String
   delivery  String
   paymentId String?
 

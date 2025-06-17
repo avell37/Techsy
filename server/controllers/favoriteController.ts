@@ -1,14 +1,20 @@
 const { PrismaClient } = require("@prisma/client")
 const prisma = new PrismaClient();
+const ApiError = require('../error/apiError');
 
 class FavoriteController {
-    async toggleFavoriteDevice(req: any, res: any) {
-            const {deviceId} = req.body;
-            const {id} = req.user;
+    async toggleFavoriteDevice(req: any, res: any, next: any) {
+        try {
+            const userId = req.user.id;
+            const { deviceId } = req.body;
+
+            if (!deviceId) {
+                return next(ApiError.badRequest('Не передан ID устройства'))
+            }
 
             const isFavoriteDeviceExists = await prisma.favoriteDevice.findFirst({
                 where: {
-                    userId: id,
+                    userId,
                     deviceId
                 }
             })
@@ -16,7 +22,7 @@ class FavoriteController {
             if (isFavoriteDeviceExists) {
                 const deleteFavoriteDevice = await prisma.favoriteDevice.deleteMany({
                     where: {
-                        userId: id,
+                        userId,
                         deviceId
                     }
                 })
@@ -24,38 +30,44 @@ class FavoriteController {
             } else {
                 const favoriteDevice = await prisma.favoriteDevice.create({
                     data: {
-                        userId: id,
+                        userId,
                         deviceId
                     },
-                    include: { device: {include: {
-                            Brand: true,
-                            Type: true
+                    include: {
+                        device: {
+                            include: {
+                                Brand: true,
+                                Type: true
+                            }
                         }
-                    } }
+                    }
                 })
                 return res.json({ added: true, favoriteDevice })
             }
-        
+        } catch (err) {
+            return next(ApiError.internal('Произошла ошибка на сервере. Попробуйте позже.'))
+        }
     }
-    async getFavoriteDevices(req: any, res: any) {
+
+    async getFavoriteDevices(req: any, res: any, next: any) {
         try {
-            const {id} = req.user;
-            if (!id) {
-                return res.status(404).json({message: 'нет айди юзера'})
-            } 
+            const userId = req.user.id;
             const favoriteDevices = await prisma.favoriteDevice.findMany({
                 where: {
-                    userId: id
+                    userId
                 },
-                include: { device: {include: {
-                        Brand: true,
-                        Type: true
+                include: {
+                    device: {
+                        include: {
+                            Brand: true,
+                            Type: true
+                        }
                     }
-                } }
+                }
             });
             return res.json(favoriteDevices);
         } catch (err) {
-            return res.json({message: "все хуйня"})
+            return next(ApiError.internal('Произошла ошибка на сервере. Попробуйте позже.'))
         }
     }
 }
