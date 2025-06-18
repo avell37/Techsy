@@ -21,7 +21,7 @@ export const LoginView = ({
 }: LoginProps) => {
     console.log(errors);
     return (
-        <Container widthWrapper={false}>
+        <Container noWidthFull={true}>
             <div className="flex flex-col gap-[20px] text-start bg-[#0d091d] p-8 rounded-2xl">
                 <p className="text-center text-3xl font-bold text-purple-500 mb-10">
                     techsy

@@ -1,6 +1,7 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 const ApiError = require('../error/apiError');
+const deleteDeviceCascade = require('../utils/deleteDeviceCascade');
 
 class DeviceController {
     async create(req: any, res: any, next: any) {
@@ -110,17 +111,12 @@ class DeviceController {
             if (!id) {
                 return next(ApiError.notFound('Не найден ID устройства'))
             }
-            const deletedFavorite = await prisma.favoriteDevice.deleteMany({
-                where: {
-                    deviceId: id
-                }
-            })
-            const deleted = await prisma.device.delete({
-                where: { id }
-            })
+
+            const deleted = await deleteDeviceCascade(id);
 
             return res.json({ message: "Девайс удален", deleted })
         } catch (err) {
+            console.error(err);
             return next(ApiError.internal('Произошла ошибка на сервере. Попробуйте позже.'))
         }
     }

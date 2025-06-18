@@ -11,7 +11,6 @@ export const Dropdown: FC<DropdownSchema> = ({
     triggerClassname,
 }) => {
     const [isOpen, setIsOpen] = useState(false);
-
     const dropdownRef = useDropdownClickOutside(() => setIsOpen(false));
 
     return (

@@ -13,7 +13,7 @@ class OrderController {
             const userId = req.user.id;
             const { items, totalPrice, delivery } = req.body;
 
-            if (!items || totalPrice || !delivery) {
+            if (!items || !totalPrice || !delivery) {
                 return next(ApiError.badRequest('Переданы не все данные.'))
             }
 

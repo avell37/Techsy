@@ -1,14 +1,8 @@
 import { useState } from "react";
 import { CartView } from "./CartView/CartView";
-import {
-    useAppDispatch,
-    useAppSelector,
-    useNotification,
-} from "@/shared/hooks";
-import {
-    getTotalPrice, createNewOrder,
-    createNewPayment,
-} from "@/entities";
+import { useAppDispatch, useAppSelector, useNotification } from "@/shared/hooks";
+import { getTotalPrice, createNewOrder, createNewPayment } from "@/entities";
+import { isShippingValid } from "../lib/isShippingValid";
 
 export const Cart = () => {
     const [selectedPayment, setSelectedPayment] = useState<string | null>(null);
@@ -27,13 +21,19 @@ export const Cart = () => {
     }));
 
     const handleCreateOrder = async () => {
+        const shippingData = isShippingValid(shipping);
+        if (!shippingData) {
+            notifyWarn("Пожалуйста, заполните информацию об адресе доставки в профиле.")
+            return;
+        }
+
         if (!selectedPayment) {
             notifyWarn("Пожалуйста, выберите способ оплаты");
             return;
         }
 
         try {
-            if (selectedPayment === "yoomoney" && shipping) {
+            if (selectedPayment === "yoomoney") {
                 const order = await dispatch(
                     createNewOrder({
                         items: orderItems,
@@ -45,7 +45,6 @@ export const Cart = () => {
                 const confirmationUrl = await dispatch(
                     createNewPayment(order)
                 ).unwrap();
-
                 window.location.href = confirmationUrl;
             }
         } catch (err) {

@@ -9,5 +9,5 @@ export const ShippingYupSchema = yup.object().shape({
     region: yup.string().required('Введите ваш регион/область'),
     zipCode: yup.string().required('Введите ваш почтовый индекс').matches(/^\d{6}$/, 'Почтовый индекс должен содержать ровно 6 цифр'),
     city: yup.string().required('Введите ваш город'),
-    address: yup.string().required('Введите ваш адрес (пример: ул. Пушкина, д. Колотушкина. кв. 228')
+    address: yup.string().required('Введите ваш адрес (пример: ул. Пушкина, д. Колотушкина. кв. 228)')
 })

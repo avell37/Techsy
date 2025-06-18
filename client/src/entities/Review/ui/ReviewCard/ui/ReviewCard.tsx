@@ -31,7 +31,7 @@ export const ReviewCard = ({
                         {review.User.username}
                     </p>
                 </div>
-                <div className="flex items-center gap-[10px] border border-[#5120B8]/30 max-w-[200px] rounded-lg p-2 bg-gradient-to-br from-[#1A1238]/50 to-[#08080e] backdrop-blur-sm ">
+                <div className="flex items-center gap-[10px] border border-[#5120B8]/30 max-w-[160px] rounded-lg p-2 bg-gradient-to-br from-[#1A1238]/50 to-[#08080e] backdrop-blur-sm">
                     <span className="text-white text-sm">Оценка:</span>
                     <StarRating value={Number(review.rate)} readOnly size={16} />
                 </div>

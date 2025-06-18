@@ -6,7 +6,7 @@ export interface IOrder {
     updatedAt: string,
     userId: string,
     price: number,
-    status: string,
+    status: 'created' | 'pending' | 'cancelled' | 'success',
     delivery: string,
     paymentId: string,
     OrderItem: IOrderItem[]

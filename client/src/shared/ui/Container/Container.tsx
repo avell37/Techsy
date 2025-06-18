@@ -1,12 +1,14 @@
 export const Container = ({
     children,
-    widthWrapper = true,
+    className,
+    noWidthFull,
 }: {
     children: React.ReactNode;
-    widthWrapper?: boolean;
+    className?: string;
+    noWidthFull?: boolean;
 }) => {
-    if (widthWrapper) {
-        return <div className="max-w-[1440px] mx-auto w-full">{children}</div>;
+    if (noWidthFull) {
+        return <div className={`max-w-[1440px] mx-auto ${className ? className : ''}`}>{children}</div>;
     }
-    return <div className="max-w-[1440px] mx-auto">{children}</div>;
+    return <div className={`max-w-[1440px] mx-auto w-full ${className ? className : ''}`}>{children}</div>;
 };

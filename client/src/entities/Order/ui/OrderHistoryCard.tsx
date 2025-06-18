@@ -1,32 +1,30 @@
 import { IOrder } from "@/shared/types/IOrder";
+import { FormattedDate } from "@/shared/ui";
+import { useHiddenCount } from "../hooks/useHiddenCount";
 
 export const OrderHistoryCard = ({ order }: { order: IOrder }) => {
+
+    const { visibleItems, hiddenCount } = useHiddenCount(order);
+
     return (
-        <div className="relative rounded-xl border border-[#5120B8]/30 font-bold focus:outline-none">
-            <div className="p-2">
-                <span className="text-white">Заказ #93827-cdA-1</span>
-                <div className="flex justify-between my-7">
-                    {/* <div className="text-white">
-                        {/* {order.OrderItem.map((item) => (
-                            <div>
-                                <img src={
-                                    item.img.startsWith("http")
-                                        ? item.img
-                                        : import.meta.env.VITE_API_URL + '/' +
-                                        item?.img
-                                } className="w-[50px] h-[50px] object-cover" />
-                                <p className="text-white">{item.quantity}x {item.name}</p>
-                            </div>
-                        ))} */}
-                    {/* </div> */}
-                    <div className="text-white">Статус: {order.status}</div>
-                    <div className="text-white">Доставка ожидается через: {order.delivery}</div>
-                    <div className="text-purple-500">{order.price} Р.</div>
-                </div>
-                <div className="text-gray-500 text-sm">
-                    <p>кликните, чтобы узнать подробности</p>
-                </div>
-                <span className="absolute top-2 right-2 text-white">12.06.2025, 12:49</span>
+        <div className="flex flex-col gap-[10px] max-w-[500px]">
+            <div className='flex justify-between'>
+                <span className='text-gray-400 text-xs'>Заказ: №&nbsp;{order.id}</span>
+                <FormattedDate date={order.createdAt} className='text-gray-400 text-xs' />
+            </div>
+            <div className="flex gap-[10px] flex-wrap max-w-[250px]">
+                {visibleItems.map((item) => (
+                    <img
+                        key={item.id}
+                        className="w-[30px] h-[30px] object-contain"
+                        src={`${import.meta.env.VITE_API_URL}/${item.img}`} />
+                ))}
+                {hiddenCount > 0 && (
+                    <div className="w-[30px] h-[30px] rounded-full bg-[#5120B8] text-white text-xs flex items-center justify-center">
+                        +{hiddenCount}
+                    </div>
+                )}
+
             </div>
         </div >
     );

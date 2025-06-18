@@ -3,7 +3,16 @@ import { fetchShippingInfo } from "../services/fetchShippingInfo";
 import { ShippingInitialState } from "../types/shippingInitialState";
 
 const initialState: ShippingInitialState = {
-    shipping: {},
+    shipping: {
+        firstName: '',
+        lastName: '',
+        phone: '',
+        country: '',
+        region: '',
+        zipCode: '',
+        city: '',
+        address: ''
+    },
     loading: false,
     error: false
 }
