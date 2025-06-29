@@ -2,10 +2,11 @@
 export default {
     content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
     theme: {
-        extend: {},
+        extend: {}
     },
     plugins: [],
     safelist: [
+        'border-primary',
         "group",
         "peer",
         "group-hover",

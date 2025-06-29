@@ -1,27 +1,22 @@
-import { Input, Button } from "@/shared/ui";
+import { Button, FormInputController } from "@/shared/ui";
 import { useBrandForm } from "../hooks/useBrandForm";
-import { Controller } from "react-hook-form";
 
 export const BrandForm = ({ onClose }: { onClose: () => void }) => {
-    const { control, errors, handleSubmit, handleBrandFormSubmit } = useBrandForm(onClose);
+    const { control, errors, handleBrandFormSubmit } = useBrandForm(onClose);
 
     return (
-        <form onSubmit={handleSubmit(handleBrandFormSubmit)} className="flex flex-col gap-[30px] pl-6">
+        <form onSubmit={handleBrandFormSubmit} className="flex flex-col gap-[30px] pl-6">
             <h1 className="text-white pt-8 text-xl font-bold">
                 Добавить бренд:
             </h1>
-            <Controller
-                name='brand'
+            <FormInputController
+                name="brand"
                 control={control}
-                render={({ field }) =>
-                    <Input
-                        {...field}
-                        noWrap
-                        className="max-w-[450px] custom-input p-3"
-                        placeholder="Введите название бренда"
-                        error={errors?.brand?.message}
-                    />} />
-            <div className="flex justify-end mb-6 mr-2 gap-[10px]">
+                type="text"
+                className="max-w-[450px] w-full custom-input p-3"
+                placeholder="Введите новый бренд"
+                errors={errors} />
+            <div className="flex justify-end mb-6 mr-4 gap-[10px]">
                 <Button
                     className="apply-button"
                     type="submit"

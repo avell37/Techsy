@@ -3,20 +3,23 @@ import { Button } from "@/shared/ui";
 import { CartSchema } from "../../model/types/CartSchema";
 
 export const CartView = ({
-    setSelectedPayment,
     totalPrice,
+    setSelectedPayment,
     handleCreateOrder,
 }: CartSchema) => {
+    const handleSelectYoomoneyPayment = () => setSelectedPayment("yoomoney")
     return (
         <div className="flex flex-col justify-between gap-[30px] h-full">
             <div className="flex flex-col gap-[20px]">
                 <p className="text-white text-xl">Вариант оплаты:</p>
                 <div className="flex gap-[20px] flex-wrap">
                     <Button
-                        onClick={() => setSelectedPayment("yoomoney")}
+                        onClick={handleSelectYoomoneyPayment}
                         type="button"
-                        className="flex justify-center items-center min-h-[80px] w-full border-[2px] border-[#3A177F] rounded-xl hover:border-[#8A4FFF] 
-                    hover:bg-[#1A1238]/30 active:border-[#8A4FFF] focus:border-[#8A4FFF] transition-all text-white max-w-[150px] cursor-pointer"
+                        className="flex justify-center items-center min-h-[80px] w-full border-[2px] 
+                        border-indigo-900 rounded-xl hover:border-light-purple 
+                        hover:bg-primary-300/30 active:border-light-purple focus:border-light-purple 
+                        transition-all max-w-[150px] cursor-pointer"
                     >
                         <Iomoney />
                     </Button>
@@ -42,8 +45,8 @@ export const CartView = ({
                     К оплате: {totalPrice.toLocaleString()} Р.
                 </p>
                 <Button
-                    className="max-w-[300px] w-full h-[60px] border-2 border-[#3A177F] rounded-xl hover:border-[#8A4FFF] 
-                    hover:bg-[#1A1238]/30 transition-all text-white cursor-pointer"
+                    className="max-w-[320px] w-full h-[60px] border-2 border-indigo-900 rounded-xl hover:border-light-purple
+                    hover:bg-primary-300/30 transition-all text-white cursor-pointer"
                     text="Перейти к оплате"
                     onClick={handleCreateOrder}
                 />

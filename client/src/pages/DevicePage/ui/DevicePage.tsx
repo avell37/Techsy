@@ -1,67 +1,40 @@
-import { Header } from "@/widgets/Header";
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { IDevice } from "@/shared/types";
-import { useAppSelector, useModal, useNotification } from "@/shared/hooks";
-import { useAppDispatch } from "@/shared/hooks";
-import { deleteReview, fetchDeviceReviews } from "@/entities/Review";
+import { useEffect, useMemo } from "react";
+import {
+    useActions, useAppSelector, useModal,
+    useNotification, useToggleFavorites
+} from "@/shared/hooks";
+import { deleteReview, reviewSelector } from "@/entities/Review";
 import { DevicePageView } from "./DevicePageView/DevicePageView";
-import Cookies from "js-cookie";
-import { Container } from "@/shared/ui";
-import { checkFavoriteDevices, toggleFavorites } from "@/shared/lib";
-import { Spinner } from "@/shared/assets";
+import { Container, Spinner } from "@/shared/ui";
+import { checkFavoriteDevices, getToken } from "@/shared/lib";
 import { Modal } from "@/features/ManageModal";
-import { fetchOneDevice } from "@/entities";
+import { deviceSelector, favoriteSelector, userSelector } from "@/entities";
 
 const DevicePage = () => {
     const { id } = useParams();
-    const dispatch = useAppDispatch();
-    const [device, setDevice] = useState<IDevice | null>(null);
-    const [isLoading, setIsLoading] = useState(true);
-    const { isOpen, contentType, openModal, closeModal } = useModal();
-    const { reviews } = useAppSelector((state) => state.reviewReducer);
-    const { currentUser } = useAppSelector((state) => state.userReducer);
-    const { favoriteDevices } = useAppSelector(
-        (state) => state.favoriteReducer
-    );
     const { notifySuccess, notifyError } = useNotification();
-
-    useEffect(() => {
-        getData();
-        if (id) {
-            dispatch(fetchDeviceReviews(id));
-        }
-    }, [id, dispatch]);
-
-    const getData = async () => {
-        if (!id) return;
-        try {
-            setIsLoading(true);
-            const data = await fetchOneDevice(id);
-            setDevice(data);
-        } catch (err) {
-            console.error(err);
-        } finally {
-            setIsLoading(false);
-        }
-    };
+    const { isOpen, contentType, openModal, closeModal } = useModal();
+    const device = useAppSelector(deviceSelector.selectedDevice)
+    const loading = useAppSelector(deviceSelector.loading)
+    const reviews = useAppSelector(reviewSelector.reviews);
+    const currentUser = useAppSelector(userSelector.currentUser);
+    const favoriteDevices = useAppSelector(favoriteSelector.favoriteDevices);
+    const { fetchDeviceById, fetchDeviceReviews } = useActions();
+    const { toggleFavorites } = useToggleFavorites();
 
     const handleAddReview = () => {
-        if (!Cookies.get("token")) {
+        if (!getToken('token')) {
             notifyError("Чтобы оставить отзыв, необходимо авторизоваться");
             return;
         }
-        if (id) {
-            openModal("addReview");
-        }
+        if (id) openModal("addReview");
     };
 
     const handleDeleteReview = async (reviewId: string) => {
         try {
             await deleteReview(reviewId);
-            if (id) {
-                dispatch(fetchDeviceReviews(id));
-            }
+            if (id) fetchDeviceReviews(id);
             notifySuccess("Отзыв успешно удален");
         } catch (err) {
             console.log(err);
@@ -69,14 +42,30 @@ const DevicePage = () => {
         }
     };
 
+    const isFavorite = useMemo(() => {
+        return device ? checkFavoriteDevices({
+            deviceId: device.id,
+            favoriteDevices,
+        }) : false
+    }, [device, favoriteDevices])
+
+    const handleToggleFavorites = () => {
+        if (!device) return;
+        toggleFavorites(device.id);
+    }
+
+    useEffect(() => {
+        if (id) {
+            fetchDeviceById(id);
+            fetchDeviceReviews(id);
+        }
+    }, [id]);
+
     return (
         <div className="flex flex-col gap-[30px]">
-            <Header />
             <Container>
-                {isLoading ? (
-                    <div className="flex justify-center items-center h-[60vh]">
-                        <Spinner width="100px" height="100px" />
-                    </div>
+                {loading ? (
+                    <Spinner width="100px" height="100px" />
                 ) : (
                     <DevicePageView
                         device={device}
@@ -84,37 +73,21 @@ const DevicePage = () => {
                         reviews={reviews}
                         isOpen={isOpen}
                         contentType={contentType}
+                        isFavorite={isFavorite}
                         closeModal={closeModal}
                         openModal={openModal}
                         handleAddReview={handleAddReview}
                         handleDeleteReview={handleDeleteReview}
-                        dispatch={dispatch}
                         notifySuccess={notifySuccess}
                         notifyError={notifyError}
-                        isFavorite={
-                            device
-                                ? checkFavoriteDevices({
-                                    deviceId: device.id,
-                                    favoriteDevices,
-                                })
-                                : false
-                        }
-                        toggleFavorites={() =>
-                            device &&
-                            toggleFavorites({
-                                device,
-                                notifySuccess,
-                                notifyError,
-                                dispatch,
-                            })
-                        }
+                        toggleFavorites={handleToggleFavorites}
                     />
                 )}
             </Container>
             <Modal
                 isOpen={isOpen}
-                onClose={closeModal}
                 contentType={contentType}
+                onClose={closeModal}
             />
         </div>
     );

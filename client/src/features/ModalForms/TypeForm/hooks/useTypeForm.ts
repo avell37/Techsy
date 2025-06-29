@@ -1,12 +1,13 @@
-import { useNotification } from "@/shared/hooks";
+import { useActions, useNotification } from "@/shared/hooks";
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { TypeYupSchema } from "../lib/TypeYupSchema";
 import { createType } from "@/entities";
-import { AxiosError } from "axios";
+import { handleServerFormError } from "@/shared/lib";
 
 export const useTypeForm = (onClose?: () => void) => {
     const { notifySuccess, notifyWarn, notifyError } = useNotification();
+    const { fetchAllTypes } = useActions();
 
     const { control, handleSubmit, reset, setError,
         formState: { errors }
@@ -23,27 +24,25 @@ export const useTypeForm = (onClose?: () => void) => {
                 return notifyWarn("Поле обязательно для заполнения");
             }
             await createType(data.type);
+            fetchAllTypes();
             reset();
             if (onClose) onClose();
             notifySuccess("Отлично! Тип уже на сайте!");
         } catch (err) {
-            const error = err as AxiosError<{ message: string }>;
-            const message = error.response?.data?.message || "Ошибка. Пожалуйста, попробуйте еще раз.";
-            if (message.includes("Данный тип уже существует.")) {
-                setError("type", {
-                    type: "server",
-                    message,
-                })
-            } else {
-                notifyError("Ошибка... Попробуй еще раз :)");
-            }
+            handleServerFormError<{ type: string }>(
+                err,
+                setError,
+                {
+                    type: "type"
+                },
+                notifyError
+            )
         };
     }
 
     return {
-        handleTypeFormSubmit,
         control,
-        handleSubmit,
-        errors
+        errors,
+        handleTypeFormSubmit: handleSubmit(handleTypeFormSubmit)
     }
 }

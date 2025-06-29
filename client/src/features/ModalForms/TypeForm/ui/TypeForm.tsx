@@ -1,25 +1,20 @@
-import { Input, Button } from "@/shared/ui";
+import { Button, FormInputController } from "@/shared/ui";
 import { useTypeForm } from "../hooks/useTypeForm";
-import { Controller } from "react-hook-form";
 
 export const TypeForm = ({ onClose }: { onClose: () => void }) => {
-    const { control, handleSubmit, handleTypeFormSubmit, errors } = useTypeForm(onClose);
-
+    const { control, errors, handleTypeFormSubmit } = useTypeForm(onClose);
     return (
-        <form onSubmit={handleSubmit(handleTypeFormSubmit)} className="flex flex-col gap-[30px] pl-6">
+        <form onSubmit={handleTypeFormSubmit} className="flex flex-col gap-[30px] pl-6">
             <h1 className="text-white pt-8 text-xl font-bold">Добавить тип:</h1>
-            <Controller
+            <FormInputController
                 name="type"
                 control={control}
-                render={({ field }) =>
-                    <Input
-                        {...field}
-                        noWrap
-                        className="max-w-[450px] custom-input p-3"
-                        placeholder="Введите тип устройства"
-                        error={errors?.type?.message}
-                    />} />
-            <div className="flex justify-end mb-6 mr-2 gap-[10px]">
+                type="text"
+                className="max-w-[450px] w-full custom-input p-3"
+                placeholder="Введите новый тип"
+                errors={errors}
+            />
+            <div className="flex justify-end mb-6 mr-4 gap-[10px]">
                 <Button
                     className="apply-button"
                     type="submit"

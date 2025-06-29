@@ -1,62 +1,63 @@
+import { fetchUserData, uploadAvatar } from "@/entities/User";
 import {
-    fetchUserData,
-    uploadAvatar,
-} from "@/entities/User/api/userApi";
-import {
-    useAppDispatch,
+    useActions,
     useAppSelector,
     useModal,
     useNotification,
 } from "@/shared/hooks";
-import { useRef, useState } from "react";
-import { updateAvatar } from "@/entities/User";
+import { useCallback, useRef, useState } from "react";
 import { UserProfileView } from "./UserProfileView";
 import { IShipping, IUser } from "@/shared/types";
+import { shippingSelector } from "@/entities/Shipping";
 
 export const UserProfile = ({ user }: { user: IUser | null }) => {
     const fileInputRef = useRef<HTMLInputElement>(null);
-    const dispatch = useAppDispatch();
     const { notifySuccess, notifyError } = useNotification();
     const { isOpen, contentType, openModal, closeModal } = useModal();
-    const { shipping } = useAppSelector((state) => state.shippingReducer);
+    const shipping = useAppSelector(shippingSelector.shipping);
     const [shippingData, setShippingData] = useState<IShipping>(shipping);
+    const { updateAvatar } = useActions();
 
-    const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target?.files?.[0];
-        if (!file) return;
-
+    const handleFileUpload = useCallback(async (file: File) => {
         try {
             await uploadAvatar(file);
             const newData = await fetchUserData();
             if (newData) {
-                dispatch(updateAvatar(newData.picture));
+                updateAvatar(newData.picture);
                 notifySuccess("Аватар был изменен :)");
             }
         } catch (err) {
             console.error(err);
             notifyError("Что-то пошло не так... Попробуй еще раз!");
         }
-    };
+    }, [updateAvatar, notifyError, notifySuccess])
+
+    const handleUpload = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target?.files?.[0];
+        if (file) {
+            handleFileUpload(file);
+        }
+    }, [handleFileUpload])
 
 
-    const handleChangeShippingData = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChangeShippingData = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setShippingData((prev) => ({
             ...prev,
             [name]: value,
         }))
-    }
+    }, [])
 
     return (
         <UserProfileView
             user={user}
-            handleUpload={handleUpload}
-            fileInputRef={fileInputRef}
             isOpen={isOpen}
             contentType={contentType}
+            fileInputRef={fileInputRef}
+            shippingData={shippingData}
+            handleUpload={handleUpload}
             openModal={openModal}
             closeModal={closeModal}
-            shippingData={shippingData}
             handleChangeShippingData={handleChangeShippingData}
         />
     );

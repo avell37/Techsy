@@ -1,14 +1,14 @@
 import { StarIcon } from "@/shared/assets";
 import { useState } from "react";
-import { StarRatingSchema } from "../model/StarRatingSchema";
+import { StarRatingProps } from "../model/StarRatingProps";
 
 export const StarRating = ({
     value,
-    onChange,
     readOnly = false,
     size = 30,
-    error
-}: StarRatingSchema) => {
+    error,
+    onChange
+}: StarRatingProps) => {
     const [hovered, setHovered] = useState(0);
 
     return (
@@ -28,7 +28,7 @@ export const StarRating = ({
                                     !readOnly ? () => setHovered(0) : undefined
                                 }
                                 fill={filled ? "facc15" : "none"}
-                                className={`${!readOnly && "cursor-pointer"} ${filled ? "fill-[#ffe500]" : "fill-[#ffe500]/30"
+                                className={`${!readOnly && "cursor-pointer"} ${filled ? "fill-yellow" : "fill-yellow/30"
                                     }`}
                                 width={`${size}px`}
                                 height={`${size}px`}

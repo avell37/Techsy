@@ -1,7 +1,8 @@
-import { OrderDataSchema } from "@/entities";
+import { IOrder } from "@/shared/types/IOrder";
+import { OrderDataProps } from "../model/types/createOrderProps";
 import { $authHost } from "@shared/api";
 
-export const createOrder = async (orderData: OrderDataSchema) => {
+export const createOrder = async (orderData: OrderDataProps) => {
     const { data } = await $authHost.post('/api/order/create-order/', orderData)
     return data;
 }
@@ -16,7 +17,7 @@ export const fetchStatus = async (orderId: string) => {
     return data;
 }
 
-export const fetchOrders = async () => {
-    const { data } = await $authHost.get('/api/order/get-orders');
+export const fetchOrders = async (): Promise<IOrder[]> => {
+    const { data } = await $authHost.get<IOrder[]>('/api/order/get-orders');
     return data;
 }

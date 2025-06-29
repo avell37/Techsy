@@ -1,3 +1,4 @@
+import { BasketItem } from "@/shared/types";
 import { $authHost } from "@shared/api";
 
 export const addDeviceToBasket = async (deviceId: string) => {
@@ -5,13 +6,13 @@ export const addDeviceToBasket = async (deviceId: string) => {
     return data;
 }
 
-export const getBasket = async () => {
-    const { data } = await $authHost.get('/api/basket');
+export const getBasket = async (): Promise<BasketItem[]> => {
+    const { data } = await $authHost.get<BasketItem[]>('/api/basket');
     return data;
 }
 
 export const deleteDeviceFromBasket = async (deviceId: string) => {
-    const { data } = await $authHost.delete('/api/basket' + '/' + deviceId);
+    const { data } = await $authHost.delete(`/api/basket/${deviceId}`);
     return data;
 }
 

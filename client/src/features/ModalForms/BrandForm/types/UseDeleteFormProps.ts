@@ -1,4 +1,6 @@
+export type EntityKey = "brand" | "type" | "device";
+
 export interface UseDeleteFormProps {
-    entityType: "brand" | "type" | "device";
+    entityType: EntityKey;
     onClose?: () => void;
 }

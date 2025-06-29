@@ -6,3 +6,5 @@ export * from './ui/DeviceLike';
 export * from './ui/DeviceRating';
 export * from './model/types/deviceCardProps';
 export * from './api/deviceApi';
+export * from './model/selectors/deviceSelector';
+export * from './model/services/fetchDeviceById';

@@ -16,11 +16,11 @@ model User {
   password        String?
   picture         String
   role            String           @default("User")
-  basket          Basket?
-  reviews         Review[]
-  favoriteDevices FavoriteDevice[]
-  ShippingInfo    ShippingInfo[]
   Order           Order[]
+  basket          Basket?
+  favoriteDevices FavoriteDevice[]
+  reviews         Review[]
+  ShippingInfo    ShippingInfo?
 
   @@map("user")
 }
@@ -31,8 +31,8 @@ model Basket {
   updatedAt    DateTime       @updatedAt @map("updated_at")
   userId       String         @unique
   user         User           @relation(fields: [userId], references: [id], onDelete: Cascade)
-  Device       Device[]
   BasketDevice BasketDevice[]
+  Device       Device[]
 
   @@map("basket")
 }
@@ -44,9 +44,8 @@ model BasketDevice {
   basketId  String
   deviceId  String
   quantity  Int      @default(1)
-
-  basket Basket @relation(fields: [basketId], references: [id])
-  device Device @relation(fields: [deviceId], references: [id])
+  basket    Basket   @relation(fields: [basketId], references: [id])
+  device    Device   @relation(fields: [deviceId], references: [id])
 
   @@unique([basketId, deviceId])
   @@map("basket_device")
@@ -63,13 +62,13 @@ model Device {
   brandId         String?
   typeId          String?
   basketId        String?
+  BasketDevice    BasketDevice[]
   basket          Basket?          @relation(fields: [basketId], references: [id])
   Brand           Brand?           @relation(fields: [brandId], references: [id])
   Type            Type?            @relation(fields: [typeId], references: [id])
   deviceInfo      DeviceInfo[]
-  reviews         Review[]
   favoriteDevices FavoriteDevice[]
-  BasketDevice    BasketDevice[]
+  reviews         Review[]
 
   @@map("device")
 }
@@ -143,12 +142,10 @@ model FavoriteDevice {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
-
-  userId   String
-  deviceId String
-
-  user   User   @relation(fields: [userId], references: [id])
-  device Device @relation(fields: [deviceId], references: [id])
+  userId    String
+  deviceId  String
+  device    Device   @relation(fields: [deviceId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
 
   @@unique([userId, deviceId])
   @@map("favorite_device")
@@ -167,23 +164,20 @@ model ShippingInfo {
   zipCode   String
   city      String
   address   String
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("shipping_info")
 }
 
 model Order {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  id        String      @id @default(cuid())
+  createdAt DateTime    @default(now()) @map("created_at")
+  updatedAt DateTime    @updatedAt @map("updated_at")
   userId    String
-
   price     Int
   status    String
   delivery  String
   paymentId String?
-
   user      User        @relation(fields: [userId], references: [id])
   OrderItem OrderItem[]
 }
@@ -192,11 +186,10 @@ model OrderItem {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
-
-  name     String
-  price    Int
-  img      String
-  quantity Int
-  order    Order  @relation(fields: [orderId], references: [id])
-  orderId  String
+  name      String
+  price     Int
+  img       String
+  quantity  Int
+  orderId   String
+  order     Order    @relation(fields: [orderId], references: [id])
 }

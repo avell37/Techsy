@@ -1,75 +1,52 @@
-import { Button, Input } from "@/shared/ui";
+import { Button, FormInputController } from "@/shared/ui";
 import { useEditProfileForm } from "@/features/ManageModal";
 import { ProfileFormProps } from "../types/ProfileFormProps";
-import { Controller } from "react-hook-form";
 
 export const ProfileForm = ({ onClose, edit }: ProfileFormProps) => {
-    const { title, placeholder, isPassword, control, errors,
-        handleSubmit, handleChangeData,
+    const { title, placeholder, isPassword, control, errors, handleChangeData,
     } = useEditProfileForm({ edit, onClose });
-    const mainError = edit === "username" ? errors.username?.message : edit === "email"
-        ? errors.email?.message : edit === "password" ? errors.oldPassword?.message
-            : undefined;
 
     return (
         <form
             className="flex flex-col gap-[30px] p-4"
-            onSubmit={handleSubmit(handleChangeData)}
+            onSubmit={handleChangeData}
         >
             <h1 className="text-white pt-4 text-xl font-bold">
                 Изменить {title}
             </h1>
             <div className="flex flex-col gap-[20px]">
                 {edit && (
-                    <Controller
+                    <FormInputController
                         name={edit === "password" ? "oldPassword" : edit}
                         control={control}
-                        render={({ field }) => (
-                            <Input
-                                {...field}
-                                noWrap
-                                type={edit === "password" ? "password" : "text"}
-                                className="custom-input p-3"
-                                placeholder={placeholder}
-                                error={mainError}
-                            />
-                        )}
+                        placeholder={placeholder}
+                        className="max-w-[450px] w-full custom-input p-3"
+                        type={isPassword ? "password" : "text"}
+                        errors={errors}
                     />
                 )}
                 {isPassword && (
                     <>
-                        <Controller
+                        <FormInputController
                             name="newPassword"
                             control={control}
-                            render={({ field }) => (
-                                <Input
-                                    noWrap
-                                    type={edit === "password" ? "password" : "text"}
-                                    {...field}
-                                    className="custom-input p-3"
-                                    placeholder="Введите новый пароль"
-                                    error={errors.newPassword?.message}
-                                />
-                            )}
+                            placeholder="Введите новый пароль"
+                            className="max-w-[450px] w-full custom-input p-3"
+                            type="password"
+                            errors={errors}
                         />
-                        <Controller
+                        <FormInputController
                             name="repeatPassword"
                             control={control}
-                            render={({ field }) => (
-                                <Input
-                                    noWrap
-                                    type={edit === "password" ? "password" : "text"}
-                                    {...field}
-                                    className="custom-input p-3"
-                                    placeholder="Повторите новый пароль"
-                                    error={errors.repeatPassword?.message}
-                                />
-                            )}
+                            placeholder="Повторите новый пароль"
+                            className="max-w-[450px] w-full custom-input p-3"
+                            type="password"
+                            errors={errors}
                         />
                     </>
                 )}
             </div>
-            <div className="flex justify-end mb-6 mr-2 gap-[10px]">
+            <div className="flex justify-end mb-6 mr-4 gap-[10px]">
                 <Button
                     className="apply-button"
                     type="submit"
@@ -81,6 +58,6 @@ export const ProfileForm = ({ onClose, edit }: ProfileFormProps) => {
                     text="Закрыть"
                 />
             </div>
-        </form >
+        </form>
     );
 };

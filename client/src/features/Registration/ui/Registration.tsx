@@ -1,17 +1,18 @@
 import { useState } from "react";
-import { registration } from "@/entities/User/api/userApi";
+import { registration } from "@/entities/User";
 import { useNavigate } from "react-router-dom";
 import { SHOP_ROUTE } from "@/shared/config/consts";
 import { RegistrationView } from "./RegistrationView";
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useNotification } from "@/shared/hooks";
-import { AxiosError } from "axios";
+import { useNotification, useActions } from "@/shared/hooks";
 import { RegistrationYupSchema } from "../lib/RegistrationYupSchema";
 import { RegistrationFormProps } from "../model/RegistrationFormProps";
+import { handleServerFormError } from "@/shared/lib";
 
 export const Registration = () => {
-    const [showPassword, setShowPassword] = useState(true);
+    const { fetchUser } = useActions();
+    const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
     const { notifySuccess, notifyError } = useNotification();
 
@@ -29,20 +30,19 @@ export const Registration = () => {
     const handleRegistration = async (data: RegistrationFormProps) => {
         try {
             await registration(data.username, data.email, data.password);
+            fetchUser();
             reset();
             navigate(SHOP_ROUTE);
             notifySuccess("Успешная регистрация!");
         } catch (err) {
-            const error = err as AxiosError<{ message: string }>;
-            const message = error.response?.data?.message || "Ошибка регистрации. Пожалуйста, попробуйте еще раз.";
-            if (message.toLowerCase().includes("email")) {
-                setError("email", {
-                    type: "server",
-                    message,
-                })
-            } else {
-                notifyError(message);
-            }
+            handleServerFormError<{ email: string }>(
+                err,
+                setError,
+                {
+                    email: "email"
+                },
+                notifyError
+            )
         }
     }
 
@@ -53,11 +53,11 @@ export const Registration = () => {
     return (
         <RegistrationView
             showPassword={showPassword}
+            control={control}
+            errors={errors}
             toggleShowPassword={toggleShowPassword}
             handleSubmit={handleSubmit}
             handleRegistration={handleRegistration}
-            control={control}
-            errors={errors}
         />
     );
 };

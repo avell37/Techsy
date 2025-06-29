@@ -1,23 +1,20 @@
 import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
-import { useAppSelector, useAppDispatch } from "@/shared/hooks";
+import { getToken, removeToken } from "@/shared/lib";
+import { useAppSelector, useActions } from "@/shared/hooks";
 import { HeaderView } from "./HeaderView";
-import { logout } from "@/entities";
-import { clearFavorite } from "@/entities/Favorites";
+import { userSelector } from "@/entities";
 
 export const Header = () => {
     const navigate = useNavigate();
-    const dispatch = useAppDispatch();
-    const userIsAuth = Cookies.get("token");
-    const currentUser = useAppSelector(
-        (state) => state.userReducer.currentUser
-    );
+    const userIsAuth = getToken('token');
+    const currentUser = useAppSelector(userSelector.currentUser);
     const picture = currentUser?.picture;
+    const { logout, clearFavorite } = useActions();
 
     const userLogout = (route: string) => {
-        Cookies.remove("token");
-        dispatch(logout());
-        dispatch(clearFavorite());
+        removeToken('token');
+        logout();
+        clearFavorite();
         navigate(route);
     };
 

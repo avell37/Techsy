@@ -7,7 +7,6 @@ export const createNewOrder = createAsyncThunk(
     async (orderData: OrderDataProps) => {
         try {
             const res = await createOrder(orderData);
-            console.log(orderData);
             return res;
         } catch (err) {
             console.error(err);

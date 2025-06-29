@@ -8,3 +8,5 @@ export * from './IReview';
 export * from './IShipping';
 export * from './IFavoriteDevice';
 export * from './IBasketItem';
+export * from './IOrder';
+export * from './IOrderItem';

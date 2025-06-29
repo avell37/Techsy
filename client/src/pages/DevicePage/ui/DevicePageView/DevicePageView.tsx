@@ -2,6 +2,7 @@ import { DevicePageReviews } from "../DevicePageReviews/DevicePageReviews";
 import { DevicePageSchema } from "../../model/types/DevicePageSchema";
 import { DevicePageInfo } from "../DevicePageInfo/DevicePageInfo";
 import { DevicePageDescription } from "../DevicePageDescription/DevicePageDescription";
+import { Divider } from "@/shared/ui";
 
 export const DevicePageView = ({
     device,
@@ -9,21 +10,21 @@ export const DevicePageView = ({
     reviews,
     isOpen,
     contentType,
+    isFavorite,
     closeModal,
     openModal,
     handleAddReview,
     handleDeleteReview,
-    dispatch,
     notifyError,
     notifySuccess,
-    isFavorite,
     toggleFavorites,
 }: DevicePageSchema) => {
     return (
         <div className="flex flex-col gap-10">
-            <div className="relative flex flex-col lg:flex-row gap-10 bg-gradient-to-br from-[#1A1238]/30 to-[#08080e] p-8 rounded-3xl border-1 border-[#5120B8]/20 backdrop-blur-sm">
-                <div className="relative w-full lg:w-[500px] h-[500px] flex items-center justify-center rounded-2xl overflow-hidden bg-gradient-to-br from-[#1A1238]/50 to-[#08080e] border-1 border-[#5120B8]/20">
-                    <div className="absolute inset-0 bg-[#1A1238]/5 backdrop-blur-[2px]" />
+            <div className="relative flex flex-col lg:flex-row gap-10 card-gradient p-8 rounded-3xl primary-border backdrop-blur-sm">
+                <div className="relative w-full lg:w-[500px] h-[500px] flex items-center justify-center 
+                rounded-2xl overflow-hidden card-inner-gradient primary-border">
+                    <div className="overlay-blur-primary" />
                     <img
                         src={`${import.meta.env.VITE_API_URL}/${device?.img}`}
                         className="relative w-full h-full object-contain p-4 transition-transform duration-300 hover:scale-105"
@@ -34,28 +35,27 @@ export const DevicePageView = ({
                     <div className="flex-1">
                         <DevicePageInfo
                             device={device}
-                            dispatch={dispatch}
+                            isFavorite={isFavorite}
                             notifyError={notifyError}
                             notifySuccess={notifySuccess}
-                            isFavorite={isFavorite}
                             toggleFavorites={toggleFavorites}
                         />
                     </div>
                 )}
             </div>
-            <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-[#5120B8]/30 to-transparent" />
+            <Divider variant="h-[1px] w-full" />
             {device && <DevicePageDescription device={device} />}
-            <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-[#5120B8]/30 to-transparent" />
-            <div className="bg-gradient-to-br from-[#1A1238]/30 to-[#08080e] rounded-3xl border-1 border-[#5120B8]/20 backdrop-blur-sm">
+            <Divider variant="h-[1px] w-full" />
+            <div className="card-gradient rounded-3xl primary-border">
                 <DevicePageReviews
-                    contentType={contentType}
-                    currentUser={currentUser}
                     reviews={reviews}
-                    handleAddReview={handleAddReview}
-                    handleDeleteReview={handleDeleteReview}
+                    currentUser={currentUser}
                     isOpen={isOpen}
+                    contentType={contentType}
                     openModal={openModal}
                     closeModal={closeModal}
+                    handleAddReview={handleAddReview}
+                    handleDeleteReview={handleDeleteReview}
                 />
             </div>
         </div>

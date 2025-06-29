@@ -36,6 +36,5 @@ const brandSlice = createSlice({
     }
 })
 
-export const { setSelectedBrand } = brandSlice.actions;
-
+export const brandActions = brandSlice.actions;
 export const brandReducer = brandSlice.reducer;

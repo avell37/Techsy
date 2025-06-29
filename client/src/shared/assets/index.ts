@@ -8,7 +8,7 @@ export * from './icons/HidePasswordIcon';
 export * from './icons/LikeIcon';
 export * from './icons/PasswordIcon';
 export * from './icons/ShowPasswordIcon';
-export * from './icons/Spinner';
+export * from './icons/SpinnerAnimation';
 export * from './icons/UserIcon';
 export * from './icons/StarIcon'
 export * from './icons/XMarkIcon';
@@ -16,4 +16,5 @@ export * from './icons/PlusIcon';
 export * from './icons/MinusIcon';
 export * from './icons/ChangePhotoIcon';
 export * from './icons/EditIcon'
+export * from './icons/CancelledIcon'
 export const defaultUser = img1;

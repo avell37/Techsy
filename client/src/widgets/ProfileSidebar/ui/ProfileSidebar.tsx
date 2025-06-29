@@ -3,7 +3,7 @@ import { ProfileSidebarSchema } from "../model/types/ProfileSidebarSchema";
 
 export const ProfileSidebar = ({ onSelectTab, user }: ProfileSidebarSchema) => {
     return (
-        <div className="flex border-1 rounded-xl border-[#5120B8]/30 min-h-[750px] mt-5 filters-bg-gradient shadow-lg">
+        <div className="flex border-1 rounded-xl border-primary-300 min-h-[750px] mt-5 filters-bg-gradient shadow-lg">
             <div className="sticky top-30 flex flex-col gap-[10px] mt-[20px] mb-[20px]">
                 <Button
                     text="Основное"

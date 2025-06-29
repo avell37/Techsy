@@ -5,6 +5,7 @@ interface GoogleProps {
 export const GoogleIcon = ({ className }: GoogleProps) => {
     return (
         <svg
+            className={className}
             width="15px"
             height="15px"
             viewBox="0 0 256 262"
@@ -12,7 +13,6 @@ export const GoogleIcon = ({ className }: GoogleProps) => {
             xmlns="http://www.w3.org/2000/svg"
             xmlnsXlink="http://www.w3.org/1999/xlink"
             preserveAspectRatio="xMidYMid"
-            className={className}
         >
             <g>
                 <path

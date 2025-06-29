@@ -41,6 +41,6 @@ const shippingSlice = createSlice({
     }
 })
 
-export const { saveInfo } = shippingSlice.actions;
+export const shippingActions = shippingSlice.actions;
 
 export const shippingReducer = shippingSlice.reducer;

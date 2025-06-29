@@ -1,15 +1,16 @@
-import { useAppDispatch, useNotification } from "@/shared/hooks";
+import { useActions, useNotification } from "@/shared/hooks";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { ReviewYupSchema } from "../lib/ReviewYupSchema";
-import { createReview, fetchDeviceReviews } from "@/entities";
-import { AxiosError } from "axios";
+import { createReview } from "@/entities";
+import { handleServerFormError } from "@/shared/lib";
+import { ReviewHookData } from "../types/ReviewHookData";
 
 export const useReviewForm = (onClose?: () => void) => {
     const { id } = useParams();
+    const { fetchDeviceReviews } = useActions();
     const { notifySuccess, notifyError } = useNotification();
-    const dispatch = useAppDispatch();
 
     const { control, handleSubmit, reset, setError,
         getValues, formState: { errors }
@@ -26,30 +27,27 @@ export const useReviewForm = (onClose?: () => void) => {
         try {
             if (id) {
                 await createReview(id, data.rating, data.review);
+                fetchDeviceReviews(id);
                 reset();
                 if (onClose) onClose();
-                dispatch(fetchDeviceReviews(id));
                 notifySuccess("Отзыв успешно добавлен");
             }
         } catch (err) {
-            const error = err as AxiosError<{ message: string }>;
-            const message = error.response?.data?.message || "Ошибка. Пожалуйста, попробуйте еще раз.";
-            if (message.includes("Данный тип уже существует.")) {
-                setError("review", {
-                    type: "server",
-                    message,
-                })
-            } else {
-                notifyError("Ошибка... Попробуй еще раз :)");
-            }
+            handleServerFormError<ReviewHookData>(
+                err,
+                setError,
+                {
+                    review: "review"
+                },
+                notifyError
+            )
         }
     };
 
     return {
         control,
-        handleSubmit,
         errors,
-        handleAddReview,
-        reviewRating
+        reviewRating,
+        handleAddReview: handleSubmit(handleAddReview)
     }
 }

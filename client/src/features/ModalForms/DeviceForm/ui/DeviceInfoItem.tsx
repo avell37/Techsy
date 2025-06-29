@@ -1,7 +1,7 @@
 import { Input, Button } from "@/shared/ui";
-import { DeviceInfoItemSchema } from "@/features/ManageModal/model/types/DeviceInfoSchema";
 import { XMarkIcon } from "@/shared/assets";
 import React from "react";
+import { DeviceInfoItemSchema } from "../types/DeviceInfoSchema";
 
 export const DeviceInfoItem = React.memo(
     ({ item, onChange, onRemove }: DeviceInfoItemSchema) => {

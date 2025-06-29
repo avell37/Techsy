@@ -4,12 +4,12 @@ import { fetchAllTypes } from "../services/fetchAllTypes";
 
 const initialState: TypeInitialState = {
     types: [],
-    loading: false,
-    error: false,
     selectedType: {
         id: '',
         name: 'Тип',
-    }
+    },
+    loading: false,
+    error: false
 }
 
 const typeSlice = createSlice({
@@ -36,6 +36,6 @@ const typeSlice = createSlice({
     }
 })
 
-export const { setSelectedType } = typeSlice.actions;
+export const typeActions = typeSlice.actions;
 
 export const typeReducer = typeSlice.reducer;

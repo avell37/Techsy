@@ -1,46 +1,38 @@
-import { fetchUser } from "@/entities/User";
-import { useAppDispatch, useAppSelector } from "@/shared/hooks";
-import Cookies from "js-cookie";
-import { useEffect } from "react";
-import {
-    fetchAllDevices,
-    fetchAllTypes,
-    fetchAllBrands,
-    fetchShippingInfo,
-    fetchBasket,
-    fetchUserOrders,
-} from "@/entities";
-import { fetchAllFavoriteDevices } from "@/entities/Favorites";
+import { useActions, useAppSelector } from "@/shared/hooks";
+import { getToken } from "@/shared/lib";
+import { FC, useEffect } from "react";
+import { userSelector } from "@/entities";
 
-interface initProps {
+interface InitProps {
     children: React.ReactNode;
 }
 
-export const InitUser = ({ children }: initProps) => {
-    const dispatch = useAppDispatch();
-    const isAuth = useAppSelector((state) => state.userReducer.isAuth);
+export const InitUser: FC<InitProps> = ({ children }) => {
+    const { fetchBasket, fetchAllDevices, fetchAllTypes,
+        fetchAllBrands, fetchUser, fetchAllFavoriteDevices,
+        fetchShippingInfo, fetchUserOrders } = useActions();
+    const isAuth = useAppSelector(userSelector.isAuth);
 
     useEffect(() => {
-        dispatch(fetchAllDevices());
-        dispatch(fetchAllTypes());
-        dispatch(fetchAllBrands());
-    }, [dispatch]);
+        fetchAllDevices();
+        fetchAllTypes();
+        fetchAllBrands();
+    }, []);
 
     useEffect(() => {
-        const token = Cookies.get("token");
-        if (token && !isAuth) {
-            dispatch(fetchUser());
+        if (getToken('token') && !isAuth) {
+            fetchUser();
         }
-    }, [dispatch, isAuth]);
+    }, [isAuth]);
 
     useEffect(() => {
         if (isAuth) {
-            dispatch(fetchAllFavoriteDevices());
-            dispatch(fetchShippingInfo());
-            dispatch(fetchBasket());
-            dispatch(fetchUserOrders());
+            fetchAllFavoriteDevices();
+            fetchShippingInfo();
+            fetchBasket();
+            fetchUserOrders();
         }
-    }, [dispatch, isAuth]);
+    }, [isAuth]);
 
-    return <>{children}</>;
+    return children;
 };

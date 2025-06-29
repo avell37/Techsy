@@ -1,63 +1,49 @@
-import { Header } from "@/widgets/Header";
 import { Cart } from "@/features/Cart";
 import { CartDevice } from "@/features/Cart/ui/CartDevice/CartDevice";
-import {
-    useAppDispatch,
-    useAppSelector,
-    useNotification,
-} from "@/shared/hooks";
-import { Spinner } from "@/shared/assets";
+import { useAppSelector, useToggleFavorites } from "@/shared/hooks";
 import { checkFavoriteDevices } from "@/shared/lib/checkFavoriteDevices/checkFavoriteDevices";
-import { toggleFavorites } from "@/shared/lib/toggleFavorites/toggleFavorites";
 import { Container } from "@/shared/ui";
+import { basketSelector, favoriteSelector } from "@/entities";
+import { SpinnerAnimation } from "@/shared/assets";
+import { useMemo } from "react";
 
 const BasketPage = () => {
-    const dispatch = useAppDispatch();
-    const { favoriteDevices } = useAppSelector(
-        (state) => state.favoriteReducer
-    );
-    const { basket, loading } = useAppSelector((state) => state.basketReducer);
-    const { notifyError, notifySuccess } = useNotification();
+    const favoriteDevices = useAppSelector(favoriteSelector.favoriteDevices);
+    const basket = useAppSelector(basketSelector.basket);
+    const loading = useAppSelector(basketSelector.loading)
+    const { toggleFavorites } = useToggleFavorites();
+
+    const isFavorite = useMemo(() => {
+        return (deviceId: string) =>
+            checkFavoriteDevices({ deviceId, favoriteDevices });
+    }, [favoriteDevices])
+
+    const handleToggleFavorites = (deviceId: string) => toggleFavorites(deviceId);
 
     return (
-        <div className="flex flex-col">
-            <Header />
-            <Container>
-                <div className="flex justify-center gap-[50px] mt-5 filters-bg-gradient p-6 rounded-xl">
-                    <div className="flex flex-col gap-[20px] w-full">
-                        {loading ? (
-                            <div className="flex justify-center items-center">
-                                <Spinner width="100px" height="100px" />
-                            </div>
-                        ) : basket.length > 0 ? (
-                            basket.map((device) => (
-                                <CartDevice
-                                    key={device.id}
-                                    device={device}
-                                    isFavorite={checkFavoriteDevices({
-                                        deviceId: device.id,
-                                        favoriteDevices,
-                                    })}
-                                    onClick={() =>
-                                        toggleFavorites({
-                                            device: device.device,
-                                            notifySuccess,
-                                            notifyError,
-                                            dispatch,
-                                        })
-                                    }
-                                />
-                            ))
-                        ) : (
-                            <div className="text-white text-center text-xl mt-2">
-                                🛒 Корзина пуста. Добавьте товар.
-                            </div>
-                        )}
-                    </div>
-                    <Cart />
+        <Container>
+            <div className="flex justify-center gap-[50px] mt-5 filters-bg-gradient p-6 rounded-xl">
+                <div className="flex flex-col gap-[20px] w-full">
+                    {loading ? (
+                        <SpinnerAnimation width="100px" height="100px" />
+                    ) : basket.length > 0 ? (
+                        basket.map((device) => (
+                            <CartDevice
+                                key={device.id}
+                                device={device}
+                                isFavorite={isFavorite(device.id)}
+                                onClick={() => handleToggleFavorites(device.deviceId)}
+                            />
+                        ))
+                    ) : (
+                        <div className="text-white text-center text-xl mt-2">
+                            Корзина пуста. Добавьте товар.
+                        </div>
+                    )}
                 </div>
-            </Container>
-        </div>
+                <Cart />
+            </div>
+        </Container>
     );
 };
 

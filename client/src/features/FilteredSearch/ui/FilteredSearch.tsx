@@ -1,16 +1,19 @@
 import { FilteredSearchView } from "./FilteredSearchView";
-import { useState } from "react";
-import { useAppDispatch } from "@/shared/hooks";
-import { setSearchFilter } from "../model/slice/sortSlice";
+import { useCallback, useState } from "react";
+import { useActions } from "@/shared/hooks";
 
 export const FilteredSearch = () => {
-    const dispatch = useAppDispatch();
+    const { setSearchFilter } = useActions();
+
     const [value, setValue] = useState("");
 
-    const onChangeFilters = (value: string) => {
+    const onChangeFilters = useCallback((value: string) => {
         setValue(value);
-        dispatch(setSearchFilter(value));
-    };
+        setSearchFilter(value);
+    }, []);
 
-    return <FilteredSearchView value={value} onChange={onChangeFilters} />;
+    return <FilteredSearchView
+        value={value}
+        onChange={onChangeFilters}
+    />;
 };

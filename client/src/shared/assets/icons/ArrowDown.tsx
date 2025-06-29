@@ -9,9 +9,9 @@ export const ArrowDown = ({ width, height, className }: ArrowDownProps) => {
         <svg
             width={width}
             height={height}
+            className={className}
             viewBox="0 0 24 24"
             fill="#fff"
-            className={className}
             xmlns="http://www.w3.org/2000/svg"
         >
             <path

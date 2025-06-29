@@ -19,6 +19,6 @@ const sortSlice = createSlice({
     }
 })
 
-export const {setSortType, setSearchFilter} = sortSlice.actions;
+export const sortActions = sortSlice.actions;
 
 export const sortReducer = sortSlice.reducer;

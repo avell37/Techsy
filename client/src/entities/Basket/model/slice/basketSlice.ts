@@ -11,9 +11,10 @@ const initialState: BasketInitialState = {
 const basketSlice = createSlice({
     name: 'basket',
     initialState,
+    selectors: {},
     reducers: {
         deleteFromBasket: (state, action) => {
-            state.basket = state.basket.filter((device) => device.id !== action.payload)
+            state.basket = state.basket.filter((device) => device.deviceId !== action.payload)
         },
         incrementBasketDevice: (state, action) => {
             state.basket = state.basket.map((item) => item.deviceId === action.payload
@@ -41,5 +42,4 @@ const basketSlice = createSlice({
 })
 
 export const basketReducer = basketSlice.reducer;
-
-export const { deleteFromBasket, incrementBasketDevice, decrementBasketDevice } = basketSlice.actions;
+export const basketActions = basketSlice.actions;

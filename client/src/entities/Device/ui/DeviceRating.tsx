@@ -11,16 +11,7 @@ export const DeviceRating = ({
     rating,
     iconClass,
     spanClass,
-    noWrap,
 }: Props) => {
-    if (noWrap)
-        return (
-            <>
-                <StarIcon width="20px" height="20px" className={iconClass} />
-                <span className={spanClass}>{rating}</span>
-            </>
-        );
-
     return (
         <div className="flex items-center">
             <StarIcon width="20px" height="20px" className={iconClass} />

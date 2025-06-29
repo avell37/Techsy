@@ -4,3 +4,6 @@ export * from './model/slice/orderStatusSlice';
 export * from './model/types/createOrderProps';
 export * from './ui/OrderHistory';
 export * from './ui/OrderHistoryCard';
+export * from './model/selectors/orderStatusSelector';
+export * from './model/selectors/ordersSelector';
+export * from './model/types/createOrderProps';

@@ -1,37 +1,41 @@
-import { Modal } from "@/features/ManageModal";
+import React from "react";
+import { Modal, ModalContentType } from "@/features/ManageModal";
 import { ChangePhotoIcon, EditIcon } from "@/shared/assets";
-import { Input } from "@/shared/ui";
+import { Button, Input } from "@/shared/ui";
 import { ProfileProps } from "../model/types/profileProps";
 import { ShippingForm } from "@/features/ModalForms";
 
-export const UserProfileView = ({
+export const UserProfileView = React.memo(({
     user,
-    handleUpload,
     fileInputRef,
     isOpen,
     contentType,
     openModal,
     closeModal,
+    handleUpload,
 }: ProfileProps) => {
+    const handleFileUpload = () => fileInputRef?.current?.click()
+
+    const handleOpenModal = (e: React.MouseEvent<HTMLButtonElement>) => {
+        const value = e.currentTarget.value as ModalContentType;
+        openModal(value);
+    }
+
     return (
         <div className="flex w-full min-h-fit mt-5">
-            <div className="w-full p-8 border-1 border-[#5120B8]/30 rounded-xl filters-bg-gradient shadow-lg">
+            <div className="w-full p-8 border-1 border-primary-900/30 rounded-xl filters-bg-gradient shadow-lg">
                 <div className="flex flex-col md:flex-row gap-12">
                     <div className="flex flex-col items-center gap-6">
                         <div
-                            className="group relative w-[200px] h-[200px] border-2 border-[#3A177F] rounded-xl bg-[#1A1238]/20 overflow-hidden 
-                            cursor-pointer transition-all duration-300 hover:border-[#5120B8] hover:shadow-lg"
-                            onClick={() => fileInputRef?.current?.click()}
+                            className="group relative w-[200px] h-[200px] border-2 border-indigo-900 rounded-xl bg-primary-300/20 
+                            overflow-hidden cursor-pointer transition-all duration-300 hover:border-primary-900 hover:shadow-lg"
+                            onClick={handleFileUpload}
                         >
                             {user?.picture && (
                                 <>
                                     <img
-                                        src={
-                                            user.picture.startsWith("http")
-                                                ? user.picture
-                                                : import.meta.env.VITE_API_URL +
-                                                "/avatars/" +
-                                                user?.picture
+                                        src={user.picture.startsWith("http") ? user.picture
+                                            : `${import.meta.env.VITE_API_URL}/avatars/${user.picture}`
                                         }
                                         className="w-full h-full object-cover transition-all duration-300 group-hover:opacity-50"
                                         alt="Фото профиля"
@@ -58,8 +62,8 @@ export const UserProfileView = ({
                             noWrap
                             type="file"
                             accept="image/*"
-                            onChange={handleUpload}
                             ref={fileInputRef}
+                            onChange={handleUpload}
                         />
                     </div>
                     <div className="flex-1">
@@ -72,22 +76,22 @@ export const UserProfileView = ({
                                     <div className="flex gap-4 items-center">
                                         <Input
                                             noWrap
-                                            className="flex-1 max-w-[400px] border-1 border-[#5120B8]/30 hover:border-[#5120B8]
-                                                    hover:bg-[#1A1238]/30 focus:border-[#4F45E4] p-3 text-start rounded-lg text-white
+                                            className="flex-1 max-w-[400px] border-1 border-primary-900/30 hover:border-primary-900
+                                                    hover:bg-primary-300/30 p-3 text-start rounded-lg text-white
                                                     outline-none transition-all duration-300"
                                             type="text"
                                             disabled
                                             placeholder="Ваш username"
-                                            value={user?.username}
+                                            value={user?.username || ""}
                                         />
-                                        <div
-                                            className="cursor-pointer flex items-center justify-center p-[10px] bg-[#5120B8] rounded-lg"
-                                            onClick={() =>
-                                                openModal("editUsername")
-                                            }
+                                        <Button
+                                            value="editUsername"
+                                            className="cursor-pointer flex items-center justify-center p-[10px] bg-primary-900 rounded-lg
+                                            hover:bg-indigo-900 transition-all duration-300"
+                                            onClick={handleOpenModal}
                                         >
                                             <EditIcon />
-                                        </div>
+                                        </Button>
                                     </div>
                                 </div>
                                 <div className="space-y-3">
@@ -97,22 +101,22 @@ export const UserProfileView = ({
                                     <div className="flex gap-4 items-center">
                                         <Input
                                             noWrap
-                                            className="flex-1 max-w-[400px] border-1 border-[#5120B8]/30 hover:border-[#5120B8] 
-                                            hover:bg-[#1A1238]/30 focus:border-[#4F45E4] p-3 text-start rounded-lg text-white 
-                                            outline-none transition-all duration-300"
+                                            className="flex-1 max-w-[400px] border-1 border-primary-900/30 hover:border-primary-900
+                                                    hover:bg-primary-300/30 p-3 text-start rounded-lg text-white 
+                                                    outline-none transition-all duration-300"
                                             type="email"
                                             disabled
                                             placeholder="Ваш e-mail"
-                                            value={user?.email}
+                                            value={user?.email || ""}
                                         />
-                                        <div
-                                            className="cursor-pointer flex items-center justify-center p-[10px] bg-[#5120B8] rounded-lg"
-                                            onClick={() =>
-                                                openModal("editEmail")
-                                            }
+                                        <Button
+                                            value="editEmail"
+                                            className="cursor-pointer flex items-center justify-center p-[10px] bg-primary-900 rounded-lg
+                                            hover:bg-indigo-900 transition-all duration-300"
+                                            onClick={handleOpenModal}
                                         >
                                             <EditIcon />
-                                        </div>
+                                        </Button>
                                     </div>
                                 </div>
                             </div>
@@ -120,7 +124,7 @@ export const UserProfileView = ({
                     </div>
                 </div>
                 <div className="mt-8 space-y-8">
-                    <div className="p-6 border-1 border-[#5120B8]/30 rounded-xl bg-[#1A1238]/20">
+                    <div className="p-6 border-1 border-primary-900/30 rounded-xl bg-primary-300/20">
                         <div className="flex items-center justify-between">
                             <div>
                                 <h3 className="text-white text-lg font-medium mb-2">
@@ -133,7 +137,7 @@ export const UserProfileView = ({
                             </div>
                             <button
                                 onClick={() => openModal("editPassword")}
-                                className="px-6 py-3 bg-[#5120B8] hover:bg-[#4F45E4] rounded-lg text-white font-medium 
+                                className="px-6 py-3 bg-primary-900 hover:bg-indigo-900 rounded-lg text-white font-medium 
                                 transition-all duration-300 flex items-center gap-2"
                             >
                                 <EditIcon />
@@ -151,9 +155,9 @@ export const UserProfileView = ({
             </div>
             <Modal
                 isOpen={isOpen}
-                onClose={closeModal}
                 contentType={contentType}
+                onClose={closeModal}
             />
         </div>
     );
-};
+})

@@ -1,4 +1,7 @@
-import { deleteOneBrand, deleteOneDevice, deleteOneType, fetchAllBrands, fetchAllDevices, fetchAllTypes } from "@/entities";
+import {
+    deleteOneBrand, deleteOneDevice, deleteOneType,
+    fetchAllBrands, fetchAllDevices, fetchAllTypes
+} from "@/entities";
 import { RootState } from "@/app/providers/store/store";
 import { IBrand, IDevice, IType } from "../types";
 

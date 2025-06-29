@@ -1,5 +1,5 @@
 import { ArrowDown } from "@/shared/assets";
-import { Button, Dropdown } from "@/shared/ui";
+import { Button, Divider, Dropdown, Input } from "@/shared/ui";
 import { ProductFiltersSchema } from "../model/types/productFiltersSchema";
 
 export const ProductFiltersView = ({
@@ -13,13 +13,16 @@ export const ProductFiltersView = ({
     handleFilterChange,
 }: ProductFiltersSchema) => {
     return (
-        <div className="min-h-[750px] flex border-1 rounded-xl border-[#5120B8]/30 mt-5 filters-bg-gradient shadow-lg max-lg:max-w-[200px] max-md:max-w-[150px]">
+        <div className="min-h-[750px] flex border-1 rounded-xl border-primary-900/30 mt-5 
+        filters-bg-gradient shadow-lg max-lg:max-w-[200px] max-md:max-w-[150px]">
             <div className="flex flex-col gap-[10px] mt-[20px]">
                 <Dropdown
                     trigger={
                         <Button
                             text={selectedType.name}
-                            className="relative w-[250px] h-[40px] text-start pl-8 text-white border-[#5120B8]/30 hover:border-[#5120B8] hover:bg-[#1A1238] focus:border-[#4F45E4] transition cursor-pointer"
+                            className="relative w-[250px] h-[40px] text-start pl-8 text-white 
+                            border-primary-900/30 hover:border-primary-900 hover:bg-primary-300
+                            focus:border-light-purple transition cursor-pointer"
                         >
                             <ArrowDown
                                 width="20px"
@@ -35,7 +38,9 @@ export const ProductFiltersView = ({
                     trigger={
                         <Button
                             text={selectedBrand.name}
-                            className="relative w-[250px] h-[40px] text-start pl-8 text-white border-[#5120B8]/30 hover:border-[#5120B8] hover:bg-[#1A1238] focus:border-[#4F45E4] transition cursor-pointer"
+                            className="relative w-[250px] h-[40px] text-start pl-8 text-white 
+                            border-primary-900/30 hover:border-primary-900 hover:bg-primary-300 
+                            focus:border-light-purple transition cursor-pointer"
                         >
                             <ArrowDown
                                 width="20px"
@@ -47,9 +52,10 @@ export const ProductFiltersView = ({
                     items={brandItems}
                     className="w-[250px]"
                 />
-                <div className="divider max-lg:max-w-[200px] max-md:max-w-[150px]" />
+                <Divider variant="h-[2px] w-full" />
                 <label className="filter-label">
-                    <input
+                    <Input
+                        noWrap
                         type="checkbox"
                         className="peer absolute w-0 h-0 opacity-0 cursor-pointer"
                         checked={activeFilter === "priceLow"}
@@ -59,7 +65,8 @@ export const ProductFiltersView = ({
                     <span className="text-white ml-4 max-sm:break-words max-sm:max-w-[100px]">Сначала недорогие</span>
                 </label>
                 <label className="filter-label">
-                    <input
+                    <Input
+                        noWrap
                         type="checkbox"
                         className="peer absolute w-0 h-0 opacity-0 cursor-pointer"
                         checked={activeFilter === "priceHigh"}
@@ -69,7 +76,8 @@ export const ProductFiltersView = ({
                     <span className="text-white ml-4 max-sm:break-words max-sm:max-w-[100px]">Сначала дорогие</span>
                 </label>
                 <label className="filter-label">
-                    <input
+                    <Input
+                        noWrap
                         type="checkbox"
                         className="peer absolute w-0 h-0 opacity-0 cursor-pointer"
                         checked={activeFilter === "rating"}
@@ -80,7 +88,8 @@ export const ProductFiltersView = ({
                 </label>
                 {isFilterActive && (
                     <Button
-                        className="w-[250px] h-[40px] text-center text-white rounded-md border-[#5120B8]/30 hover:border-[#5120B8] hover:bg-[#1A1238]/30 transition cursor-pointer"
+                        className="w-[250px] h-[40px] text-center text-white rounded-md border-primary-900/30 
+                        hover:border-primary-900 hover:bg-primary-300/30 transition cursor-pointer"
                         text="Сбросить всё"
                         onClick={handleResetFilters}
                     />

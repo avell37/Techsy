@@ -1,5 +1,5 @@
 import axios, { InternalAxiosRequestConfig } from 'axios';
-import Cookies from 'js-cookie';
+import { getToken } from '../lib';
 
 const $host = axios.create({
     baseURL: import.meta.env.VITE_API_URL,
@@ -12,7 +12,7 @@ const $authHost = axios.create({
 });
 
 const authInterceptor = (config: InternalAxiosRequestConfig) => {
-    const token = Cookies.get('token');
+    const token = getToken('token');
     if (token) {
         config.headers.authorization = `Bearer ${token}`;
     }

@@ -1,15 +1,12 @@
-import { changeUsername, changeEmail, changePassword, fetchUser } from "@/entities";
-import { useNotification, useAppDispatch } from "@/shared/hooks";
 import { EditProfileFormProps } from "../types/EditProfileFormProps";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from "react-hook-form";
-import { ProfileYupSchema } from "@/features/ModalForms/ProfileForm/lib/ProfileYupSchema";
+import { ProfileYupSchema } from "../lib/ProfileYupSchema";
 import { ProfileHookData } from "../types/ProfileHookData";
-import { AxiosError } from "axios";
+import { useChangeData } from "./useChangeData";
+import { EditType } from "../types/ChangeDataProps";
 
 export const useEditProfileForm = ({ edit, onClose }: EditProfileFormProps) => {
-    const dispatch = useAppDispatch();
-    const { notifyError, notifySuccess, notifyWarn } = useNotification();
 
     const { control, handleSubmit, reset, setError,
         formState: { errors }
@@ -22,6 +19,13 @@ export const useEditProfileForm = ({ edit, onClose }: EditProfileFormProps) => {
             newPassword: "",
             repeatPassword: ""
         }
+    });
+
+    const { handleChangeData } = useChangeData({
+        edit: edit as EditType,
+        reset,
+        setError,
+        onClose
     });
 
     let title = '';
@@ -44,76 +48,12 @@ export const useEditProfileForm = ({ edit, onClose }: EditProfileFormProps) => {
             break;
     }
 
-    const handleChangeData = async (data: ProfileHookData) => {
-        try {
-            if (edit === 'username' && data.username) {
-                if (!data.username.trim()) return notifyWarn("Поле не может быть пустым.")
-                await changeUsername(data.username);
-                reset();
-                dispatch(fetchUser())
-                notifySuccess('Имя пользователя успешно изменено!')
-            } else if (edit === 'email' && data.email) {
-                if (!data.email.trim()) return notifyWarn("Поле не может быть пустым.")
-                await changeEmail(data.email);
-                reset();
-                dispatch(fetchUser())
-                notifySuccess('Почта успешно изменена!')
-            } else if (edit === 'password' && data.oldPassword) {
-                if (!data.oldPassword || !data.newPassword || !data.repeatPassword) {
-                    return notifyWarn('Заполните все поля.')
-                }
-                if (data.newPassword !== data.repeatPassword) {
-                    return notifyWarn('Пароли не совпадают')
-                }
-                await changePassword(data.oldPassword, data.newPassword);
-                reset();
-                dispatch(fetchUser())
-                notifySuccess('Пароль успешно изменен!')
-            }
-            onClose();
-        } catch (err) {
-            const error = err as AxiosError<{ message: string }>;
-            const message = error.response?.data?.message || "Ошибка. Пожалуйста, попробуйте еще раз.";
-            if (message.toLowerCase().includes("username")) {
-                setError("username", {
-                    type: "server",
-                    message,
-                })
-            } else if (message.toLowerCase().includes("email")) {
-                setError("email", {
-                    type: "server",
-                    message,
-                })
-            } else if (message.includes("Email адрес уже занят.")) {
-                setError("email", {
-                    type: "server",
-                    message,
-                })
-            } else if (message.toLowerCase().includes("password")) {
-                setError("oldPassword", {
-                    type: "server",
-                    message,
-                })
-            }
-            else if (message.includes("Неверный старый пароль")) {
-                setError("oldPassword", {
-                    type: "server",
-                    message,
-                })
-            }
-            else {
-                notifyError(message);
-            }
-        }
-    }
-
     return {
         title,
         placeholder,
         isPassword,
-        handleChangeData,
-        handleSubmit,
         control,
-        errors
+        errors,
+        handleChangeData: handleSubmit(handleChangeData),
     }
 }

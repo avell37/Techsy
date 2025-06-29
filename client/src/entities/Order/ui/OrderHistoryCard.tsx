@@ -20,11 +20,11 @@ export const OrderHistoryCard = ({ order }: { order: IOrder }) => {
                         src={`${import.meta.env.VITE_API_URL}/${item.img}`} />
                 ))}
                 {hiddenCount > 0 && (
-                    <div className="w-[30px] h-[30px] rounded-full bg-[#5120B8] text-white text-xs flex items-center justify-center">
+                    <div className="w-[30px] h-[30px] rounded-full bg-primary-900 
+                    text-white text-xs flex items-center justify-center">
                         +{hiddenCount}
                     </div>
                 )}
-
             </div>
         </div >
     );

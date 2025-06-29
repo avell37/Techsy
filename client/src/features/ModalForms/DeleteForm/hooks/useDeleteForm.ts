@@ -1,10 +1,10 @@
-import { useDeleteEntity } from "@/features/ManageModal/hooks/useDeleteEntity";
-import { UseDeleteFormProps } from "../../BrandForm/types/UseDeleteFormProps";
+import { useDeleteEntity } from "./useDeleteEntity";
+import { EntityKey, UseDeleteFormProps } from "../../BrandForm/types/UseDeleteFormProps";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { DeleteYupSchema } from "../lib/DeleteYupSchema";
 import { useNotification } from "@/shared/hooks";
-import { AxiosError } from "axios";
+import { handleServerFormError } from "@/shared/lib";
 
 export const useDeleteForm = ({ entityType, onClose }: UseDeleteFormProps) => {
     const { items, remove } = useDeleteEntity(entityType);
@@ -12,14 +12,14 @@ export const useDeleteForm = ({ entityType, onClose }: UseDeleteFormProps) => {
 
     const { control, handleSubmit, reset, setError,
         formState: { errors }
-    } = useForm<{ entity: string }>({
+    } = useForm<{ entity: EntityKey }>({
         resolver: yupResolver(DeleteYupSchema),
         defaultValues: {
-            entity: ''
+            entity: 'brand'
         }
     });
 
-    const handleDeleteFormSubmit = async (data: { entity: string }) => {
+    const handleDeleteFormSubmit = async (data: { entity: EntityKey }) => {
         try {
             if (!data.entity) {
                 return notifyWarn('Выберите то, что хотите удалить')
@@ -29,24 +29,21 @@ export const useDeleteForm = ({ entityType, onClose }: UseDeleteFormProps) => {
             reset();
             if (onClose) onClose();
         } catch (err) {
-            const error = err as AxiosError<{ message: string }>;
-            const message = error.response?.data?.message || "Ошибка. Пожалуйста, попробуйте еще раз.";
-            if (message.includes("Не найден ID устройства")) {
-                setError("entity", {
-                    type: "server",
-                    message,
-                })
-            } else {
-                notifyError("Ошибка... Попробуй еще раз :)");
-            }
+            handleServerFormError<{ entity: string }>(
+                err,
+                setError,
+                {
+                    entity: "entity"
+                },
+                notifyError
+            )
         }
     };
 
     return {
         control,
-        handleSubmit,
-        handleDeleteFormSubmit,
         errors,
-        items
+        items,
+        handleDeleteFormSubmit: handleSubmit(handleDeleteFormSubmit)
     }
 }

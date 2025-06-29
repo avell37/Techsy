@@ -1,6 +1,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 @import "tailwindcss";
 
+@theme {
+    --color-primary-900: #5120B8;
+    --color-primary-500: color-mix(in srgb, #5120B8 30%, transparent);
+    --color-primary-300: #1A1238;
+
+    --color-indigo-900: #3A177F;
+    --color-indigo-300: color-mix(in srgb, #3A177F 30%, transparent);
+
+    --color-black: #08080e;
+    --color-light-black: #0d091d;
+    --color-black-purple: #3A2D67;
+    --color-light-purple: #8A4FFF;
+    --color-yellow: #ffe500;
+}
+
+
 @layer utilities {
     .bg-base-gradient {
         backdrop-filter: blur(50%);
@@ -17,6 +33,30 @@
                 #0F0F1A 100%);
     }
 
+    .card-gradient {
+        @apply bg-gradient-to-br from-[#1A1238]/30 to-[#08080e];
+    }
+
+    .card-inner-gradient {
+        @apply bg-gradient-to-br from-[#1A1238]/50 to-[#08080e];
+    }
+
+    .card-gradient-right {
+        @apply bg-gradient-to-r from-[#5120B8]/0 via-[#5120B8]/5 to-[#5120B8]/0
+    }
+
+    .divider-gradient {
+        @apply bg-gradient-to-r from-transparent via-[#5120B8]/30 to-transparent;
+    }
+
+    .primary-border {
+        @apply border border-[#5120B8]/20;
+    }
+
+    .overlay-blur-primary {
+        @apply absolute inset-0 bg-primary-300/5 backdrop-blur-[2px];
+    }
+
     .custom-input {
         @apply flex-1 border-1 border-[#5120B8]/30 hover:border-[#5120B8] hover:bg-[#1A1238]/30 focus:border-[#4F45E4] text-start rounded-lg text-white outline-none transition-all duration-300;
     }
@@ -30,7 +70,7 @@
     }
 
     .custom-button {
-        @apply w-[250px] h-[50px] text-center text-white border-[#5120B8]/30 hover:border-[#5120B8] hover:bg-[#1A1238] focus:border-[#4F45E4] transition cursor-pointer
+        @apply w-[250px] h-[50px] text-center text-white border-primary-300 hover:border-primary-900 hover:bg-[#1A1238] focus:border-[#4F45E4] transition cursor-pointer
     }
 
     .filter-label {
@@ -45,16 +85,12 @@
         @apply border-[#4F45E4];
     }
 
-    .divider {
-        @apply border-1 border-[#5120B8]/30 h-[1px] w-full;
-    }
-
     .apply-button {
-        @apply rounded-md max-w-[100px] w-full h-[40px] bg-[#5120B8] focus:outline-none cursor-pointer text-white
+        @apply rounded-md max-w-[100px] w-full h-[40px] bg-primary-900 focus:outline-none cursor-pointer text-white hover:bg-indigo-900 transition-all duration-300
     }
 
     .cancel-button {
-        @apply rounded-md max-w-[100px] w-full h-[40px] bg-red-900 focus:outline-none cursor-pointer text-white
+        @apply rounded-md max-w-[100px] w-full h-[40px] bg-red-700 focus:outline-none cursor-pointer text-white hover:bg-red-900 transition-all duration-300
     }
 }
 

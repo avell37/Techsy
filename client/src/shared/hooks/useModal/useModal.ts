@@ -10,12 +10,11 @@ export type ModalContentType =
     'addReview' |
     'editUsername' |
     'editEmail' |
-    'editPassword' |
-    null;
+    'editPassword'
 
 export const useModal = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const [contentType, setContentType] = useState<ModalContentType>(null);
+    const [contentType, setContentType] = useState<ModalContentType | null>(null);
 
     const openModal = (type: ModalContentType) => {
         setContentType(type);

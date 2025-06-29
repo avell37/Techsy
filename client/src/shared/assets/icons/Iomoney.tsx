@@ -5,7 +5,7 @@ export const Iomoney = () => {
             data-name="Layer 1"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 1440 320"
-            className="fill-[#fff] w-auto h-auto max-h-6"
+            className="fill-white w-auto h-auto max-h-6"
         >
             <path
                 className="cls-1"

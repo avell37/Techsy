@@ -8,7 +8,7 @@ export interface ProfileProps {
     handleUpload: (e: React.ChangeEvent<HTMLInputElement>) => void,
     fileInputRef: RefObject<HTMLInputElement | null>,
     isOpen: boolean,
-    contentType: ModalContentType,
+    contentType: ModalContentType | null,
     openModal: (contentType: ModalContentType) => void,
     closeModal: () => void,
     shippingData: IShipping,

@@ -6,13 +6,13 @@ export const ProductFilters = () => {
         isFilterActive,
         selectedType,
         selectedBrand,
-        handleResetFilters,
         typeItems,
         brandItems,
-        handleFilterChange,
         activeFilter,
+        handleResetFilters,
+        handleFilterChange,
     } = useProductFilters();
-    
+
     return (
         <ProductFiltersView
             selectedType={selectedType}
@@ -20,9 +20,9 @@ export const ProductFilters = () => {
             selectedBrand={selectedBrand}
             brandItems={brandItems}
             isFilterActive={isFilterActive}
+            activeFilter={activeFilter}
             handleResetFilters={handleResetFilters}
             handleFilterChange={handleFilterChange}
-            activeFilter={activeFilter}
         />
     );
 };

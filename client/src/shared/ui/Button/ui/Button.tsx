@@ -8,6 +8,7 @@ export const Button: React.FC<ButtonSchema> = ({
     type,
     noWrap,
     disabled,
+    value
 }) => {
     if (noWrap)
         return (
@@ -16,6 +17,7 @@ export const Button: React.FC<ButtonSchema> = ({
                 className={className}
                 onClick={onClick}
                 disabled={disabled}
+                value={value}
             >
                 {text}
             </button>
@@ -26,6 +28,7 @@ export const Button: React.FC<ButtonSchema> = ({
             className={className}
             onClick={onClick}
             disabled={disabled}
+            value={value}
         >
             {text}
             {children}

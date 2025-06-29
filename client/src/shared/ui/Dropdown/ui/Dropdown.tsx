@@ -1,10 +1,10 @@
 import { FC, useState } from "react";
 import { Button } from "@/shared/ui/Button/ui/Button";
-import { DropdownSchema } from "../model/DropdownSchema";
 import { useDropdownClickOutside } from "@/shared/hooks/useDropdownClickOutside/useDropdownClickOutside";
-import { Spinner } from "@/shared/assets";
+import { SpinnerAnimation } from "@/shared/assets";
+import { DropdownProps } from "../model/types/DropdownProps";
 
-export const Dropdown: FC<DropdownSchema> = ({
+export const Dropdown: FC<DropdownProps> = ({
     trigger,
     items,
     className,
@@ -23,14 +23,14 @@ export const Dropdown: FC<DropdownSchema> = ({
             </div>
             {isOpen && (
                 <div
-                    className={`${className} absolute mt-2 w-44 bg-[#1A1238] rounded-xl shadow-lg z-10000`}
+                    className={`${className} absolute mt-2 w-44 bg-primary-300 rounded-xl shadow-lg z-10000`}
                 >
                     <div className={`py-1 scrollable`}>
                         {items.length > 0 ? (
                             items.map((item, i) => (
                                 <Button
                                     key={i}
-                                    className="w-full text-center px-4 py-2 text-white rounded-xl hover:bg-[#3A2D67] transition"
+                                    className="w-full text-center px-4 py-2 text-white rounded-xl hover:bg-black-purple transition"
                                     text={item.text}
                                     onClick={() => {
                                         setIsOpen(false);
@@ -39,11 +39,13 @@ export const Dropdown: FC<DropdownSchema> = ({
                                 />
                             ))
                         ) : (
-                            <Spinner
-                                width="30px"
-                                height="30px"
-                                className="p-2"
-                            />
+                            <div className="flex justify-center items-center">
+                                <SpinnerAnimation
+                                    width="30px"
+                                    height="30px"
+                                    className="p-2"
+                                />
+                            </div>
                         )}
                     </div>
                 </div>

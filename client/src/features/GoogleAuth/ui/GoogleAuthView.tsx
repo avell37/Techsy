@@ -5,8 +5,10 @@ export const GoogleAuthView = ({ login }: { login: () => void }) => {
     return (
         <Button
             type="button"
+            className="relative flex justify-center items-center w-[40px] h-[40px] 
+            border-primary-500 border-1 hover:border-primary-900 hover:bg-primary-500
+            bg-primary-300 text-white rounded-full cursor-pointer transition-all"
             onClick={login}
-            className="relative flex justify-center items-center w-[40px] h-[40px] border-gray-700 border-1 hover:border-gray-500 hover:bg-[#191e2b] bg-[#111729] text-white rounded-full cursor-pointer transition-all"
         >
             <GoogleIcon />
         </Button>

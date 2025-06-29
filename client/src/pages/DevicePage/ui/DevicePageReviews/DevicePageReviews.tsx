@@ -1,11 +1,10 @@
-import { Button } from "@/shared/ui";
+import { Button, RatingBars } from "@/shared/ui";
 import { DevicePageReviewsSchema } from "../../model/types/DevicePageSchema";
 import { ReviewCard } from "@/entities/Review/ui/ReviewCard/ui/ReviewCard";
 import { StarRating } from "@/features/StarRating/ui/StarRating";
 import { starCounts } from "../../lib/starCounts";
 import { averageRating } from "../../lib/averageRating";
-import { StarCountType } from "../../model/types/starCountSchema";
-import { RatingBars } from "./lib/RatingBars";
+import { useMemo } from "react";
 
 export const DevicePageReviews = ({
     reviews,
@@ -13,19 +12,29 @@ export const DevicePageReviews = ({
     handleAddReview,
     handleDeleteReview,
 }: DevicePageReviewsSchema) => {
-    const stats = starCounts(reviews || []);
-    const avgRating = averageRating(reviews || []);
-    const counts: StarCountType = stats.counts;
+    const { avgRating, counts } = useMemo(() => {
+        const safeReviews = reviews || [];
+        const stats = starCounts(safeReviews);
+        const avg = averageRating(safeReviews);
+        return {
+            avgRating: avg,
+            counts: stats.counts
+        }
+    }, [reviews]);
+
+    const handleDelete = (id: string) => {
+        handleDeleteReview(id)
+    }
 
     return (
         <div className="flex h-full">
-            <div className="border-r border-[#5120B8]/30 min-h-fit min-w-[300px] flex flex-col items-center p-8">
+            <div className="flex flex-col items-center min-h-fit min-w-[300px] p-8 border-r border-primary-900/30">
                 <div className="flex flex-col items-center gap-4 mb-8">
-                    <span className="text-[#8A4FFF] text-5xl font-bold">
+                    <span className="text-light-purple text-5xl font-bold">
                         {avgRating}
                     </span>
                     <StarRating value={Number(avgRating)} readOnly size={24} />
-                    <span className="text-[#8A4FFF]/70 text-sm">
+                    <span className="text-light-purple/70 text-sm">
                         На основе {reviews.length}{" "}
                         {reviews.length === 1 ? "отзыва" : "отзывов"}
                     </span>
@@ -41,20 +50,19 @@ export const DevicePageReviews = ({
                         <span className="text-white">({reviews.length})</span>
                     </h1>
                     <Button
-                        onClick={() => handleAddReview()}
-                        className="rounded-md w-[200px] h-[50px] text-center border border-[#3A177F] text-white hover:border-[#8A4FFF] hover:bg-[#1A1238]/50 transition-all cursor-pointer"
+                        onClick={handleAddReview}
+                        className="rounded-md w-[200px] h-[50px] text-center border border-indigo-900 text-white 
+                        hover:border-light-purple hover:bg-primary-300/50 transition-all cursor-pointer"
                         text="Добавить отзыв"
                     />
                 </div>
-                {reviews && reviews.length > 0 ? (
+                {reviews && !!reviews.length ? (
                     reviews.map((review) => (
                         <ReviewCard
                             key={review.id}
                             currentUser={currentUser}
                             review={review}
-                            handleDeleteReview={() =>
-                                handleDeleteReview(review.id)
-                            }
+                            handleDeleteReview={() => handleDelete(review.id)}
                         />
                     ))
                 ) : (

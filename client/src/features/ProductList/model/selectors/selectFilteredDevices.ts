@@ -1,28 +1,40 @@
 import { RootState } from "@/app/providers/store/store";
+import { createSelector } from "@reduxjs/toolkit";
 
-export const selectFilteredDevices = (state: RootState) => {
-    const { devices } = state.deviceReducer;
-    const { selectedBrand } = state.brandReducer;
-    const { selectedType } = state.typeReducer; 
-    const { sortType, search } = state.sortReducer;
-    
-    const filtered = devices.filter((device) => {
+const selectDevices = (state: RootState) => state.deviceReducer.devices;
+const selectSelectedBrand = (state: RootState) => state.brandReducer.selectedBrand;
+const selectSelectedType = (state: RootState) => state.typeReducer.selectedType;
+const selectSortType = (state: RootState) => state.sortReducer.sortType;
+const selectSearch = (state: RootState) => state.sortReducer.search;
+
+export const selectFilteredDevices = createSelector(
+    [selectDevices, selectSelectedBrand, selectSelectedType,
+        selectSortType, selectSearch],
+    (devices = [], selectedBrand, selectedType, sortType, search) => {
         const searchQuery = search?.toLowerCase() || '';
-        const deviceName = device.name?.toLowerCase() || '';
-        const matchedSearch = deviceName.includes(searchQuery);
-        
-        const matchedBrand = selectedBrand.name !== 'Бренд' ? device.brandId === selectedBrand.id : true;
-        const matchedType = selectedType.name !== 'Тип' ? device.typeId === selectedType.id : true;
-        return matchedSearch && matchedBrand && matchedType;
-    })
 
-    if (sortType === 'price-inc') {
-        filtered.sort((a, b) => a.price - b.price);
-    } else if (sortType === 'price-dec') {
-        filtered.sort((a, b) => b.price - a.price)
-    } else if (sortType === 'rating') {
-        filtered.sort((a, b) => b.rating - a.rating)
+        let filtered = devices.filter((device) => {
+            const matchedSearch = device.name?.toLowerCase().includes(searchQuery);
+            const matchedBrand = selectedBrand.name !== 'Бренд' ?
+                device.brandId === selectedBrand.id : true;
+            const matchedType = selectedType.name !== 'Тип' ?
+                device.typeId === selectedType.id : true;
+            return matchedSearch && matchedBrand && matchedType;
+        })
+
+        switch (sortType) {
+            case 'price-inc':
+                filtered = [...filtered].sort((a, b) => a.price - b.price);
+                break;
+            case 'price-dec':
+                filtered = [...filtered].sort((a, b) => b.price - a.price);
+                break;
+            case 'rating':
+                filtered = [...filtered].sort((a, b) => b.rating - a.rating);
+                break;
+        }
+
+
+        return filtered;
     }
-
-    return filtered;
-}
+)

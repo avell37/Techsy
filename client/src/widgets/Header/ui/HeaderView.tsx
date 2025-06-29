@@ -10,12 +10,15 @@ export const HeaderView = ({
     userIsAuth,
     userLogout,
 }: HeaderAuthSchema) => {
+    const handleLogin = () => navigate(LOGIN_ROUTE);
+    const handleNavigateToShop = () => navigate(SHOP_ROUTE);
+
     return (
-        <div className="sticky top-0 w-full bg-[#08080e] border-b border-[#5120B8]/30 z-[100]">
+        <div className="sticky top-0 w-full bg-black border-b border-primary-500 z-[100]">
             <Container>
                 <div className="flex justify-between items-center min-h-[100px]">
                     <Button
-                        onClick={() => navigate(SHOP_ROUTE)}
+                        onClick={handleNavigateToShop}
                         className="flex justify-center text-xl text-purple-500 font-bold cursor-pointer"
                     >
                         techsy
@@ -26,16 +29,11 @@ export const HeaderView = ({
                                 trigger={
                                     picture ? (
                                         <div className="flex justify-center items-center gap-[5px] cursor-pointer">
-                                            <div className="w-[50px] h-[50px] border-2 border-[#3A177F] rounded-full bg-transparent overflow-hidden">
+                                            <div className="w-[50px] h-[50px] border-2 border-primary-900 rounded-full bg-transparent overflow-hidden">
                                                 <img
                                                     className="w-[50px] h-[50px]"
-                                                    src={
-                                                        picture.startsWith("http")
-                                                            ? picture
-                                                            : import.meta.env
-                                                                .VITE_API_URL +
-                                                            "/avatars/" +
-                                                            picture
+                                                    src={picture.startsWith("http") ? picture
+                                                        : `${import.meta.env.VITE_API_URL}/avatars/${picture}`
                                                     }
                                                 />
                                             </div>
@@ -43,7 +41,7 @@ export const HeaderView = ({
                                         </div>
                                     ) : (
                                         <div className="flex items-center justify-center gap-[5px]">
-                                            <div className="w-[50px] h-[50px] border-2 border-[#3A177F] rounded-full bg-transparent overflow-hidden">
+                                            <div className="w-[50px] h-[50px] border-2 border-primary-500 rounded-full bg-transparent overflow-hidden">
                                                 <img
                                                     className="w-[50px] h-[50px]"
                                                     src={defaultUser}
@@ -60,8 +58,8 @@ export const HeaderView = ({
                     ) : (
                         <div className="flex justify-center gap-[30px]">
                             <Button
-                                onClick={() => navigate(LOGIN_ROUTE)}
-                                className="text-white hover:text-[#8A4FFF] transition-colors cursor-pointer"
+                                onClick={handleLogin}
+                                className="text-white hover:text-primary-light transition-colors cursor-pointer"
                             >
                                 Войти
                             </Button>

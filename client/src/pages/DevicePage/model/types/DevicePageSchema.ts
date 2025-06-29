@@ -9,7 +9,6 @@ export interface DevicePageDescriptionSchema {
 export interface DevicePageInfoSchema extends DevicePageDescriptionSchema {
     isFavorite: boolean,
     toggleFavorites: () => void,
-    dispatch: AppDispatch,
     notifyError: (message: string) => void,
     notifySuccess: (message: string) => void,
 }
@@ -18,11 +17,12 @@ export interface DevicePageReviewsSchema {
     currentUser: IUser | null,
     reviews: IReview[],
     isOpen: boolean,
-    contentType: ModalContentType,
+    contentType: ModalContentType | null,
+    dispatch?: AppDispatch
     closeModal: () => void,
     openModal: (type: ModalContentType) => void,
     handleAddReview: () => void,
     handleDeleteReview: (reviewId: string) => void,
 }
 
-export interface DevicePageSchema extends DevicePageInfoSchema, DevicePageDescriptionSchema, DevicePageReviewsSchema {}
+export interface DevicePageSchema extends DevicePageInfoSchema, DevicePageDescriptionSchema, DevicePageReviewsSchema { }

@@ -4,14 +4,11 @@ interface Props {
     className?: string;
 }
 
-export const DeviceImg = ({ name, img, className }: Props) => {
-    return (
-        <>
-            <img
-                className={className}
-                src={import.meta.env.VITE_API_URL + "/" + img}
-                alt={name}
-            />
-        </>
-    );
-};
+export const DeviceImg = ({ name, img, className }: Props) => (
+    <img
+        className={className}
+        src={`${import.meta.env.VITE_API_URL}/${img}`}
+        alt={name}
+    />
+);
+

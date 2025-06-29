@@ -3,12 +3,11 @@ import { GoogleAuthView } from "./GoogleAuthView";
 import { loginWithOAuth } from "@/entities/User/api/userApi";
 import { useNavigate } from "react-router-dom";
 import { SHOP_ROUTE } from "@/shared/config/consts";
-import { useNotification, useAppDispatch } from "@/shared/hooks";
-import { fetchUser } from "@/entities/User";
+import { useNotification, useActions } from "@/shared/hooks";
 
 export const GoogleAuth = () => {
+    const { fetchUser } = useActions();
     const navigate = useNavigate();
-    const dispatch = useAppDispatch();
     const { notifySuccess, notifyError } = useNotification();
 
     const login = useGoogleLogin({
@@ -17,7 +16,7 @@ export const GoogleAuth = () => {
         onSuccess: async (response) => {
             const code = response?.code;
             await loginWithOAuth(code);
-            await dispatch(fetchUser());
+            fetchUser();
             navigate(SHOP_ROUTE);
             notifySuccess("Успешный вход!");
         },

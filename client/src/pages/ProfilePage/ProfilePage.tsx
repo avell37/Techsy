@@ -1,14 +1,13 @@
-import { Header } from "@/widgets/Header";
 import { ProfileSidebar } from "@/widgets/ProfileSidebar/ui/ProfileSidebar";
 import { useState } from "react";
-import { OrderHistory, UserProfile } from "@/entities";
+import { OrderHistory, ordersSelector, UserProfile, userSelector } from "@/entities";
 import { Container } from "@/shared/ui";
 import { useAppSelector } from "@/shared/hooks";
 import { AdminPanel } from "@/features/AdminPanel";
 
 const ProfilePage = () => {
-    const user = useAppSelector((state) => state.userReducer.currentUser);
-    const orders = useAppSelector((state) => state.ordersReducer.orders);
+    const user = useAppSelector(userSelector.currentUser);
+    const orders = useAppSelector(ordersSelector.orders);
     const [activeTab, setActiveTab] = useState("profile");
 
     const renderContent = () => {
@@ -33,15 +32,12 @@ const ProfilePage = () => {
     };
 
     return (
-        <div className="flex flex-col w-full">
-            <Header />
-            <Container>
-                <div className="flex h-full">
-                    <ProfileSidebar onSelectTab={setActiveTab} user={user} />
-                    <div className="flex-1 pl-10">{renderContent()}</div>
-                </div>
-            </Container>
-        </div>
+        <Container>
+            <div className="flex h-full">
+                <ProfileSidebar onSelectTab={setActiveTab} user={user} />
+                <div className="flex-1 pl-10">{renderContent()}</div>
+            </div>
+        </Container>
     );
 };
 

@@ -1,15 +1,18 @@
+import { favoriteSelector } from "@/entities";
 import { DeviceCard } from "@/entities/Device";
-import { useAppDispatch, useAppSelector, useNotification } from "@/shared/hooks";
-import { toggleFavorites, checkFavoriteDevices, addToBasket } from "@/shared/lib";
+import { useAddToBasket, useAppSelector, useToggleFavorites } from "@/shared/hooks";
+import { checkFavoriteDevices } from "@/shared/lib";
 import { countPagination } from "@/shared/lib/countPagination/countPagination";
 import { Pagination } from "@/shared/ui/Pagination/Pagination";
+import { useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const FavoritesList = () => {
-    const { favoriteDevices, currentPage } = useAppSelector(
-        (state) => state.favoriteReducer
-    );
-    const dispatch = useAppDispatch();
-    const { notifySuccess, notifyWarn, notifyError } = useNotification();
+    const navigate = useNavigate();
+    const favoriteDevices = useAppSelector(favoriteSelector.favoriteDevices);
+    const currentPage = useAppSelector(favoriteSelector.currentPage);
+    const { addToBasket, checkInBasket } = useAddToBasket();
+    const { toggleFavorites } = useToggleFavorites();
 
     const { currentItems, totalPages } = countPagination({
         devices: favoriteDevices.map((fav) => fav.device),
@@ -17,35 +20,30 @@ export const FavoritesList = () => {
         itemsPerPage: 10,
     });
 
+    const isFavorite = useMemo(() => {
+        return (deviceId: string) =>
+            checkFavoriteDevices({ deviceId, favoriteDevices });
+    }, [favoriteDevices])
+
+    const handleToggleFavorites = (deviceId: string) => toggleFavorites(deviceId);
+    const handleAddToCart = (deviceId: string) => {
+        if (checkInBasket(deviceId)) navigate('/basket');
+        addToBasket(deviceId);
+    }
+
     return (
-        <div className="p-6 border-1 rounded-xl border-[#5120B8]/30 mt-5 filters-bg-gradient shadow-lg">
+        <div className="p-6 border-1 rounded-xl border-primary-900/30 mt-5 filters-bg-gradient shadow-lg">
             <h1 className="text-white text-2xl font-bold">Избранные товары:</h1>
             <div className="grid grid-cols-5 gap-[25px] mt-[20px]">
-                {currentItems.length > 0 ? (
+                {currentItems.length ? (
                     currentItems.map((device) => (
                         <DeviceCard
                             key={device.id}
                             device={device}
-                            isFavorite={checkFavoriteDevices({
-                                deviceId: device.id,
-                                favoriteDevices,
-                            })}
-                            onClick={() =>
-                                toggleFavorites({
-                                    device,
-                                    notifySuccess,
-                                    notifyError,
-                                    dispatch,
-                                })
-                            }
-                            addToBasket={() =>
-                                addToBasket({
-                                    id: device.id,
-                                    notifySuccess,
-                                    notifyWarn,
-                                    notifyError,
-                                })
-                            }
+                            isFavorite={isFavorite(device.id)}
+                            onClick={() => handleToggleFavorites(device.id)}
+                            addToBasket={() => handleAddToCart(device.id)}
+                            checkInBasket={checkInBasket}
                         />
                     ))
                 ) : (

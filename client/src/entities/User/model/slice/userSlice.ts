@@ -42,4 +42,4 @@ const userSlice = createSlice({
 
 export const userReducer = userSlice.reducer;
 
-export const { updateAvatar, logout } = userSlice.actions;
+export const userActions = userSlice.actions;

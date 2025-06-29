@@ -1,42 +1,47 @@
-import { Input, Button, Dropdown, ImagePreview } from "@/shared/ui";
-import { useDeviceForm, FormSchema } from "@features/ManageModal";
+import { Input, Button, Dropdown, ImagePreview, FormInputController } from "@/shared/ui";
 import { DeviceInfoItem } from "./DeviceInfoItem";
 import { useRef } from "react";
 import { ChangePhotoIcon } from "@/shared/assets";
+import { useDeviceForm } from "../hooks/useDeviceForm";
 
-export const DeviceForm = ({ onClose }: FormSchema) => {
+export const DeviceForm = ({ onClose }: { onClose?: () => void }) => {
     const fileInputRef = useRef<HTMLInputElement>(null);
     const {
-        device,
+        img,
+        brandName,
+        typeName,
+        control,
         brandItems,
         typeItems,
-        handleChange,
+        info,
+        errors,
         handleFileChange,
         handleSubmitForm,
-        info,
         handleAddInfo,
         handleChangeInfo,
         handleRemoveInfo,
     } = useDeviceForm();
+    const handleFileUpload = () => fileInputRef?.current?.click()
 
     return (
         <form
-            onSubmit={handleSubmitForm}
             className="flex flex-col gap-[20px] pl-6"
+            onSubmit={handleSubmitForm}
         >
             <h1 className="text-white pt-8 text-xl font-bold">
                 Добавить устройство:
             </h1>
             <div className="flex gap-8">
                 <div
-                    className="group relative w-[200px] h-[200px] border-2 border-[#3A177F] rounded-xl bg-[#1A1238]/20 overflow-hidden 
-                    cursor-pointer transition-all duration-300 hover:border-[#5120B8] hover:shadow-lg p-4"
-                    onClick={() => fileInputRef?.current?.click()}
+                    className="group relative w-[200px] h-[200px] border-2 border-indigo-900 rounded-xl 
+                    bg-primary-300/20 overflow-hidden cursor-pointer transition-all duration-300 
+                    hover:border-primary-900 hover:shadow-lg p-4"
+                    onClick={handleFileUpload}
                 >
-                    {device.img && (
+                    {img ? (
                         <>
                             <ImagePreview
-                                file={device.img}
+                                file={img}
                                 className="w-full h-full object-contain transition-all duration-300 group-hover:opacity-50"
                             />
                             <div
@@ -51,8 +56,7 @@ export const DeviceForm = ({ onClose }: FormSchema) => {
                                 </div>
                             </div>
                         </>
-                    )}
-                    {!device.img && (
+                    ) : (
                         <div className="absolute inset-0 flex items-center justify-center">
                             <div className="flex flex-col items-center gap-2">
                                 <ChangePhotoIcon />
@@ -66,8 +70,8 @@ export const DeviceForm = ({ onClose }: FormSchema) => {
                         ref={fileInputRef}
                         type="file"
                         className="hidden"
-                        onChange={handleFileChange}
                         accept="image/*"
+                        onChange={handleFileChange}
                     />
                 </div>
                 <div className="flex flex-col gap-[30px]">
@@ -75,8 +79,10 @@ export const DeviceForm = ({ onClose }: FormSchema) => {
                         trigger={
                             <Button
                                 type="button"
-                                className="w-[175px] h-[40px] cursor-pointer text-center text-white rounded-md border-1 border-[#5120B8]/30 hover:border-[#5120B8] hover:bg-[#1A1238]/30 focus:border-[#4F45E4] transition"
-                                text={device.brandName}
+                                className="w-[175px] h-[40px] cursor-pointer text-center text-white rounded-md border-1 
+                                border-primary-900/30 hover:border-primary-900 hover:bg-primary-300/30 
+                                focus:border-light-purple transition"
+                                text={brandName}
                             />
                         }
                         items={brandItems}
@@ -87,8 +93,10 @@ export const DeviceForm = ({ onClose }: FormSchema) => {
                         trigger={
                             <Button
                                 type="button"
-                                className="w-[175px] h-[40px] cursor-pointer text-center text-white rounded-md border-1 border-[#5120B8]/30 hover:border-[#5120B8] hover:bg-[#1A1238]/30 focus:border-[#4F45E4] transition"
-                                text={device.typeName}
+                                className="w-[175px] h-[40px] cursor-pointer text-center text-white rounded-md border-1 
+                                border-primary-900/30 hover:border-primary-900 hover:bg-primary-300/30 
+                                focus:border-light-purple transition"
+                                text={typeName}
                             />
                         }
                         items={typeItems}
@@ -97,25 +105,28 @@ export const DeviceForm = ({ onClose }: FormSchema) => {
                     />
                 </div>
             </div>
-            <Input
-                noWrap
-                className="max-w-[450px] custom-input p-3"
+            <FormInputController
+                name="name"
+                control={control}
+                type="text"
+                className="max-w-[410px] w-full custom-input p-3"
                 placeholder="Название устройства"
-                value={device.name}
-                onChange={(e) => handleChange("name", e.target.value)}
+                errors={errors}
             />
-            <Input
-                noWrap
-                className="max-w-[450px] custom-input p-3"
+            <FormInputController
+                name="price"
+                control={control}
+                type="text"
+                className="max-w-[410px] w-full custom-input p-3"
                 placeholder="Цена"
-                value={device.price}
-                onChange={(e) => handleChange("price", e.target.value)}
+                errors={errors}
             />
             <Button
                 type="button"
-                onClick={handleAddInfo}
-                className="w-[175px] h-[40px] cursor-pointer text-center text-white rounded-md border-1 border-[#5120B8]/30 hover:border-[#5120B8] hover:bg-[#1A1238]/30 focus:border-[#4F45E4] transition"
+                className="w-[175px] h-[40px] cursor-pointer text-center text-white rounded-md border-1 
+                border-primary-900/30 hover:border-primary-900 hover:bg-primary-300/30 focus:border-light-purple transition"
                 text="Добавить свойства"
+                onClick={handleAddInfo}
             />
             <div className="flex flex-col gap-[10px]">
                 {info.map((i) => (
@@ -127,7 +138,7 @@ export const DeviceForm = ({ onClose }: FormSchema) => {
                     />
                 ))}
             </div>
-            <div className="flex justify-end mb-6 mr-2 gap-[10px]">
+            <div className="flex justify-end mb-6 mr-4 gap-[10px]">
                 <Button
                     className="apply-button"
                     type="submit"
@@ -135,8 +146,8 @@ export const DeviceForm = ({ onClose }: FormSchema) => {
                 />
                 <Button
                     className="cancel-button"
-                    onClick={onClose}
                     text="Закрыть"
+                    onClick={onClose}
                 />
             </div>
         </form>

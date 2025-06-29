@@ -7,6 +7,7 @@ export const ShowPasswordIcon: React.FC<ShowPasswordProps> = ({
 }) => {
     return (
         <svg
+            className={className}
             width="18px"
             height="18px"
             viewBox="0 0 64 64"
@@ -14,8 +15,7 @@ export const ShowPasswordIcon: React.FC<ShowPasswordProps> = ({
             xmlns="http://www.w3.org/2000/svg"
             xmlnsXlink="http://www.w3.org/1999/xlink"
             xmlSpace="preserve"
-            className={className}
-            fill="#ffffff"
+            fill="#fff"
         >
             <rect
                 id="Icons"
