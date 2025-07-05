@@ -12,7 +12,7 @@ export const CartView = ({
         <div className="flex flex-col justify-between gap-[30px] h-full">
             <div className="flex flex-col gap-[20px]">
                 <p className="text-white text-xl">Вариант оплаты:</p>
-                <div className="flex gap-[20px] flex-wrap">
+                <div className="flex gap-[20px] flex-wrap justify-center items-center">
                     <Button
                         onClick={handleSelectYoomoneyPayment}
                         type="button"

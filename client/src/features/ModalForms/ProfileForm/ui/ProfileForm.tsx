@@ -8,10 +8,10 @@ export const ProfileForm = ({ onClose, edit }: ProfileFormProps) => {
 
     return (
         <form
-            className="flex flex-col gap-[30px] p-4"
+            className="flex flex-col gap-[30px] p-4 max-sm:px-2"
             onSubmit={handleChangeData}
         >
-            <h1 className="text-white pt-4 text-xl font-bold">
+            <h1 className="text-white pt-4 text-xl font-bold max-sm:text-sm max-sm:pt-4 max-sm:mt-[3px]">
                 Изменить {title}
             </h1>
             <div className="flex flex-col gap-[20px]">

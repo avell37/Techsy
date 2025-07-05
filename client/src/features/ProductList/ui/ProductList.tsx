@@ -39,7 +39,7 @@ export const ProductList = () => {
 
     return (
         <div className="flex flex-col justify-between">
-            <div className="grid grid-cols-4 gap-[20px] mt-[10px] max-xl:grid-cols-3 max-lg:grid-cols-2 max-lg:gap-[10px]">
+            <div className="gap-[20px] mt-[10px] cards-responsive">
                 {currentItems?.map((device: IDevice) => (
                     <DeviceCard
                         key={device.id}

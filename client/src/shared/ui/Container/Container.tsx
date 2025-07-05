@@ -8,7 +8,23 @@ export const Container = ({
     noWidthFull?: boolean;
 }) => {
     if (noWidthFull) {
-        return <div className={`max-w-[1440px] mx-auto ${className ? className : ''}`}>{children}</div>;
+        return (
+            <div
+                className={`max-w-[1440px] mx-auto px-4 ${
+                    className ? className : ""
+                }`}
+            >
+                {children}
+            </div>
+        );
     }
-    return <div className={`max-w-[1440px] mx-auto w-full ${className ? className : ''}`}>{children}</div>;
+    return (
+        <div
+            className={`max-w-[1440px] mx-auto w-full px-4 ${
+                className ? className : ""
+            }`}
+        >
+            {children}
+        </div>
+    );
 };

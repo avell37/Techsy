@@ -11,7 +11,6 @@ class UserController {
             if (!username || !email || !password) {
                 return next(ApiError.badRequest('Переданы не все данные.'))
             }
-            const avatar = 'default-user.png'
             const candidate = await prisma.user.findUnique({
                 where: {
                     email
@@ -26,7 +25,6 @@ class UserController {
                     username,
                     email,
                     password: hashPassword,
-                    picture: avatar,
                     role
                 }
             })
@@ -35,7 +33,7 @@ class UserController {
                     userId: user.id
                 }
             })
-            const token = generateJWT(user.id, user.username, user.email, user.role, user.picture)
+            const token = generateJWT(user.id, user.username, user.email, user.role)
             return res.json({ token })
         } catch (err) {
             return next(ApiError.internal('Произошла ошибка на сервере. Попробуйте позже.'))
@@ -180,26 +178,22 @@ class UserController {
     }
 
     async uploadAvatar(req: any, res: any, next: any) {
-        try {
-            if (!req.user) {
-                return next(ApiError.unauthorized('Информация о пользователе не найдена.'))
-            }
-            const newAvatar = req.file.filename;
-            const userId = req.user.id;
-            if (!req.file) {
-                return next(ApiError.badRequest('Файл не загружен'))
-            }
-
-            const updatedUser = await prisma.user.update({
-                where: { id: userId },
-                data: { picture: newAvatar }
-            })
-
-            const token = generateJWT(updatedUser.id, updatedUser.username, updatedUser.email, updatedUser.role, updatedUser.picture)
-            return res.json({ token });
-        } catch (err) {
-            return next(ApiError.internal('Произошла ошибка на сервере. Попробуйте позже.'));
+        if (!req.user) {
+            return next(ApiError.unauthorized('Информация о пользователе не найдена.'))
         }
+        const newAvatar = req.file.filename;
+        const userId = req.user.id;
+        if (!req.file) {
+            return next(ApiError.badRequest('Файл не загружен'))
+        }
+
+        const updatedUser = await prisma.user.update({
+            where: { id: userId },
+            data: { picture: newAvatar }
+        })
+
+        const token = generateJWT(updatedUser.id, updatedUser.username, updatedUser.email, updatedUser.role, updatedUser.picture)
+        return res.json({ token });
     }
 
     async getShippingInfo(req: any, res: any, next: any) {

@@ -21,12 +21,12 @@ export const DevicePageView = ({
 }: DevicePageSchema) => {
     return (
         <div className="flex flex-col gap-10">
-            <div className="relative flex flex-col lg:flex-row gap-10 card-gradient p-8 rounded-3xl primary-border backdrop-blur-sm">
-                <div className="relative w-full lg:w-[500px] h-[500px] flex items-center justify-center 
+            <div className="relative flex flex-col lg:flex-row gap-10 card-gradient p-8 rounded-3xl primary-border backdrop-blur-sm max-sm:gap-6">
+                <div className="relative w-full lg:w-[500px] sm:h-[500px] flex items-center justify-center 
                 rounded-2xl overflow-hidden card-inner-gradient primary-border">
                     <div className="overlay-blur-primary" />
                     <img
-                        src={`${import.meta.env.VITE_API_URL}/${device?.img}`}
+                        src={`${import.meta.env.VITE_API_URL}/uploads/${device?.img}`}
                         className="relative w-full h-full object-contain p-4 transition-transform duration-300 hover:scale-105"
                         alt={device?.name}
                     />

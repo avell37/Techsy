@@ -1,12 +1,15 @@
-import { IOrder } from '@/shared/types/IOrder'
-import { OrderHistoryCard } from './OrderHistoryCard'
+import { IOrder } from "@/shared/types/IOrder";
+import { OrderHistoryCard } from "./OrderHistoryCard";
 
 interface OrderHistoryItemProps {
-    order: IOrder,
+    order: IOrder;
     handleOrderClick: (order: IOrder) => void;
 }
 
-export const OrderHistoryItem = ({ order, handleOrderClick }: OrderHistoryItemProps) => {
+export const OrderHistoryItem = ({
+    order,
+    handleOrderClick,
+}: OrderHistoryItemProps) => {
     const handleClick = () => handleOrderClick(order);
 
     return (
@@ -17,5 +20,5 @@ export const OrderHistoryItem = ({ order, handleOrderClick }: OrderHistoryItemPr
         >
             <OrderHistoryCard order={order} />
         </div>
-    )
-}
+    );
+};

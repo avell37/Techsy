@@ -5,8 +5,8 @@ export const BrandForm = ({ onClose }: { onClose: () => void }) => {
     const { control, errors, handleBrandFormSubmit } = useBrandForm(onClose);
 
     return (
-        <form onSubmit={handleBrandFormSubmit} className="flex flex-col gap-[30px] pl-6">
-            <h1 className="text-white pt-8 text-xl font-bold">
+        <form onSubmit={handleBrandFormSubmit} className="flex flex-col gap-[30px] pl-6 max-sm:px-2">
+            <h1 className="text-white pt-8 text-xl font-bold max-sm:text-sm max-sm:pt-4 max-sm:mt-[3px]">
                 Добавить бренд:
             </h1>
             <FormInputController

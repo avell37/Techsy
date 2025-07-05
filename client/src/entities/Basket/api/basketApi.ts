@@ -1,4 +1,4 @@
-import { BasketItem } from "@/shared/types";
+import { IBasket } from "@/shared/types/IBasket";
 import { $authHost } from "@shared/api";
 
 export const addDeviceToBasket = async (deviceId: string) => {
@@ -6,8 +6,8 @@ export const addDeviceToBasket = async (deviceId: string) => {
     return data;
 }
 
-export const getBasket = async (): Promise<BasketItem[]> => {
-    const { data } = await $authHost.get<BasketItem[]>('/api/basket');
+export const getBasket = async (): Promise<IBasket> => {
+    const { data } = await $authHost.get<IBasket>('/api/basket');
     return data;
 }
 

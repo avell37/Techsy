@@ -15,7 +15,7 @@ export const DeleteForm = ({
             className="p-4 flex flex-col gap-[30px] h-full"
             onSubmit={handleDeleteFormSubmit}
         >
-            <h2 className="font-bold text-xl text-white mt-4">
+            <h2 className="font-bold text-xl text-white mt-4 max-sm:text-sm max-sm:pt-4 max-sm:mt-[3px]">
                 Удалить {entityName}
             </h2>
             <Divider variant="h-[3px] w-full" />

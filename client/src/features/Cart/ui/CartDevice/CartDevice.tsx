@@ -17,16 +17,18 @@ export const CartDevice = ({
     isFavorite,
     onClick,
 }: CartDeviceSchema) => {
-    const { deleteFromBasket, decrementBasketDevice, incrementBasketDevice } = useActions();
+    const { deleteFromBasket, decrementBasketDevice, incrementBasketDevice } =
+        useActions();
     const { notifySuccess, notifyError } = useNotification();
     const navigate = useNavigate();
 
-    const handleNavigate = () => navigate(DEVICE_ROUTE + "/" + device.device.id);
+    const handleNavigate = () =>
+        navigate(DEVICE_ROUTE + "/" + device.device.id);
 
     const handleDelete = async (deviceId: string) => {
         try {
             await deleteDeviceFromBasket(deviceId);
-            deleteFromBasket(deviceId)
+            deleteFromBasket(deviceId);
             notifySuccess("Товар успешно удален из корзины");
         } catch (err) {
             console.log(err);
@@ -37,7 +39,7 @@ export const CartDevice = ({
     const handleIncrement = async (deviceId: string) => {
         try {
             await incrementDevice(deviceId);
-            incrementBasketDevice(deviceId)
+            incrementBasketDevice(deviceId);
         } catch (err) {
             console.error(err);
             notifyError("Произошла ошибка... Попробуй еще раз :)");
@@ -51,77 +53,86 @@ export const CartDevice = ({
         }
         try {
             await decrementDevice(deviceId);
-            decrementBasketDevice(deviceId)
+            decrementBasketDevice(deviceId);
         } catch (err) {
             console.error(err);
             notifyError("Произошла ошибка... Попробуй еще раз :)");
         }
     };
 
-    const handleDecrementDevice = () => handleDecrement(device.device.id, device.quantity);
+    const handleDecrementDevice = () =>
+        handleDecrement(device.device.id, device.quantity);
     const handleIncrementDevice = () => handleIncrement(device.device.id);
     const handleDeleteCartDevice = () => handleDelete(device.device.id);
 
     return (
         <div
-            className="relative flex items-center justify-between
-            min-h-[130px] w-full border-[2px] border-indigo-900 rounded-xl hover:border-light-purple
-            hover:bg-primary-300/30 transition-all"
+            className="relative flex flex-col sm:flex-row items-start sm:items-center justify-between 
+            w-full p-4 border-[2px] border-indigo-900 rounded-xl 
+            hover:border-light-purple hover:bg-primary-300/30 transition-all duration-300"
         >
             <div
-                className="flex gap-[20px] w-full cursor-pointer"
+                className="flex flex-1 gap-4 items-center cursor-pointer w-full"
                 onClick={handleNavigate}
             >
-                <div className="flex justify-center items-center w-full">
+                <div className="relative min-w-[75px] w-[75px] sm:w-[100px] h-[75px] sm:h-[100px]">
                     <DeviceImg
-                        className="object-contain w-[75px] h-[75px]"
+                        className="object-contain w-full h-full rounded-lg"
                         img={device.device.img}
-                        name="device"
+                        name={device.device.name}
                     />
                 </div>
-                <div className="flex flex-col justify-center min-w-[300px]">
-                    <p className="text-white">{device.device.name}</p>
-                    <p className="text-light-purple">{device.device.price} Р.</p>
+                <div className="flex flex-col flex-1 gap-2">
+                    <h3 className="text-white text-sm sm:text-base font-medium line-clamp-2">
+                        {device.device.name}
+                    </h3>
+                    <p className="text-light-purple text-sm sm:text-base font-semibold">
+                        {device.device.price} Р.
+                    </p>
                 </div>
             </div>
-            <div className="flex justify-around items-center h-full w-full">
-                <div className="flex items-center border border-light-purple rounded-lg gap-[10px] p-[2px]">
+            <div className="flex items-center gap-4 mt-4 sm:mt-0 w-full sm:w-auto">
+                <div className="flex items-center justify-center flex-1 sm:flex-none">
+                    <div className="flex items-center border border-light-purple rounded-lg bg-primary-300/20 p-1">
+                        <Button
+                            onClick={handleDecrementDevice}
+                            className="p-1 hover:bg-primary-300/40 rounded-md transition-all duration-300"
+                        >
+                            <MinusIcon
+                                width="20px"
+                                height="20px"
+                                className="stroke-white"
+                            />
+                        </Button>
+                        <span className="text-white min-w-[40px] text-center">
+                            {device.quantity}
+                        </span>
+                        <Button
+                            onClick={handleIncrementDevice}
+                            className="p-1 hover:bg-primary-300/40 rounded-md transition-all duration-300"
+                        >
+                            <PlusIcon
+                                width="20px"
+                                height="20px"
+                                className="stroke-white"
+                            />
+                        </Button>
+                    </div>
+                </div>
+                <div className="flex items-center gap-2">
+                    <DeviceLike
+                        className="cursor-pointer"
+                        isFavorite={isFavorite}
+                        onClick={onClick}
+                    />
                     <Button
-                        onClick={handleDecrementDevice}
+                        className="cursor-pointer p-2 hover:bg-primary-300/20 rounded-lg transition-all duration-300"
+                        onClick={handleDeleteCartDevice}
                     >
-                        <MinusIcon
-                            width="25px"
-                            height="20px"
-                            className="stroke-white cursor-pointer"
-                        />
-                    </Button>
-                    <span className="text-white">{device.quantity}</span>
-                    <Button
-                        onClick={handleIncrementDevice}
-                    >
-                        <PlusIcon
-                            width="20px"
-                            height="20px"
-                            className="stroke-white cursor-pointer"
-                        />
+                        <XMarkIcon className="stroke-white w-5 h-5" />
                     </Button>
                 </div>
             </div>
-            <DeviceLike
-                className="absolute top-[7px] right-10 cursor-pointer"
-                isFavorite={isFavorite}
-                onClick={onClick}
-            />
-            <Button
-                className="absolute top-2 right-2 cursor-pointer"
-                onClick={handleDeleteCartDevice}
-            >
-                <XMarkIcon
-                    width="22px"
-                    height="22px"
-                    className="stroke-white"
-                />
-            </Button>
         </div>
     );
 };

@@ -44,7 +44,7 @@ export const Cart = () => {
         }
     };
     return (
-        <div className="border-1 border-primary-900 rounded-xl max-w-[400px] min-h-[400px] h-full w-full p-6">
+        <div className="border-1 border-primary-900 rounded-xl max-w-[400px] min-h-[400px] h-full w-full p-6 max-lg:max-w-full max-lg:min-h-[300px]">
             <CartView
                 totalPrice={totalPrice}
                 handleCreateOrder={handleCreateOrder}

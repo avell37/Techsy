@@ -34,7 +34,7 @@ export const FavoritesList = () => {
     return (
         <div className="p-6 border-1 rounded-xl border-primary-900/30 mt-5 filters-bg-gradient shadow-lg">
             <h1 className="text-white text-2xl font-bold">Избранные товары:</h1>
-            <div className="grid grid-cols-5 gap-[25px] mt-[20px]">
+            <div className="mt-[20px] favorite-cards-responsive">
                 {currentItems.length ? (
                     currentItems.map((device) => (
                         <DeviceCard

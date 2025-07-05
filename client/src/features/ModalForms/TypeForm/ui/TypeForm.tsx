@@ -4,8 +4,8 @@ import { useTypeForm } from "../hooks/useTypeForm";
 export const TypeForm = ({ onClose }: { onClose: () => void }) => {
     const { control, errors, handleTypeFormSubmit } = useTypeForm(onClose);
     return (
-        <form onSubmit={handleTypeFormSubmit} className="flex flex-col gap-[30px] pl-6">
-            <h1 className="text-white pt-8 text-xl font-bold">Добавить тип:</h1>
+        <form onSubmit={handleTypeFormSubmit} className="flex flex-col gap-[30px] pl-6 max-sm:px-2">
+            <h1 className="text-white pt-8 text-xl font-bold max-sm:text-sm max-sm:pt-4 max-sm:mt-[3px]">Добавить тип:</h1>
             <FormInputController
                 name="type"
                 control={control}

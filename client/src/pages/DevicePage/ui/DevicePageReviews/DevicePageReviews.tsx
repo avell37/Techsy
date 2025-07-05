@@ -27,8 +27,8 @@ export const DevicePageReviews = ({
     }
 
     return (
-        <div className="flex h-full">
-            <div className="flex flex-col items-center min-h-fit min-w-[300px] p-8 border-r border-primary-900/30">
+        <div className="flex h-full max-sm:flex-col">
+            <div className="flex flex-col items-center min-h-fit md:max-w-[300px] w-full p-8 border-r border-primary-900/30 max-sm:border-r-0 max-sm:border-b">
                 <div className="flex flex-col items-center gap-4 mb-8">
                     <span className="text-light-purple text-5xl font-bold">
                         {avgRating}
@@ -45,14 +45,14 @@ export const DevicePageReviews = ({
             </div>
             <div className="w-full flex flex-col gap-[30px] p-8">
                 <div className="flex justify-between">
-                    <h1 className="text-white text-2xl font-bold">
+                    <h1 className="text-white text-2xl font-bold max-sm:text-sm">
                         Все отзывы{" "}
                         <span className="text-white">({reviews.length})</span>
                     </h1>
                     <Button
                         onClick={handleAddReview}
                         className="rounded-md w-[200px] h-[50px] text-center border border-indigo-900 text-white 
-                        hover:border-light-purple hover:bg-primary-300/50 transition-all cursor-pointer"
+                        hover:border-light-purple hover:bg-primary-300/50 transition-all cursor-pointer max-sm:text-xs"
                         text="Добавить отзыв"
                     />
                 </div>

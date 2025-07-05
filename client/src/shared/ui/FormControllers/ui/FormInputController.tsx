@@ -24,12 +24,12 @@ export const FormInputController = ({
                     {...field}
                     type={type}
                     placeholder={placeholder}
-                    className={`custom-input ${className}`}
+                    className={`${className} custom-input`}
                     error={typeof errorMessage === 'string' ? errorMessage : undefined}
                 >
-                    {icon && <span className="absolute top-3 left-3">{icon}</span>}
+                    {icon && <span className="absolute top-3 left-3 max-sm:top-[9px] max-sm:left-[7px]">{icon}</span>}
                     {element && (
-                        <span className="absolute right-2 top-3">{element}</span>
+                        <span className="absolute right-2 top-3 max-sm:top-[9px] max-sm:right-[7px]">{element}</span>
                     )}
                 </Input>
             )} />

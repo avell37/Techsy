@@ -33,9 +33,9 @@ const ProfilePage = () => {
 
     return (
         <Container>
-            <div className="flex h-full">
+            <div className="flex w-full h-full gap-10 max-lg:gap-2 max-lg:flex-col">
                 <ProfileSidebar onSelectTab={setActiveTab} user={user} />
-                <div className="flex-1 pl-10">{renderContent()}</div>
+                <div className="w-full">{renderContent()}</div>
             </div>
         </Container>
     );

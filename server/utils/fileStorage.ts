@@ -1,10 +1,18 @@
 const multer = require('multer');
 const uuid = require('uuid');
 const path = require('path');
+const fs = require('fs');
+
+const isProd = process.env.NODE_ENV === 'production';
+
+const baseUploadPath = isProd
+    ? path.join(__dirname, '..', 'uploads', 'avatars')
+    : path.join(process.cwd(), 'uploads', 'avatars');
 
 const storage = multer.diskStorage({
     destination: function (req: any, file: any, cb: any) {
-        cb(null, process.env.HOME + '/Desktop/frontend/techsy/server/uploads/avatars')
+        fs.mkdirSync(baseUploadPath, { recursive: true });
+        cb(null, baseUploadPath)
     },
     filename: function (req: any, file: any, cb: any) {
         const ext = path.extname(file.originalname);

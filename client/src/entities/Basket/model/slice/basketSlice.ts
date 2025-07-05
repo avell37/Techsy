@@ -31,7 +31,7 @@ const basketSlice = createSlice({
                 state.loading = true;
             })
             .addCase(fetchBasket.fulfilled, (state, action) => {
-                state.basket = action.payload;
+                state.basket = action.payload ?? [];
                 state.loading = false;
             })
             .addCase(fetchBasket.rejected, (state) => {

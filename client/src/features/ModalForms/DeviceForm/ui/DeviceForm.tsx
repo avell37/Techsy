@@ -25,13 +25,13 @@ export const DeviceForm = ({ onClose }: { onClose?: () => void }) => {
 
     return (
         <form
-            className="flex flex-col gap-[20px] pl-6"
+            className="flex flex-col gap-[20px] pl-6 max-sm:px-2"
             onSubmit={handleSubmitForm}
         >
-            <h1 className="text-white pt-8 text-xl font-bold">
+            <h1 className="text-white pt-8 text-xl font-bold max-sm:text-sm max-sm:pt-4 max-sm:mt-[3px]">
                 Добавить устройство:
             </h1>
-            <div className="flex gap-8">
+            <div className="flex gap-8 max-sm:flex-col">
                 <div
                     className="group relative w-[200px] h-[200px] border-2 border-indigo-900 rounded-xl 
                     bg-primary-300/20 overflow-hidden cursor-pointer transition-all duration-300 
@@ -87,7 +87,7 @@ export const DeviceForm = ({ onClose }: { onClose?: () => void }) => {
                         }
                         items={brandItems}
                         className="left"
-                        triggerClassname="max-w-[175px]"
+                        triggerClassname="max-w-[175px] max-sm:text-sm"
                     />
                     <Dropdown
                         trigger={
@@ -101,7 +101,7 @@ export const DeviceForm = ({ onClose }: { onClose?: () => void }) => {
                         }
                         items={typeItems}
                         className="left"
-                        triggerClassname="max-w-[175px]"
+                        triggerClassname="max-w-[175px] max-sm:text-sm"
                     />
                 </div>
             </div>
@@ -123,7 +123,7 @@ export const DeviceForm = ({ onClose }: { onClose?: () => void }) => {
             />
             <Button
                 type="button"
-                className="w-[175px] h-[40px] cursor-pointer text-center text-white rounded-md border-1 
+                className="w-[175px] h-[40px] cursor-pointer text-center text-white rounded-md border-1 max-sm:text-sm
                 border-primary-900/30 hover:border-primary-900 hover:bg-primary-300/30 focus:border-light-purple transition"
                 text="Добавить свойства"
                 onClick={handleAddInfo}

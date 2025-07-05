@@ -20,7 +20,7 @@ const deviceSlice = createSlice({
                 state.loading = true;
             })
             .addCase(fetchAllDevices.fulfilled, (state, action) => {
-                state.devices = action.payload;
+                state.devices = action.payload ?? [];
                 state.loading = false;
             })
             .addCase(fetchAllDevices.rejected, (state) => {

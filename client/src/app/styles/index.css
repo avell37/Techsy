@@ -58,7 +58,11 @@
     }
 
     .custom-input {
-        @apply flex-1 border-1 border-[#5120B8]/30 hover:border-[#5120B8] hover:bg-[#1A1238]/30 focus:border-[#4F45E4] text-start rounded-lg text-white outline-none transition-all duration-300;
+        @apply flex-1 border-1 border-[#5120B8]/30 hover:border-[#5120B8] hover:bg-[#1A1238]/30 focus:border-[#4F45E4] text-start rounded-lg text-white outline-none transition-all duration-300 max-sm:p-[6px] max-sm:pl-3 max-sm:text-sm;
+    }
+
+    .custom-input-with-icon {
+        @apply flex-1 border-1 border-[#5120B8]/30 hover:border-[#5120B8] hover:bg-[#1A1238]/30 focus:border-[#4F45E4] text-start rounded-lg text-white outline-none transition-all duration-300 max-sm:p-[6px] max-sm:pl-7 max-sm:text-sm;
     }
 
     .custom-checkbox {
@@ -70,11 +74,15 @@
     }
 
     .custom-button {
-        @apply w-[250px] h-[50px] text-center text-white border-primary-300 hover:border-primary-900 hover:bg-[#1A1238] focus:border-[#4F45E4] transition cursor-pointer
+        @apply block h-[50px] text-center text-white border-primary-300 hover:border-primary-900 hover:bg-[#1A1238] focus:border-[#4F45E4] transition cursor-pointer max-sm:h-[40px] max-sm:text-sm;
     }
 
     .filter-label {
         @apply flex items-center relative max-w-[250px] h-[40px] text-left pl-4 text-white transition cursor-pointer;
+    }
+
+    .filter-label-responsive {
+        @apply flex items-center relative max-w-[320px] w-full h-[40px] text-left pl-4 text-white transition cursor-pointer;
     }
 
     .filter-label:hover {
@@ -86,11 +94,34 @@
     }
 
     .apply-button {
-        @apply rounded-md max-w-[100px] w-full h-[40px] bg-primary-900 focus:outline-none cursor-pointer text-white hover:bg-indigo-900 transition-all duration-300
+        @apply rounded-md max-w-[100px] w-full h-[40px] bg-primary-900 focus:outline-none cursor-pointer text-white hover:bg-indigo-900 transition-all duration-300 max-sm:max-w-[70px] max-sm:text-xs
     }
 
     .cancel-button {
-        @apply rounded-md max-w-[100px] w-full h-[40px] bg-red-700 focus:outline-none cursor-pointer text-white hover:bg-red-900 transition-all duration-300
+        @apply rounded-md max-w-[100px] w-full h-[40px] bg-red-700 focus:outline-none cursor-pointer text-white hover:bg-red-900 transition-all duration-300 max-sm:max-w-[70px] max-sm:text-xs
+    }
+
+    .cards-responsive {
+        @apply grid grid-cols-4 gap-5;
+        @apply max-[1024px]:grid-cols-3;
+        @apply max-[768px]:grid-cols-2;
+        @apply max-[450px]:grid-cols-1 max-[450px]:justify-items-center;
+    }
+
+    .favorite-cards-responsive {
+        @apply grid grid-cols-5 gap-5;
+        @apply max-[1280px]:grid-cols-4;
+        @apply max-[1024px]:grid-cols-3;
+        @apply max-[768px]:grid-cols-2;
+        @apply max-[450px]:grid-cols-1 max-[450px]:justify-items-center;
+    }
+
+    .security-responsive {
+        @apply max-[450px]:flex-col gap-[10px]
+    }
+
+    .admin-button {
+        @apply block border rounded-xl max-w-[200px] w-full h-[50px] text-center text-white border-primary-300 hover:border-primary-900 hover:bg-[#1A1238] transition cursor-pointer max-sm:h-[40px] max-sm:text-xs;
     }
 }
 

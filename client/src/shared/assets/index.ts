@@ -17,4 +17,8 @@ export * from './icons/MinusIcon';
 export * from './icons/ChangePhotoIcon';
 export * from './icons/EditIcon'
 export * from './icons/CancelledIcon'
+export * from './icons/SuccessIcon';
+export * from './icons/ArrowLeft';
+export * from './icons/ArrowRight';
+export * from './icons/FiltersIcon';
 export const defaultUser = img1;

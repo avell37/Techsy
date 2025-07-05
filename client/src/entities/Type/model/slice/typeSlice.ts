@@ -27,7 +27,7 @@ const typeSlice = createSlice({
             })
             .addCase(fetchAllTypes.fulfilled, (state, action) => {
                 state.loading = false;
-                state.types = action.payload
+                state.types = action.payload ?? [];
             })
             .addCase(fetchAllTypes.rejected, (state) => {
                 state.loading = false;

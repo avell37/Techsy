@@ -8,8 +8,8 @@ export const OrderHistoryCard = ({ order }: { order: IOrder }) => {
 
     return (
         <div className="flex flex-col gap-[10px] max-w-[500px]">
-            <div className='flex justify-between'>
-                <span className='text-gray-400 text-xs'>Заказ: №&nbsp;{order.id}</span>
+            <div className='flex justify-between max-sm:flex-col'>
+                <span className='text-gray-400 text-xs break-words'>Заказ: №&nbsp;{order.id}</span>
                 <FormattedDate date={order.createdAt} className='text-gray-400 text-xs' />
             </div>
             <div className="flex gap-[10px] flex-wrap max-w-[250px]">
@@ -17,7 +17,7 @@ export const OrderHistoryCard = ({ order }: { order: IOrder }) => {
                     <img
                         key={item.id}
                         className="w-[30px] h-[30px] object-contain"
-                        src={`${import.meta.env.VITE_API_URL}/${item.img}`} />
+                        src={`${import.meta.env.VITE_API_URL}/uploads/${item.img}`} />
                 ))}
                 {hiddenCount > 0 && (
                     <div className="w-[30px] h-[30px] rounded-full bg-primary-900 

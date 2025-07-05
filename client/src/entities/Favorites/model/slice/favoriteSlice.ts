@@ -39,7 +39,7 @@ const favoriteSlice = createSlice({
                 state.isLoaded = false;
             })
             .addCase(fetchAllFavoriteDevices.fulfilled, (state, action) => {
-                state.favoriteDevices = action.payload;
+                state.favoriteDevices = action.payload ?? [];
                 state.loading = false;
                 state.isLoaded = true;
             })

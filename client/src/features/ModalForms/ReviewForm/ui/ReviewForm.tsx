@@ -9,9 +9,9 @@ export const ReviewForm = ({ onClose }: { onClose: () => void }) => {
     return (
         <form
             onSubmit={handleAddReview}
-            className="flex flex-col gap-[30px] p-4"
+            className="flex flex-col gap-[30px] p-4 max-sm:px-2"
         >
-            <h1 className="text-white pt-4 text-xl font-bold">Ваш отзыв:</h1>
+            <h1 className="text-white pt-4 text-xl font-bold max-sm:text-sm max-sm:pt-4 max-sm:mt-[3px]">Ваш отзыв:</h1>
             <Controller
                 name="rating"
                 control={control}

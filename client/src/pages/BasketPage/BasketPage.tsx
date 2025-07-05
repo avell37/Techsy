@@ -22,7 +22,7 @@ const BasketPage = () => {
 
     return (
         <Container>
-            <div className="flex justify-center gap-[50px] mt-5 filters-bg-gradient p-6 rounded-xl">
+            <div className="flex justify-center gap-[50px] mt-5 filters-bg-gradient p-6 rounded-xl max-lg:flex-col">
                 <div className="flex flex-col gap-[20px] w-full">
                     {loading ? (
                         <SpinnerAnimation width="100px" height="100px" />

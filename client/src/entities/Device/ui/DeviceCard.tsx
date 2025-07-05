@@ -43,7 +43,7 @@ export const DeviceCard = React.memo(({
                 <DeviceImg
                     name={device.name}
                     img={device.img}
-                    className="object-contain w-[150px] h-[150px] mt-6 mb-2"
+                    className="object-contain w-[150px] h-[150px] mt-6 mb-2 text-white"
                 />
             </div>
             <div className="flex flex-col w-full px-4 pb-2 text-white text-left gap-1">

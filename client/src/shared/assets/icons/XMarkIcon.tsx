@@ -1,14 +1,10 @@
 interface Props {
-    width: string;
-    height: string;
     className?: string;
 }
 
-export const XMarkIcon = ({ width, height, className }: Props) => {
+export const XMarkIcon = ({ className }: Props) => {
     return (
         <svg
-            width={width}
-            height={height}
             className={className}
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

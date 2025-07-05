@@ -12,6 +12,9 @@ export const HeaderView = ({
 }: HeaderAuthSchema) => {
     const handleLogin = () => navigate(LOGIN_ROUTE);
     const handleNavigateToShop = () => navigate(SHOP_ROUTE);
+    const profileImage = picture
+        ? `${import.meta.env.VITE_API_URL}/uploads/avatars/${picture}`
+        : defaultUser;
 
     return (
         <div className="sticky top-0 w-full bg-black border-b border-primary-500 z-[100]">
@@ -19,7 +22,7 @@ export const HeaderView = ({
                 <div className="flex justify-between items-center min-h-[100px]">
                     <Button
                         onClick={handleNavigateToShop}
-                        className="flex justify-center text-xl text-purple-500 font-bold cursor-pointer"
+                        className="flex justify-center text-xl text-purple-500 font-bold cursor-pointer max-sm:text-lg"
                     >
                         techsy
                     </Button>
@@ -27,29 +30,15 @@ export const HeaderView = ({
                         <div className="flex justify-center gap-[30px]">
                             <Dropdown
                                 trigger={
-                                    picture ? (
-                                        <div className="flex justify-center items-center gap-[5px] cursor-pointer">
-                                            <div className="w-[50px] h-[50px] border-2 border-primary-900 rounded-full bg-transparent overflow-hidden">
-                                                <img
-                                                    className="w-[50px] h-[50px]"
-                                                    src={picture.startsWith("http") ? picture
-                                                        : `${import.meta.env.VITE_API_URL}/avatars/${picture}`
-                                                    }
-                                                />
-                                            </div>
-                                            <ArrowDown width="20px" height="20px" />
+                                    <div className="flex justify-center items-center gap-[5px] cursor-pointer">
+                                        <div className="w-[50px] h-[50px] border-2 border-primary-900 rounded-full bg-transparent overflow-hidden max-sm:w-[40px] max-sm:h-[40px]">
+                                            <img
+                                                className="w-[50px] h-[50px] max-sm:w-[40px] max-sm:h-[40px]"
+                                                src={profileImage}
+                                            />
                                         </div>
-                                    ) : (
-                                        <div className="flex items-center justify-center gap-[5px]">
-                                            <div className="w-[50px] h-[50px] border-2 border-primary-500 rounded-full bg-transparent overflow-hidden">
-                                                <img
-                                                    className="w-[50px] h-[50px]"
-                                                    src={defaultUser}
-                                                />
-                                            </div>
-                                            <ArrowDown width="20px" height="20px" />
-                                        </div>
-                                    )
+                                        <ArrowDown width="20px" height="20px" className="max-sm:w-[15px] max-sm:h-[15px]" />
+                                    </div>
                                 }
                                 items={userDropdownItems({ navigate, userLogout })}
                                 className="right-2"

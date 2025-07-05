@@ -13,7 +13,7 @@ export const Input = forwardRef<HTMLInputElement, InputSchema>(
             <div className="relative">
                 {children}
                 <input ref={ref} className={`${className} ${error ? "border-red-500 flex flex-col" : ""}`} {...props} />
-                {error && <span className="text-red-500 text-sm">{error}</span>}
+                {error && <span className="text-red-500 text-sm max-sm:text-xs">{error}</span>}
             </div>
         );
     }

@@ -1,8 +1,8 @@
-import { IFavoriteDevice } from "@/shared/types";
 import { $authHost } from "@shared/api";
+import { FavoriteDevices } from "../model/types/favoriteDevices";
 
-export const fetchFavoriteDevices = async (): Promise<IFavoriteDevice[]> => {
-    const { data } = await $authHost.get<IFavoriteDevice[]>('/api/favorite/');
+export const fetchFavoriteDevices = async (): Promise<FavoriteDevices[]> => {
+    const { data } = await $authHost.get<FavoriteDevices[]>('/api/favorite/');
     return data;
 }
 
