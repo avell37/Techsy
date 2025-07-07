@@ -1,31 +1,33 @@
 require("dotenv").config();
 const express = require('express');
 const cors = require('cors');
-const router = require('./routes/routes.ts');
-const {PrismaClient} = require('@prisma/client')
+const router = require('./routes/routes');
+const path = require('path');
+const errorHandler = require('./middleware/errorHandlingMiddleware');
+const cookieParser = require('cookie-parser');
 
-const prisma = new PrismaClient();
 const app = express();
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 5000;
 
-app.use(cors());
-app.use(express.json());
-// app.use('/api', router)
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
-app.post('/users', async (req: any, res: any) => {
-    const { email, password } = req.body;
-    const newUser = await prisma.user.create({
-        data: {
-            email,
-            password
-        }
-    });
-    res.json(newUser);
-})
+const origins = [process.env.LOCAL_URL, process.env.DEPLOY_URL, process.env.PROD_URL];
+
+app.use(cors({
+    origin: origins,
+    credentials: true,
+}));
+
+app.use(cookieParser());
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
+app.use('/api', router);
+
+app.use(errorHandler);
 
 async function start() {
     try {
-        app.listen(PORT, () => console.log("Server started on " + PORT))
+        app.listen(PORT, '0.0.0.0', () => console.log("Server started on " + PORT))
     } catch (e) {
         console.log(e);
     }

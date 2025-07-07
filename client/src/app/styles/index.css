@@ -1,0 +1,189 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+@import "tailwindcss";
+
+@theme {
+    --color-primary-900: #5120B8;
+    --color-primary-500: color-mix(in srgb, #5120B8 30%, transparent);
+    --color-primary-300: #1A1238;
+
+    --color-indigo-900: #3A177F;
+    --color-indigo-300: color-mix(in srgb, #3A177F 30%, transparent);
+
+    --color-black: #08080e;
+    --color-light-black: #0d091d;
+    --color-black-purple: #3A2D67;
+    --color-light-purple: #8A4FFF;
+    --color-yellow: #ffe500;
+}
+
+
+@layer utilities {
+    .bg-base-gradient {
+        backdrop-filter: blur(50%);
+        background-image: linear-gradient(135deg,
+                #c37cfa 10%,
+                #9336ee 30%,
+                #1b0e8c 90%);
+    }
+
+    .filters-bg-gradient {
+        background-image: linear-gradient(to bottom,
+                #08080e 0%,
+                #0b0b14 50%,
+                #0F0F1A 100%);
+    }
+
+    .card-gradient {
+        @apply bg-gradient-to-br from-[#1A1238]/30 to-[#08080e];
+    }
+
+    .card-inner-gradient {
+        @apply bg-gradient-to-br from-[#1A1238]/50 to-[#08080e];
+    }
+
+    .card-gradient-right {
+        @apply bg-gradient-to-r from-[#5120B8]/0 via-[#5120B8]/5 to-[#5120B8]/0
+    }
+
+    .divider-gradient {
+        @apply bg-gradient-to-r from-transparent via-[#5120B8]/30 to-transparent;
+    }
+
+    .primary-border {
+        @apply border border-[#5120B8]/20;
+    }
+
+    .overlay-blur-primary {
+        @apply absolute inset-0 bg-primary-300/5 backdrop-blur-[2px];
+    }
+
+    .custom-input {
+        @apply flex-1 border-1 border-[#5120B8]/30 hover:border-[#5120B8] hover:bg-[#1A1238]/30 focus:border-[#4F45E4] text-start rounded-lg text-white outline-none transition-all duration-300 max-sm:p-[6px] max-sm:pl-3 max-sm:text-sm;
+    }
+
+    .custom-input-with-icon {
+        @apply flex-1 border-1 border-[#5120B8]/30 hover:border-[#5120B8] hover:bg-[#1A1238]/30 focus:border-[#4F45E4] text-start rounded-lg text-white outline-none transition-all duration-300 max-sm:p-[6px] max-sm:pl-7 max-sm:text-sm;
+    }
+
+    .custom-checkbox {
+        @apply absolute left-1 top-[10px] w-5 h-5 bg-[#1A1238] border border-[#5120B8]/30 rounded transition-all pointer-events-none;
+    }
+
+    .custom-checkbox-check {
+        @apply after:content-[''] after:absolute after:hidden after:left-[6px] after:top-[2px] after:w-[5px] after:h-[10px] after:border-r-2 after:border-b-2 after:border-white after:rotate-45 peer-checked:after:block peer-checked:bg-[#5120B8];
+    }
+
+    .custom-button {
+        @apply block h-[50px] text-center text-white border-primary-300 hover:border-primary-900 hover:bg-[#1A1238] focus:border-[#4F45E4] transition cursor-pointer max-sm:h-[40px] max-sm:text-sm;
+    }
+
+    .filter-label {
+        @apply flex items-center relative max-w-[250px] h-[40px] text-left pl-4 text-white transition cursor-pointer;
+    }
+
+    .filter-label-responsive {
+        @apply flex items-center relative max-w-[320px] w-full h-[40px] text-left pl-4 text-white transition cursor-pointer;
+    }
+
+    .filter-label:hover {
+        @apply border-[#5120B8] bg-[#1A1238];
+    }
+
+    .filter-label:focus-within {
+        @apply border-[#4F45E4];
+    }
+
+    .apply-button {
+        @apply rounded-md max-w-[100px] w-full h-[40px] bg-primary-900 focus:outline-none cursor-pointer text-white hover:bg-indigo-900 transition-all duration-300 max-sm:max-w-[70px] max-sm:text-xs
+    }
+
+    .cancel-button {
+        @apply rounded-md max-w-[100px] w-full h-[40px] bg-red-700 focus:outline-none cursor-pointer text-white hover:bg-red-900 transition-all duration-300 max-sm:max-w-[70px] max-sm:text-xs
+    }
+
+    .cards-responsive {
+        @apply grid grid-cols-4 gap-5;
+        @apply max-[1024px]:grid-cols-3;
+        @apply max-[768px]:grid-cols-2;
+        @apply max-[450px]:grid-cols-1 max-[450px]:justify-items-center;
+    }
+
+    .favorite-cards-responsive {
+        @apply grid grid-cols-5 gap-5;
+        @apply max-[1280px]:grid-cols-4;
+        @apply max-[1024px]:grid-cols-3;
+        @apply max-[768px]:grid-cols-2;
+        @apply max-[450px]:grid-cols-1 max-[450px]:justify-items-center;
+    }
+
+    .security-responsive {
+        @apply max-[450px]:flex-col gap-[10px]
+    }
+
+    .admin-button {
+        @apply block border rounded-xl max-w-[200px] w-full h-[50px] text-center text-white border-primary-300 hover:border-primary-900 hover:bg-[#1A1238] transition cursor-pointer max-sm:h-[40px] max-sm:text-xs;
+    }
+}
+
+:root {
+    font-family: 'Open Sans', sans-serif;
+}
+
+body {
+    background-color: #0F0F1A;
+    font-family: 'Open Sans', sans-serif;
+}
+
+#root,
+body,
+html {
+    height: 100vh;
+}
+
+.scrollable {
+    overflow-y: auto;
+    max-height: 125px;
+    scrollbar-width: thin;
+    scrollbar-color: #4F45E4 transparent;
+}
+
+.scrollable::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.scrollable::-webkit-scrollbar-thumb {
+    background-color: #4F45E4;
+    border-radius: 10px;
+}
+
+.scrollable::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.custom-overflow::-webkit-scrollbar {
+    width: 6px;
+}
+
+.custom-overflow::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.custom-overflow::-webkit-scrollbar-thumb {
+    background-color: #5120B8;
+    border-radius: 4px;
+}
+
+.custom-overflow::-webkit-scrollbar-thumb:hover {
+    background-color: #6a34ff;
+}
+
+.custom-overflow {
+    scrollbar-width: thin;
+    scrollbar-color: #5120B8 transparent;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
