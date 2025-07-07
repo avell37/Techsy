@@ -49,8 +49,13 @@ export const FilteredSearchView = ({
                             <ProductFiltersResponsive {...filterProps} />
                             <Button onClick={() => setShowFilters(false)}>
                                 <XMarkIcon
+<<<<<<< HEAD
                                     className="stroke-white absolute right-6 top-4 cursor-pointer hover:stroke-gray-400 transition-all
                                     duration-300 max-w-[25px] w-full max-h-[25px] h-full"
+=======
+                                    className="stroke-white absolute right-4 top-4 cursor-pointer hover:stroke-gray-400 transition-all
+                                duration-300 max-w-[25px] w-full max-h-[25px] h-full max-sm:max-w-[17px] max-sm:max-h-[17px] max-sm:right-8"
+>>>>>>> 9bdb23b (upd(v1.0): release)
                                 />
                             </Button>
                         </div>
