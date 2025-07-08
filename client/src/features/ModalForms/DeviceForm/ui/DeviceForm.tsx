@@ -20,7 +20,7 @@ export const DeviceForm = ({ onClose }: { onClose?: () => void }) => {
         handleAddInfo,
         handleChangeInfo,
         handleRemoveInfo,
-    } = useDeviceForm();
+    } = useDeviceForm(onClose);
     const handleFileUpload = () => fileInputRef?.current?.click()
 
     return (

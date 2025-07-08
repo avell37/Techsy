@@ -14,7 +14,7 @@ import { DeviceYupSchema } from "../lib/DeviceYupSchema";
 import { DeviceFormState } from "../types/DeviceFormState";
 import { useActions } from "@/shared/hooks";
 
-export const useDeviceForm = () => {
+export const useDeviceForm = (onClose?: () => void) => {
     const dispatch = useAppDispatch();
     const { brands } = useAppSelector((state) => state.brandReducer);
     const { types } = useAppSelector((state) => state.typeReducer);
@@ -83,6 +83,7 @@ export const useDeviceForm = () => {
             fetchAllDevices();
             notifySuccess("Отлично! Устройство создано!");
             reset();
+            if (onClose) onClose();
             setInfo([]);
         } catch (err) {
             handleServerFormError<DeviceFormState>(

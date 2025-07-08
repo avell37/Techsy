@@ -15,6 +15,16 @@ class ReviewController {
             if (!deviceId || !rate || !comment) {
                 return next(ApiError.badRequest('Пожалуйста, заполните отзыв и поставьте оценку'))
             }
+            const existingReview = await prisma.review.findFirst({
+                where: {
+                    userId: id,
+                    deviceId: deviceId
+                }
+            });
+
+            if (existingReview) {
+                return next(ApiError.badRequest('Вы уже оставляли отзыв на это устройство.'));
+            }
 
             const review = await prisma.review.create({
                 data: {
