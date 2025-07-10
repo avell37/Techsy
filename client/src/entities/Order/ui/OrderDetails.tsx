@@ -12,7 +12,7 @@ interface Props {
 export const OrderDetails = ({ order, shipping }: Props) => (
     <div className="relative flex flex-col w-full">
         <div className="flex justify-between max-sm:flex-col max-sm:justify-center max-sm:items-end">
-            <span className="text-gray-400 pl-7 text-xs break-words max-sm:max-w-[120px] text-end">
+            <span className="text-gray-400 text-xs break-words max-sm:max-w-[120px] max-md:pl-7 text-end">
                 Заказ: №&nbsp;{order.id}
             </span>
             <FormattedDate
