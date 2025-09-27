@@ -1,20 +1,20 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useMemo } from "react";
 import {
-    useActions, useAppSelector, useModal,
-    useNotification, useToggleFavorites
+    useActions, 
+    useAppSelector,
+    useNotification, 
+    useToggleFavorites
 } from "@/shared/hooks";
 import { deleteReview, reviewSelector } from "@/entities/Review";
 import { DevicePageView } from "./DevicePageView/DevicePageView";
 import { Container, Spinner } from "@/shared/ui";
 import { checkFavoriteDevices, getToken } from "@/shared/lib";
-import { Modal } from "@/features/ManageModal";
 import { deviceSelector, favoriteSelector, userSelector } from "@/entities";
 
 const DevicePage = () => {
     const { id } = useParams();
     const { notifySuccess, notifyError } = useNotification();
-    const { isOpen, contentType, openModal, closeModal } = useModal();
     const device = useAppSelector(deviceSelector.selectedDevice)
     const loading = useAppSelector(deviceSelector.loading)
     const reviews = useAppSelector(reviewSelector.reviews);
@@ -28,7 +28,7 @@ const DevicePage = () => {
             notifyError("Чтобы оставить отзыв, необходимо авторизоваться");
             return;
         }
-        if (id) openModal("addReview");
+        // if (id) openModal("addReview");
     };
 
     const handleDeleteReview = async (reviewId: string) => {
@@ -71,11 +71,7 @@ const DevicePage = () => {
                         device={device}
                         currentUser={currentUser}
                         reviews={reviews}
-                        isOpen={isOpen}
-                        contentType={contentType}
                         isFavorite={isFavorite}
-                        closeModal={closeModal}
-                        openModal={openModal}
                         handleAddReview={handleAddReview}
                         handleDeleteReview={handleDeleteReview}
                         notifySuccess={notifySuccess}
@@ -84,11 +80,6 @@ const DevicePage = () => {
                     />
                 )}
             </Container>
-            <Modal
-                isOpen={isOpen}
-                contentType={contentType}
-                onClose={closeModal}
-            />
         </div>
     );
 };

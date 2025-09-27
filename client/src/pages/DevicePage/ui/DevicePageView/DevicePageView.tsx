@@ -8,11 +8,7 @@ export const DevicePageView = ({
     device,
     currentUser,
     reviews,
-    isOpen,
-    contentType,
     isFavorite,
-    closeModal,
-    openModal,
     handleAddReview,
     handleDeleteReview,
     notifyError,
@@ -50,10 +46,6 @@ export const DevicePageView = ({
                 <DevicePageReviews
                     reviews={reviews}
                     currentUser={currentUser}
-                    isOpen={isOpen}
-                    contentType={contentType}
-                    openModal={openModal}
-                    closeModal={closeModal}
                     handleAddReview={handleAddReview}
                     handleDeleteReview={handleDeleteReview}
                 />

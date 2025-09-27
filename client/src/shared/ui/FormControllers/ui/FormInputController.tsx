@@ -1,7 +1,6 @@
-import { Controller } from "react-hook-form"
-import { Input } from "../../Input/ui/Input"
 import { FormInputControllerProps } from "../model/types/FormInputControllerProps"
-import { get } from "lodash";
+import { FormControl, FormField, FormItem, FormMessage } from "../../ui-lib/Form/Form"
+import { Input } from "../../ui-lib/Input/Input"
 
 export const FormInputController = ({
     name,
@@ -11,27 +10,40 @@ export const FormInputController = ({
     icon,
     element,
     className = "",
-    errors,
 }: FormInputControllerProps) => {
-    const errorMessage = get(errors, `${name}.message`);
-
     return (
-        <Controller
-            name={name}
+        <FormField
             control={control}
-            render={({ field }) => (
-                <Input
-                    {...field}
-                    type={type}
-                    placeholder={placeholder}
-                    className={`${className} custom-input`}
-                    error={typeof errorMessage === 'string' ? errorMessage : undefined}
-                >
-                    {icon && <span className="absolute top-3 left-3 max-sm:top-[9px] max-sm:left-[7px]">{icon}</span>}
-                    {element && (
-                        <span className="absolute right-2 top-3 max-sm:top-[9px] max-sm:right-[7px]">{element}</span>
-                    )}
-                </Input>
-            )} />
+            name={name}
+            render={({field}) => (
+                <FormItem>
+                    <div className="relative">
+                        {icon && (
+                            <span className="absolute left-3 top-[10px]">
+                                {icon}
+                            </span>
+                        )}
+
+                        <FormControl>
+                            <Input 
+                                {...field}
+                                type={type}
+                                placeholder={placeholder}
+                                className={className}
+                                value={field.value ?? ""}
+                            />
+                        </FormControl>
+
+                        {element && (
+                            <span className="absolute right-1 top-2">
+                                {element}
+                            </span>
+                        )}
+                    </div>
+
+                    <FormMessage />
+                </FormItem>
+            )}
+        />
     )
 }

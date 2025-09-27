@@ -1,30 +1,7 @@
-import { $authHost, $host } from "@shared/api";
+import { $authHost } from "@shared/api";
 import { jwtDecode } from 'jwt-decode';
 import { setToken } from "@/shared/lib";
 import { IUser } from "@shared/types/IUser";
-
-export const registration = async (username: string, email: string, password: string) => {
-    const { data } = await $host.post('api/user/registration',
-        { username, email, password, role: 'Admin' })
-    setToken('token', data.token);
-    return jwtDecode(data.token);
-}
-
-export const login = async (email: string, password: string) => {
-    const { data } = await $host.post('api/user/login', { email, password })
-    setToken('token', data.token);
-    return jwtDecode(data.token);
-}
-
-export const checkAuth = async () => {
-    try {
-        const { data } = await $authHost.get('/api/user/auth');
-        setToken('token', data.token);
-        return jwtDecode(data.token);
-    } catch (err) {
-        console.error(err);
-    }
-}
 
 export const fetchUserData = async () => {
     try {
@@ -67,20 +44,6 @@ export const uploadAvatar = async (file: File) => {
 
         setToken('token', data.token);
         return jwtDecode<IUser>(data.token);
-    } catch (err) {
-        console.error(err);
-    }
-}
-
-export const loginWithOAuth = async (code: string) => {
-    if (!code) {
-        console.error("Непридвиденная ошибка")
-        return;
-    }
-    try {
-        const { data } = await $host.post('/api/auth/google', { code })
-        setToken('token', data.token);
-        return jwtDecode(data.token);
     } catch (err) {
         console.error(err);
     }

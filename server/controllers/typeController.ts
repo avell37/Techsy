@@ -59,6 +59,30 @@ class TypeController {
         }
     }
 
+    async update(req: any, res: any, next: any) {
+        try {
+            const { id } = req.params;
+            const { name } = req.body;
+
+            if (!id) {
+                return next(ApiError.badRequest('Не найден ID типа'))
+            }
+
+            const type = await prisma.type.update({
+                where: {
+                    id
+                },
+                data: {
+                    name
+                }
+            })
+
+            return res.json(type);
+        } catch (err) {
+            return next(ApiError.internal('Произошла ошибка на сервере. Попробуйте позже.'))
+        }
+    }
+
     async deleteOne(req: any, res: any, next: any) {
         try {
             const { id } = req.params;

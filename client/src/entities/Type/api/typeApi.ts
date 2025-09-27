@@ -16,6 +16,11 @@ export const fetchOneType = async (id: string) => {
     return data;
 }
 
+export const updateType = async (id: string, type: string) => {
+    const { data } = await $authHost.patch(`/api/type/${id}`, { name: type })
+    return data;
+}
+
 export const deleteOneType = async (id: string) => {
     const { data } = await $authHost.delete(`/api/type/${id}`);
     return data;

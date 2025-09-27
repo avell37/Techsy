@@ -1,55 +1,31 @@
-import { useMemo, useState } from "react";
-import { CartView } from "./CartView/CartView";
-import { useAppSelector, useNotification } from "@/shared/hooks";
-import { getTotalPrice, basketSelector, shippingSelector } from "@/entities";
-import { isShippingValid } from "../lib/isShippingValid";
+import { Button } from "@/shared/ui";
 import { useCreateOrder } from "../hooks/useCreateOrder";
 
 export const Cart = () => {
-    const [selectedPayment, setSelectedPayment] = useState<string | null>(null);
-    const totalPrice = useAppSelector(getTotalPrice);
-    const shipping = useAppSelector(shippingSelector.shipping);
-    const basket = useAppSelector(basketSelector.basket);
-    const { notifyWarn } = useNotification();
-    const { create } = useCreateOrder()
-
-    const orderItems = useMemo(() =>
-        basket.map((device) => ({
-            id: device.id,
-            name: device.device.name,
-            price: device.device.price,
-            img: device.device.img,
-            quantity: device.quantity ?? 1,
-        })), [basket]);
-
-    const handleCreateOrder = async () => {
-        const shippingData = isShippingValid(shipping);
-        if (!shippingData) {
-            notifyWarn("Пожалуйста, заполните информацию об адресе доставки в профиле.")
-            return;
-        }
-
-        if (!selectedPayment) {
-            notifyWarn("Пожалуйста, выберите способ оплаты");
-            return;
-        }
-
-        try {
-            if (selectedPayment === "yoomoney") {
-                const { confirmationUrl } = await create(orderItems, totalPrice);
-                window.location.href = confirmationUrl;
-            }
-        } catch (err) {
-            console.log(err);
-        }
-    };
+    const { basket, totalPrice, handleCreateOrder } = useCreateOrder();
+    
     return (
-        <div className="border-1 border-primary-900 rounded-xl max-w-[400px] min-h-[400px] h-full w-full p-6 max-lg:max-w-full max-lg:min-h-[300px]">
-            <CartView
-                totalPrice={totalPrice}
-                handleCreateOrder={handleCreateOrder}
-                setSelectedPayment={setSelectedPayment}
-            />
+        <div className="flex flex-col border border-primary-900/30 bg-gradient rounded-xl p-6">
+            <div className="flex flex-col justify-between gap-[20px] h-full">
+                <h1 className="text-white font-bold text-xl">Корзина</h1>
+                <div className="flex flex-col gap-[20px]">
+                    <p className="text-white">
+                        Количество товаров: {basket?.length}
+                    </p>
+                    <p className="text-white font-bold text-xl">
+                        К оплате: {totalPrice.toLocaleString()} Р.
+                    </p>
+                    <Button
+                        variant="default"
+                        size="none"
+                        className="flex justify-center items-center max-w-[320px] w-full h-[60px] border-2 border-indigo-900 rounded-xl hover:border-primary-900
+                        hover:bg-primary-300/30 transition-all text-white cursor-pointer"
+                        onClick={handleCreateOrder}
+                    >
+                        Перейти к оплате
+                    </Button>
+                </div>
+            </div>
         </div>
     );
 };

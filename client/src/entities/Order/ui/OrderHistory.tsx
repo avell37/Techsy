@@ -6,9 +6,11 @@ import { useAppSelector } from "@/shared/hooks";
 import { shippingSelector } from "@/entities/Shipping";
 import { OrderHistoryItem } from "./OrderHistoryItem";
 import { sortedOrders } from "../utils/sortedOrders";
-import { ArrowLeft } from "@/shared/assets";
+import { ordersSelector } from "../model/selectors/ordersSelector";
+import { ArrowLeft } from "lucide-react";
 
-export const OrderHistory = ({ orders }: { orders: IOrder[] }) => {
+export const OrderHistory = () => {
+    const orders = useAppSelector(ordersSelector.orders);
     const [selectedOrder, setSelectedOrder] = useState<IOrder | null>(
         orders?.[0] ?? null
     );
@@ -41,7 +43,7 @@ export const OrderHistory = ({ orders }: { orders: IOrder[] }) => {
         <Container>
             <div
                 className="flex gap-[30px] w-full p-8 border-1 
-            border-primary-900/30 rounded-xl filters-bg-gradient shadow-lg mt-5 items-start"
+            border-primary-900/30 rounded-xl bg-gradient shadow-lg mt-5 items-start"
             >
                 {shipping ? (
                     <>
@@ -84,7 +86,7 @@ export const OrderHistory = ({ orders }: { orders: IOrder[] }) => {
                     </>
                 ) : (
                     <div className="w-full">
-                        <p className="text-light-purple font-bold text-center">
+                        <p className="text-white font-bold text-center">
                             История заказов пуста...
                         </p>
                     </div>

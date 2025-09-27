@@ -8,3 +8,7 @@ export const ERROR_ROUTE = '/error'
 export const FAVORITES_ROUTE = '/favorites'
 export const CHECKOUT_ROUTE = '/checkout-status'
 export const HISTORY_ROUTE = '/history'
+export const STORE_MANAGEMENT_ROUTE = '/store';
+export const ADD_TYPE_ROUTE = '/store/types/add';
+export const ADD_BRAND_ROUTE = '/store/brands/add';
+export const ADD_DEVICE_ROUTE = '/store/devices/add';

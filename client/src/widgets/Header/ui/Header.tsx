@@ -20,6 +20,7 @@ export const Header = () => {
 
     return (
         <HeaderView
+            currentUser={currentUser}
             navigate={navigate}
             picture={picture}
             userIsAuth={userIsAuth}

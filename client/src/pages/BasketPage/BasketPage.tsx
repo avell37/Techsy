@@ -22,26 +22,30 @@ const BasketPage = () => {
 
     return (
         <Container>
-            <div className="flex justify-center gap-[50px] mt-5 filters-bg-gradient p-6 rounded-xl max-lg:flex-col">
-                <div className="flex flex-col gap-[20px] w-full">
-                    {loading ? (
-                        <SpinnerAnimation width="100px" height="100px" />
-                    ) : basket.length > 0 ? (
-                        basket.map((device) => (
-                            <CartDevice
-                                key={device.id}
-                                device={device}
-                                isFavorite={isFavorite(device.id)}
-                                onClick={() => handleToggleFavorites(device.deviceId)}
-                            />
-                        ))
-                    ) : (
-                        <div className="text-white text-center text-xl mt-2">
-                            Корзина пуста. Добавьте товар.
-                        </div>
-                    )}
+            <div className="flex justify-center gap-[50px] mt-5 py-6 rounded-xl max-lg:flex-col">
+                <div className="flex-1 p-8 border border-primary-900/30 rounded-xl bg-gradient shadow-lg w-full">
+                    <div className="flex flex-col gap-[20px] w-full">
+                        {loading ? (
+                            <SpinnerAnimation width="100px" height="100px" />
+                        ) : basket.length > 0 ? (
+                            basket.map((device) => (
+                                <CartDevice
+                                    key={device.id}
+                                    device={device}
+                                    isFavorite={isFavorite(device.id)}
+                                    onClick={() => handleToggleFavorites(device.deviceId)}
+                                />
+                            ))
+                        ) : (
+                            <div className="text-white text-center text-xl mt-2">
+                                Корзина пуста. Добавьте товар.
+                            </div>
+                        )}
+                    </div>
                 </div>
-                <Cart />
+                <div className="max-w-[375px] w-full">
+                    <Cart />
+                </div>
             </div>
         </Container>
     );

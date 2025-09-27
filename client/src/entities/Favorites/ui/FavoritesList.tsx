@@ -32,7 +32,7 @@ export const FavoritesList = () => {
     }
 
     return (
-        <div className="p-6 border-1 rounded-xl border-primary-900/30 mt-5 filters-bg-gradient shadow-lg">
+        <div className="p-6 border-1 rounded-xl border-primary-900/30 mt-5 bg-gradient shadow-lg">
             <h1 className="text-white text-2xl font-bold">Избранные товары:</h1>
             <div className="mt-[20px] favorite-cards-responsive">
                 {currentItems.length ? (
@@ -50,9 +50,11 @@ export const FavoritesList = () => {
                     <div className="text-white">Пусто...</div>
                 )}
             </div>
-            <div className="mt-auto">
-                <Pagination totalPages={totalPages} />
-            </div>
+            {totalPages > 1 ? (
+                <div className="mt-auto">
+                    <Pagination totalPages={totalPages} />
+                </div>
+            ) : null}
         </div>
     );
 };

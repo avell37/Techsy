@@ -1,4 +1,4 @@
-import { useActions, useAppSelector } from "@/shared/hooks";
+import { useActions, useAppDispatch, useAppSelector } from "@/shared/hooks";
 import { getToken } from "@/shared/lib";
 import { FC, useEffect } from "react";
 import { userSelector } from "@/entities";

@@ -13,7 +13,7 @@ export const ShippingFields = () => {
                     name={name}
                     type="text"
                     placeholder={placeholder}
-                    className="p-3 w-full h-[50px] max-w-[500px] max-sm:text-sm max-sm:p-2"
+                    className="p-3 w-full h-[50px] text-white border-primary-900/30 max-w-[500px] max-sm:text-sm max-sm:p-2"
                     control={control}
                     errors={errors}
                 />

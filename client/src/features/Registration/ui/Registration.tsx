@@ -1,63 +1,44 @@
-import { useState } from "react";
-import { registration } from "@/entities/User";
-import { useNavigate } from "react-router-dom";
-import { SHOP_ROUTE } from "@/shared/config/consts";
-import { RegistrationView } from "./RegistrationView";
-import { useForm } from "react-hook-form";
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useNotification, useActions } from "@/shared/hooks";
-import { RegistrationYupSchema } from "../lib/RegistrationYupSchema";
-import { RegistrationFormProps } from "../model/RegistrationFormProps";
-import { handleServerFormError } from "@/shared/lib";
+import { FormAuthWrapper } from "@/shared/ui/FormWrappers/FormAuthWrapper";
+import { useRegistration } from "../hooks/useRegistration";
+import { LOGIN_ROUTE } from "@/shared/config/consts";
+import { FormInputController } from "@/shared/ui";
+import { RegistrationFields } from './RegistrationFields';
 
 export const Registration = () => {
-    const { fetchUser } = useActions();
-    const [showPassword, setShowPassword] = useState(false);
-    const navigate = useNavigate();
-    const { notifySuccess, notifyError } = useNotification();
+    const {
+        form,
+        showPassword, 
+        toggleShowPassword,
+        onSubmit
+    } = useRegistration();
 
-    const { control, handleSubmit, reset, setError,
-        formState: { errors }
-    } = useForm<RegistrationFormProps>({
-        resolver: yupResolver(RegistrationYupSchema),
-        defaultValues: {
-            username: "",
-            email: "",
-            password: ""
-        }
-    });
-
-    const handleRegistration = async (data: RegistrationFormProps) => {
-        try {
-            await registration(data.username, data.email, data.password);
-            fetchUser();
-            reset();
-            navigate(SHOP_ROUTE);
-            notifySuccess("Успешная регистрация!");
-        } catch (err) {
-            handleServerFormError<{ email: string }>(
-                err,
-                setError,
-                {
-                    email: "email"
-                },
-                notifyError
-            )
-        }
-    }
-
-    const toggleShowPassword = () => {
-        setShowPassword(!showPassword);
-    };
+    const fields = RegistrationFields({showPassword, toggleShowPassword})
 
     return (
-        <RegistrationView
-            showPassword={showPassword}
-            control={control}
-            errors={errors}
-            toggleShowPassword={toggleShowPassword}
-            handleSubmit={handleSubmit}
-            handleRegistration={handleRegistration}
-        />
+        <div className="flex flex-col gap-[20px] text-start bg-gradient p-8 rounded-2xl w-full max-w-[450px] min-w-[290px]">
+            <p className="text-center text-3xl font-bold text-purple-500 mb-10 max-sm:text-xl max-md:mb-6 max-sm:mb-4">
+                techsy
+            </p>
+            <div className="flex flex-col gap-[10px] text-center text-white font-bold">
+                <h1 className="text-2xl max-md:text-xl max-sm:text-lg">Регистрация</h1>
+                <p className="text-lg mb-4 max-md:text-md max-sm:text-sm">Начнем наше знакомство?</p>
+            </div>
+            <FormAuthWrapper
+                buttonText="Зарегистрироваться"
+                linkText="Есть аккаунт?"
+                route={LOGIN_ROUTE}
+                form={form}
+                onSubmit={onSubmit}
+            >
+                {fields.map((field) => (
+                    <FormInputController
+                        key={field.name}
+                        {...field}
+                        control={form.control}
+                        className="pl-8 custom-input"
+                    />
+                ))}
+            </FormAuthWrapper>
+        </div>
     );
 };

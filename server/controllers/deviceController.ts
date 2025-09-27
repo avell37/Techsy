@@ -105,6 +105,53 @@ class DeviceController {
         }
     }
 
+    async update(req: any, res: any, next: any) {
+        try {
+            const { id } = req.params;
+            const { name, price, brandId, typeId, info } = req.body;
+
+            if (!id) {
+                return next(ApiError.badRequest('Не найден ID устройства.'))
+            }
+
+            if (!name || !price) {
+                return next(ApiError.badRequest('Некорректные данные: name и price обязательны.'))
+            }
+
+            const device = await prisma.device.findUnique({
+                where: { id }
+            });
+            
+            if (!device) {
+                return next(ApiError.notFound('Устройство не найдено.'))
+            }
+
+            const updated = await prisma.device.update({
+                where: { id },
+                data: {
+                    name,
+                    price: Number(price),
+                    brandId: brandId ?? null,
+                    typeId: typeId ?? null,
+                    deviceInfo: {
+                        deleteMany: {},
+                        create: info?.map((item: any) => ({
+                            title: item.title,
+                            description: item.description
+                        }))
+                    }
+                },
+                include: {
+                    deviceInfo: true
+                }
+            })
+
+            return res.json(updated);
+        } catch (err) {
+            return next(ApiError.internal('Произошла ошибка на сервере. Попробуйте позже.'))
+        }
+    }
+
     async deleteOne(req: any, res: any, next: any) {
         try {
             const { id } = req.params;

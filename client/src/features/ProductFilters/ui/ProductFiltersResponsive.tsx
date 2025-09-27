@@ -1,6 +1,8 @@
-import { Button, Divider, Dropdown, Input } from "@/shared/ui";
+import { Divider, Dropdown } from "@/shared/ui";
 import { ProductFiltersSchema } from "../model/types/productFiltersSchema";
-import { ArrowDown } from "@/shared/assets";
+import { Button } from "@/shared/ui/ui-lib/Button/Button";
+import { ChevronDown } from "lucide-react";
+import { Input } from "@/shared/ui/ui-lib/Input/Input";
 
 export const ProductFiltersResponsive = ({
     activeFilter,
@@ -13,48 +15,37 @@ export const ProductFiltersResponsive = ({
     handleFilterChange,
 }: ProductFiltersSchema) => {
     return (
-        <div className="h-full flex justify-center filters-bg-gradient shadow-lg">
-            <div className="flex flex-col gap-[10px] w-full">
+        <div className="h-full flex justify-center bg-gradient shadow-lg">
+            <div className="flex flex-col gap-[10px] pt-4 w-full">
                 <Dropdown
                     trigger={
                         <Button
-                            text={selectedType.name}
-                            className="relative max-w-[300px] w-full h-[40px] text-start pl-8 text-white 
-                                border-primary-900/30 hover:border-primary-900 hover:bg-primary-300
-                                focus:border-light-purple transition cursor-pointer mt-8"
+                            variant="ghost"
+                            className="relative flex items-center w-[250px] h-[40px] text-start pl-8 text-white
+                            hover:bg-main focus:border-primary-900 transition cursor-pointer"
                         >
-                            <ArrowDown
-                                width="20px"
-                                height="20px"
-                                className="absolute top-[10px] left-1"
-                            />
+                            <ChevronDown />
+                            {selectedType.name}
                         </Button>
                     }
                     items={typeItems}
-                    className="w-[320px]"
                 />
                 <Dropdown
                     trigger={
                         <Button
-                            text={selectedBrand.name}
-                            className="relative max-w-[300px] w-full h-[40px] text-start pl-8 text-white 
-                                border-primary-900/30 hover:border-primary-900 hover:bg-primary-300 
-                                focus:border-light-purple transition cursor-pointer"
+                            variant="ghost"
+                            className="relative flex items-center w-[250px] h-[40px] text-start pl-8 text-white
+                            hover:bg-main focus:border-primary-900 transition cursor-pointer"
                         >
-                            <ArrowDown
-                                width="20px"
-                                height="20px"
-                                className="absolute top-[10px] left-1"
-                            />
+                            <ChevronDown />
+                            {selectedBrand.name}
                         </Button>
                     }
                     items={brandItems}
-                    className="w-[320px]"
                 />
                 <Divider variant="h-[2px] w-full" />
                 <label className="filter-label-responsive">
                     <Input
-                        noWrap
                         type="checkbox"
                         className="peer absolute w-0 h-0 opacity-0 cursor-pointer"
                         checked={activeFilter === "priceLow"}
@@ -65,7 +56,6 @@ export const ProductFiltersResponsive = ({
                 </label>
                 <label className="filter-label-responsive">
                     <Input
-                        noWrap
                         type="checkbox"
                         className="peer absolute w-0 h-0 opacity-0 cursor-pointer"
                         checked={activeFilter === "priceHigh"}
@@ -76,7 +66,6 @@ export const ProductFiltersResponsive = ({
                 </label>
                 <label className="filter-label-responsive">
                     <Input
-                        noWrap
                         type="checkbox"
                         className="peer absolute w-0 h-0 opacity-0 cursor-pointer"
                         checked={activeFilter === "rating"}
@@ -87,12 +76,12 @@ export const ProductFiltersResponsive = ({
                 </label>
                 {isFilterActive && (
                     <Button
-                        className="max-w-[320px] w-full h-[40px] text-center text-white rounded-md 
-                        border-primary-900/30 hover:border-primary-900 hover:bg-primary-300/30 
-                        transition cursor-pointer"
-                        text="Сбросить всё"
+                        variant="ghost"
+                        className="flex justify-center w-[250px] h-[40px] text-white rounded-md hover:bg-main transition cursor-pointer"
                         onClick={handleResetFilters}
-                    />
+                    >
+                        Сбросить всё
+                    </Button>
                 )}
             </div>
         </div>

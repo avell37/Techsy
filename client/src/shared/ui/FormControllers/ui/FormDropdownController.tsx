@@ -1,7 +1,8 @@
 import { Controller, FieldValues } from "react-hook-form";
 import { get } from "lodash";
-import { Button, Dropdown } from "@/shared/ui";
+import { Dropdown } from "@/shared/ui";
 import { FormDropdownControllerProps } from "../model/types/FormDropdownControllerProps";
+import { Button } from "../../ui-lib/Button/Button";
 
 export const FormDropdownController = <T extends FieldValues>({
     name,
@@ -33,15 +34,15 @@ export const FormDropdownController = <T extends FieldValues>({
                                     className="p-2 rounded-md max-w-[175px] w-full h-[40px] border-1 border-primary-900/30 
                                     hover:border-primary-900 hover:bg-primary-300/30 focus:border-light-purple
                                     transition font-bold cursor-pointer text-white"
-                                    text={selectedItem ? selectedItem.name : placeholder}
-                                />
+                                    
+                                >
+                                    {selectedItem ? selectedItem.name : placeholder}
+                                </Button>
                             }
                             items={items.map((item) => ({
                                 text: item.name,
                                 onClick: () => field.onChange(item.id),
                             }))}
-                            triggerClassname="max-w-[175px]"
-                            className="flex justify-center"
                         />
                         {errorMessage && (
                             <span className="text-red-500 text-sm mt-1">{errorMessage}</span>

@@ -44,8 +44,8 @@ model BasketDevice {
   basketId  String
   deviceId  String
   quantity  Int      @default(1)
-  basket    Basket   @relation(fields: [basketId], references: [id])
-  device    Device   @relation(fields: [deviceId], references: [id])
+  basket    Basket   @relation(fields: [basketId], references: [id], onDelete: Cascade)
+  device    Device   @relation(fields: [deviceId], references: [id], onDelete: Cascade)
 
   @@unique([basketId, deviceId])
   @@map("basket_device")
@@ -63,7 +63,7 @@ model Device {
   typeId          String?
   basketId        String?
   BasketDevice    BasketDevice[]
-  basket          Basket?          @relation(fields: [basketId], references: [id])
+  basket          Basket?          @relation(fields: [basketId], references: [id], onDelete: Cascade)
   Brand           Brand?           @relation(fields: [brandId], references: [id])
   Type            Type?            @relation(fields: [typeId], references: [id])
   deviceInfo      DeviceInfo[]
@@ -80,7 +80,7 @@ model DeviceInfo {
   title       String
   description String
   deviceId    String?
-  Device      Device?  @relation(fields: [deviceId], references: [id])
+  Device      Device?  @relation(fields: [deviceId], references: [id], onDelete: Cascade)
 
   @@map("device_info")
 }
@@ -93,8 +93,8 @@ model Review {
   comment   String?
   userId    String
   deviceId  String
-  Device    Device   @relation(fields: [deviceId], references: [id])
-  User      User     @relation(fields: [userId], references: [id])
+  Device    Device   @relation(fields: [deviceId], references: [id], onDelete: Cascade)
+  User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, deviceId])
   @@index([userId])
@@ -131,8 +131,8 @@ model BrandType {
   updatedAt DateTime @updatedAt @map("updated_at")
   typeId    String
   brandId   String
-  Brand     Brand    @relation(fields: [brandId], references: [id])
-  type      Type     @relation(fields: [typeId], references: [id])
+  Brand     Brand    @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  type      Type     @relation(fields: [typeId], references: [id], onDelete: Cascade)
 
   @@unique([typeId, brandId])
   @@map("brand_type")
@@ -144,8 +144,8 @@ model FavoriteDevice {
   updatedAt DateTime @updatedAt @map("updated_at")
   userId    String
   deviceId  String
-  device    Device   @relation(fields: [deviceId], references: [id])
-  user      User     @relation(fields: [userId], references: [id])
+  device    Device   @relation(fields: [deviceId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, deviceId])
   @@map("favorite_device")
@@ -178,7 +178,7 @@ model Order {
   status    String
   delivery  String
   paymentId String?
-  user      User        @relation(fields: [userId], references: [id])
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   OrderItem OrderItem[]
 }
 
@@ -191,5 +191,5 @@ model OrderItem {
   img       String
   quantity  Int
   orderId   String
-  order     Order    @relation(fields: [orderId], references: [id])
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
 }

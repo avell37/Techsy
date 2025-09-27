@@ -1,10 +1,11 @@
-import { Button, Input } from "@/shared/ui";
 import { FilteredSearchSchema } from "../model/types/filteredSearchSchema";
 import { useState } from "react";
 import { ProductFiltersResponsive } from "@/features/ProductFilters/ui/ProductFiltersResponsive";
 import { XMarkIcon, FiltersIcon } from "@/shared/assets";
 import { AnimatePresence, motion } from "framer-motion";
 import clsx from "clsx";
+import { Button } from "@/shared/ui/ui-lib/Button/Button";
+import { Input } from "@/shared/ui/ui-lib/Input/Input";
 
 export const FilteredSearchView = ({
     value,
@@ -16,9 +17,8 @@ export const FilteredSearchView = ({
         <div>
             <div className="flex gap-[10px] w-full mt-[12px]">
                 <Input
-                    noWrap
                     className="min-w-[200px] w-full border-1 border-primary-900/30 hover:border-primary-900 
-                    hover:bg-primary-300/30 focus:border-light-purple transition outline-none p-2 text-start 
+                    bg-gradient focus:border-light-purple transition outline-none p-2 text-start 
                     rounded-md text-white focus:outline-none"
                     type="text"
                     placeholder="Введите название устройства..."
@@ -26,8 +26,9 @@ export const FilteredSearchView = ({
                     onChange={(e) => onChange(e.target.value)}
                 />
                 <Button
-                    className={clsx("hidden border p-2 rounded-md transition-all duration-300 max-lg:block", {
-                        "border-light-purple": showFilters,
+                    variant="ghost"
+                    className={clsx("hidden border p-2 bg-gradient rounded-md transition-all duration-300 max-lg:block", {
+                        "border-primary-900": showFilters,
                         "border-primary-900/30": !showFilters
                     })}
                     type="button"
@@ -45,7 +46,7 @@ export const FilteredSearchView = ({
                         transition={{ duration: 0.3, ease: "easeInOut" }}
                         className="fixed top-0 left-0 z-[993] h-full lg:hidden backdrop-blur-sm"
                     >
-                        <div className="bg-[#0F0F1A] h-full w-[320px] relative shadow-xl">
+                        <div className="bg-gradient h-full max-w-[320px] relative shadow-xl">
                             <ProductFiltersResponsive {...filterProps} />
                             <Button onClick={() => setShowFilters(false)}>
                                 <XMarkIcon

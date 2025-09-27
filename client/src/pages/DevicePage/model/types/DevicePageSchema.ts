@@ -1,5 +1,4 @@
 import { AppDispatch } from "@/app/providers/store/store";
-import { ModalContentType } from "@/shared/hooks";
 import { IDevice, IReview, IUser } from "@/shared/types";
 
 export interface DevicePageDescriptionSchema {
@@ -16,11 +15,7 @@ export interface DevicePageInfoSchema extends DevicePageDescriptionSchema {
 export interface DevicePageReviewsSchema {
     currentUser: IUser | null,
     reviews: IReview[],
-    isOpen: boolean,
-    contentType: ModalContentType | null,
     dispatch?: AppDispatch
-    closeModal: () => void,
-    openModal: (type: ModalContentType) => void,
     handleAddReview: () => void,
     handleDeleteReview: (reviewId: string) => void,
 }

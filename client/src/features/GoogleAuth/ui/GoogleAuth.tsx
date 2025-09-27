@@ -1,9 +1,9 @@
 import { useGoogleLogin } from "@react-oauth/google";
 import { GoogleAuthView } from "./GoogleAuthView";
-import { loginWithOAuth } from "@/entities/User/api/userApi";
 import { useNavigate } from "react-router-dom";
 import { SHOP_ROUTE } from "@/shared/config/consts";
 import { useNotification, useActions } from "@/shared/hooks";
+import { loginWithOAuth } from "@/entities/Auth";
 
 export const GoogleAuth = () => {
     const { fetchUser } = useActions();

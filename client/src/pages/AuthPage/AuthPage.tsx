@@ -8,7 +8,7 @@ const AuthPage = () => {
     const isLogin = location.pathname === LOGIN_ROUTE;
 
     return (
-        <div className="flex flex-col justify-center items-center min-h-screen bg-base-gradient p-4">
+        <div className="flex flex-col justify-center items-center min-h-screen bg-gradient/30 p-4">
             {isLogin ? <Login /> : <Registration />}
         </div>
     );

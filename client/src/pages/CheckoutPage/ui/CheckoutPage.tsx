@@ -20,7 +20,7 @@ const CheckoutPage = () => {
     return (
         <Container>
             <div className="relative flex flex-col justify-center items-center mt-5 
-            filters-bg-gradient border border-primary-900/30 py-10 rounded-xl">
+            bg-gradient border border-primary-900/30 py-10 rounded-xl">
                 {renderStatus(status)};
                 <p className="absolute top-3 left-3 text-gray-500 text-sm">заказ: {orderId}</p>
             </div>

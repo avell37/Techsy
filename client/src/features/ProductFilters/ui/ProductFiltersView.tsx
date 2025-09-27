@@ -1,6 +1,9 @@
-import { ArrowDown } from "@/shared/assets";
-import { Button, Divider, Dropdown, Input } from "@/shared/ui";
+import { Divider, Dropdown } from "@/shared/ui";
 import { ProductFiltersSchema } from "../model/types/productFiltersSchema";
+import { Sidebar } from "@/widgets/Sidebar/ui/Sidebar";
+import { Button } from "@/shared/ui/ui-lib/Button/Button";
+import { ChevronDown } from "lucide-react";
+import { Input } from "@/shared/ui/ui-lib/Input/Input";
 
 export const ProductFiltersView = ({
     activeFilter,
@@ -13,49 +16,39 @@ export const ProductFiltersView = ({
     handleFilterChange,
 }: ProductFiltersSchema) => {
     return (
-        <div className="min-h-[750px] flex border-1 rounded-xl border-primary-900/30 mt-5 
-        filters-bg-gradient shadow-lg max-lg:max-w-[200px] max-md:max-w-[150px] max-lg:hidden">
-            <div className="flex flex-col gap-[10px] mt-[20px]">
+        <div className="max-lg:hidden">
+            <Sidebar>
                 <Dropdown
                     trigger={
                         <Button
-                            text={selectedType.name}
-                            className="relative w-[250px] h-[40px] text-start pl-8 text-white 
-                            border-primary-900/30 hover:border-primary-900 hover:bg-primary-300
-                            focus:border-light-purple transition cursor-pointer"
+                            variant="ghost"
+                            className="relative flex items-center w-[250px] h-[40px] text-start pl-8 text-white
+                            hover:bg-main focus:border-primary-900 transition cursor-pointer"
                         >
-                            <ArrowDown
-                                width="20px"
-                                height="20px"
-                                className="absolute top-[10px] left-1"
-                            />
+                            <ChevronDown />
+                            {selectedType.name}
                         </Button>
                     }
                     items={typeItems}
-                    className="w-[250px]"
+                    className="w-62"
                 />
                 <Dropdown
                     trigger={
                         <Button
-                            text={selectedBrand.name}
-                            className="relative w-[250px] h-[40px] text-start pl-8 text-white 
-                            border-primary-900/30 hover:border-primary-900 hover:bg-primary-300 
-                            focus:border-light-purple transition cursor-pointer"
+                            variant="ghost"
+                            className="relative flex items-center w-[250px] h-[40px] text-start pl-8 text-white
+                            hover:bg-main focus:border-primary-900 transition cursor-pointer"
                         >
-                            <ArrowDown
-                                width="20px"
-                                height="20px"
-                                className="absolute top-[10px] left-1"
-                            />
+                            <ChevronDown />
+                            {selectedBrand.name}
                         </Button>
                     }
                     items={brandItems}
-                    className="w-[250px]"
+                    className="w-62"
                 />
                 <Divider variant="h-[2px] w-full" />
                 <label className="filter-label">
                     <Input
-                        noWrap
                         type="checkbox"
                         className="peer absolute w-0 h-0 opacity-0 cursor-pointer"
                         checked={activeFilter === "priceLow"}
@@ -66,7 +59,6 @@ export const ProductFiltersView = ({
                 </label>
                 <label className="filter-label">
                     <Input
-                        noWrap
                         type="checkbox"
                         className="peer absolute w-0 h-0 opacity-0 cursor-pointer"
                         checked={activeFilter === "priceHigh"}
@@ -77,7 +69,6 @@ export const ProductFiltersView = ({
                 </label>
                 <label className="filter-label">
                     <Input
-                        noWrap
                         type="checkbox"
                         className="peer absolute w-0 h-0 opacity-0 cursor-pointer"
                         checked={activeFilter === "rating"}
@@ -88,13 +79,14 @@ export const ProductFiltersView = ({
                 </label>
                 {isFilterActive && (
                     <Button
-                        className="w-[250px] h-[40px] text-center text-white rounded-md border-primary-900/30 
-                        hover:border-primary-900 hover:bg-primary-300/30 transition cursor-pointer"
-                        text="Сбросить всё"
+                        variant="ghost"
+                        className="flex justify-center w-[250px] h-[40px] text-white rounded-md hover:bg-main transition cursor-pointer"
                         onClick={handleResetFilters}
-                    />
+                    >
+                        Сбросить всё
+                    </Button>
                 )}
-            </div>
+            </Sidebar>
         </div>
     );
 };

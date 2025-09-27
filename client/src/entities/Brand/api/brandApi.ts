@@ -16,6 +16,11 @@ export const fetchOneBrand = async (id: string) => {
     return data;
 }
 
+export const updateBrand = async (id: string, brand: string) => {
+    const { data } = await $authHost.patch(`/api/brand/${id}`, { name: brand })
+    return data;
+}
+
 export const deleteOneBrand = async (id: string) => {
     const { data } = await $authHost.delete(`/api/brand/${id}`)
     return data;

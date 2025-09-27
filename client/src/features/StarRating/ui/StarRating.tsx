@@ -28,7 +28,7 @@ export const StarRating = ({
                                     !readOnly ? () => setHovered(0) : undefined
                                 }
                                 fill={filled ? "facc15" : "none"}
-                                className={`${!readOnly && "cursor-pointer"} ${filled ? "fill-yellow" : "fill-yellow/30"
+                                className={`${!readOnly && "cursor-pointer"} ${filled ? "fill-star" : "fill-star"
                                     }`}
                                 width={`${size}px`}
                                 height={`${size}px`}

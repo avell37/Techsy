@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { SHOP_ROUTE } from "@/shared/config/consts";
-import { ArrowIcon } from "@shared/assets";
+import { Undo2 } from "lucide-react";
 
 const ErrorPage = () => (
     <div className="flex flex-col justify-center items-center h-[100vh] gap-[30px]">
@@ -18,7 +18,7 @@ const ErrorPage = () => (
                     to={SHOP_ROUTE}
                     className="flex justify-center items-center mt-[10px] gap-[2px] font-extrabold"
                 >
-                    <ArrowIcon />
+                    <Undo2 />
                     Назад?
                 </Link>
             </p>

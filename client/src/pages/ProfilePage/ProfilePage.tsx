@@ -1,41 +1,33 @@
-import { ProfileSidebar } from "@/widgets/ProfileSidebar/ui/ProfileSidebar";
-import { useState } from "react";
-import { OrderHistory, ordersSelector, UserProfile, userSelector } from "@/entities";
+import { Sidebar } from "@/widgets/Sidebar/ui/Sidebar";
 import { Container } from "@/shared/ui";
+import { Outlet, useNavigate } from "react-router-dom";
+import { PROFILE_ROUTE, STORE_MANAGEMENT_ROUTE } from "@/shared/config/consts";
+import { UserProfileSidebar } from "@/entities/User/ui/UserProfileSidebar";
 import { useAppSelector } from "@/shared/hooks";
-import { AdminPanel } from "@/features/AdminPanel";
+import { userSelector } from "@/entities";
 
 const ProfilePage = () => {
     const user = useAppSelector(userSelector.currentUser);
-    const orders = useAppSelector(ordersSelector.orders);
-    const [activeTab, setActiveTab] = useState("profile");
-
-    const renderContent = () => {
-        switch (activeTab) {
-            case "main":
-                return (
-                    <UserProfile
-                        user={user}
-                    />
-                );
-            case "orders":
-                return <OrderHistory orders={orders} />;
-            case "admin":
-                return <AdminPanel />;
-            default:
-                return (
-                    <UserProfile
-                        user={user}
-                    />
-                );
-        }
-    };
+    const navigate = useNavigate();
 
     return (
         <Container>
             <div className="flex w-full h-full gap-10 max-lg:gap-2 max-lg:flex-col">
-                <ProfileSidebar onSelectTab={setActiveTab} user={user} />
-                <div className="w-full">{renderContent()}</div>
+                <Sidebar>
+                    <UserProfileSidebar
+                        user={user}
+                        onSelectTab={(tab) => {
+                            if (tab === "store" && user?.role === 'Admin') {
+                                navigate(STORE_MANAGEMENT_ROUTE)
+                            } else {
+                                navigate(`${PROFILE_ROUTE}/${tab}`)
+                            }
+                        }}  
+                    />
+                </Sidebar>
+                <div className="w-full">
+                    <Outlet />
+                </div>
             </div>
         </Container>
     );

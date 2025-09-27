@@ -57,6 +57,30 @@ class BrandController {
         }
     }
 
+    async update(req: any, res: any, next: any) {
+        try {
+            const { id } = req.params;
+            const { name } = req.body;
+
+            if (!id) {
+                return next(ApiError.badRequest('Не найден ID бренда'))
+            }
+
+            const brand = await prisma.brand.update({
+                where: {
+                    id
+                },
+                data: {
+                    name
+                }
+            })
+
+            return res.json(brand);
+        } catch (err) {
+            return next(ApiError.internal('Произошла ошибка на сервере. Попробуйте позже.'))
+        }
+    }
+
     async deleteOne(req: any, res: any, next: any) {
         try {
             const { id } = req.params;

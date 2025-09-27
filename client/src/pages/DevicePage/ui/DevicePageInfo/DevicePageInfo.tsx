@@ -1,9 +1,9 @@
 import { StarIcon } from "@/shared/assets";
 import { Button } from "@/shared/ui";
-import { DeviceLike } from "@/entities";
 import { DevicePageInfoSchema } from "../../model/types/DevicePageSchema";
 import { useNavigate } from "react-router-dom";
 import { useAddToBasket } from "@/shared/hooks";
+import { Heart } from "lucide-react";
 
 export const DevicePageInfo = ({
     device,
@@ -68,16 +68,22 @@ export const DevicePageInfo = ({
                         <Button
                             className="flex-1 h-12 bg-primary-900 hover:bg-light-purple text-white font-medium 
                             rounded-xl transition-all duration-300 max-sm:text-xs"
-                            text={isInBasket ? "В корзине" : "Добавить в корзину"}
                             onClick={() => handleAddToCart(device.id)}
-                        />
+                        >
+                            {isInBasket ? "В корзине" : "Добавить в корзину"}
+                        </Button>
                         <div className="h-12 w-12 flex items-center justify-center border-1 border-indigo-900 rounded-xl 
                         hover:border-light-purple hover:bg-primary-300/50 transition-all duration-300 cursor-pointer">
-                            <DeviceLike
-                                className="cursor-pointer"
-                                isFavorite={isFavorite}
+                            <Button 
+                                variant="default"
+                                size="icon"
                                 onClick={toggleFavorites}
-                            />
+                                className="p-0 w-[24px] h-[24px] flex items-center justify-center cursor-pointer hover:stroke-light-purple"
+                            >
+                                <Heart 
+                                    className={`size-6 stroke-indigo-900 transition duration-200 ease-in-out ${isFavorite ? "fill-indigo-900" : ""}`}
+                                />
+                            </Button>
                         </div>
                     </div>
                 </div>

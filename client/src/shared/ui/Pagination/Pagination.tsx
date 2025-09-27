@@ -1,13 +1,13 @@
 import { useActions, useAppSelector } from "@/shared/hooks";
 import { favoriteSelector } from "@/entities/Favorites";
-import { Button } from "@shared/ui";
-import { ArrowLeft } from "@/shared/assets/icons/ArrowLeft";
-import { ArrowRight } from "@/shared/assets/icons/ArrowRight";
+import { PaginationContent, PaginationItem, PaginationNext, PaginationPrevious, ShadPagination } from "./Pagination.ui";
 import clsx from "clsx";
 
 export const Pagination = ({ totalPages }: { totalPages: number }) => {
     const { setCurrentPage } = useActions();
     const currentPage = useAppSelector(favoriteSelector.currentPage);
+
+    if (totalPages === 0) return null;
 
     const pages: number[] = [];
 
@@ -19,42 +19,39 @@ export const Pagination = ({ totalPages }: { totalPages: number }) => {
         setCurrentPage(page);
     };
 
-    if (totalPages === 0) {
-        return null;
-    }
-
     return (
-        <div className="border-1 rounded-xl border-primary-300 mt-5 filters-bg-gradient shadow-lg">
-            <div className="flex justify-center items-center gap-2">
-                {currentPage > 1 ? (
-                    <Button
-                        className="flex justify-center items-center w-[50px] h-[50px] cursor-pointer hover:bg-primary-500"
-                        onClick={() => handlePageChange(currentPage - 1)}
-                        disabled={currentPage === 1}
-                    >
-                        <ArrowLeft className={`size-4 stroke-white`} />
-                    </Button>
-                ) : null}
+        <ShadPagination className="rounded-xl mt-5 bg-gradient shadow-lg">
+            <PaginationContent className="flex justify-center items-center gap-2">
+                {currentPage > 1 && (
+                    <PaginationItem>
+                        <PaginationPrevious
+                            className="flex justify-center items-center bg-main text-gray-300 
+                                cursor-pointer hover:bg-primary-900 hover:text-white transition-all"
+                            onClick={() => handlePageChange(currentPage - 1)}
+                        />
+                    </PaginationItem>
+                )}
                 {pages.map((page) => (
-                    <Button
+                    <PaginationItem
                         key={page}
                         onClick={() => handlePageChange(page)}
-                        className={clsx(`w-[50px] h-[50px] text-white cursor-pointer hover:bg-primary-300 transition-all`, {
-                            "border-b-1 border-light-purple": currentPage === page
-                        })}
-                        text={page}
-                    />
-                ))}
-                {currentPage !== totalPages ? (
-                    <Button
-                        className="flex justify-center items-center w-[50px] h-[50px] cursor-pointer hover:bg-primary-500"
-                        onClick={() => handlePageChange(currentPage + 1)}
-                        disabled={currentPage === totalPages}
+                        className={clsx(`w-[50px] h-[50px] flex items-center justify-center text-white cursor-pointer hover:bg-primary-300 transition-all`, {
+                            "border-b-1 border-light-purple": currentPage === page }
+                        )}
                     >
-                        <ArrowRight className={`size-4 stroke-white`} />
-                    </Button>
-                ) : null}
-            </div>
-        </div>
+                        {page}
+                    </PaginationItem>
+                ))}
+                {currentPage < totalPages && (
+                    <PaginationItem
+                        className="flex justify-center items-center bg-main text-gray-300 
+                                cursor-pointer rounded-md hover:bg-primary-900 hover:text-white transition-all"
+                        onClick={() => handlePageChange(currentPage + 1)}
+                    >
+                        <PaginationNext />
+                    </PaginationItem>
+                )}
+            </PaginationContent>
+        </ShadPagination>
     );
 };

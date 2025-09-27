@@ -4,10 +4,10 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { LoginYupSchema } from "../lib/LoginYupSchema";
-import { login } from "@/entities/User";
 import { SHOP_ROUTE } from "@/shared/config/consts";
 import { handleServerFormError } from "@/shared/lib";
 import { LoginFormProps } from "../model/types/LoginFormProps";
+import { login } from "@/entities/Auth";
 
 export const useLogin = () => {
     const { fetchUser } = useActions();
@@ -15,17 +15,13 @@ export const useLogin = () => {
     const navigate = useNavigate();
     const { notifySuccess, notifyError } = useNotification();
 
-    const { control, handleSubmit, reset, setError,
-        formState: { errors }
-    } = useForm({
+    const form = useForm<LoginFormProps>({
         resolver: yupResolver(LoginYupSchema),
-        defaultValues: {
-            email: "",
-            password: ""
-        }
     });
 
-    const handleLogin = async (data: LoginFormProps) => {
+    const { reset, setError } = form;
+
+    const onSubmit = async (data: LoginFormProps) => {
         try {
             await login(data.email, data.password);
             await fetchUser();
@@ -45,15 +41,12 @@ export const useLogin = () => {
         }
     };
 
-    const toggleShowPassword = () => {
-        setShowPassword(!showPassword);
-    };
+    const toggleShowPassword = () => setShowPassword((prev) => !prev);
 
     return {
-        control,
-        errors,
+        form,
         showPassword,
-        handleLogin: handleSubmit(handleLogin),
-        toggleShowPassword
+        toggleShowPassword,
+        onSubmit
     }
 }
