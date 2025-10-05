@@ -5,6 +5,7 @@ const authMiddleware = require('../middleware/authMiddleware')
 
 router.post('/', authMiddleware, ReviewController.createReview);
 router.get('/:deviceId', ReviewController.getReviews);
+router.patch('/:id', authMiddleware, ReviewController.updateReview);
 router.delete('/:id', authMiddleware, ReviewController.deleteReview)
 
 module.exports = router;

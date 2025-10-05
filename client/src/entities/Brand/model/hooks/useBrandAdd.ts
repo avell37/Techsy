@@ -29,8 +29,6 @@ export const useBrandAdd = () => {
 
     return {
         form,
-        register,
-        errors,
         handleAddBrand,
         handleSubmit,
     }

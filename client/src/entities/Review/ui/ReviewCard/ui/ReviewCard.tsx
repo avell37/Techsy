@@ -3,6 +3,7 @@ import { defaultUser, XMarkIcon } from "@/shared/assets";
 import { StarRating } from "@/features/StarRating/ui/StarRating";
 import { ReviewCardProps } from "../model/ReviewCardProps";
 import { useMemo } from "react";
+import { X } from "lucide-react";
 
 export const ReviewCard = ({
     review,
@@ -38,16 +39,17 @@ export const ReviewCard = ({
                     <span className="text-white text-sm max-sm:text-xs">Оценка:</span>
                     <StarRating value={Number(review.rate)} readOnly size={16} />
                 </div>
-                <div className="mb-8">
+                <div>
                     <p className="text-white text-sm">{review.comment}</p>
                 </div>
                 <div className="flex flex-col justify-end items-end gap-[10px] text-white text-sm">
                     {(isOwner || isAdmin) && (
-                        <Button onClick={handleDelete}>
-                            <XMarkIcon
-                                className="stroke-white absolute right-4 top-4 cursor-pointer hover:stroke-gray-400 transition-all
-                                duration-300 max-w-[25px] w-full max-h-[25px] h-full max-sm:max-w-[17px] max-sm:max-h-[17px]"
-                            />
+                        <Button 
+                            size="none"
+                            className="absolute right-4 top-4"
+                            onClick={handleDelete}
+                        >
+                            <X />
                         </Button>
                     )}
                     <FormattedDate

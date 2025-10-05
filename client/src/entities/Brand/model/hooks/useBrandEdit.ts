@@ -14,7 +14,7 @@ export const useBrandEdit = () => {
         resolver: yupResolver(BrandEditYupSchema)
     });
 
-    const { register, handleSubmit, formState: { errors } } = form;
+    const { handleSubmit } = form;
 
     const handleUpdateBrand = async (id: string, brand: string) => {
         try {
@@ -29,8 +29,6 @@ export const useBrandEdit = () => {
 
     return {
         form,
-        register,
-        errors,
         handleUpdateBrand,
         handleSubmit,
     }

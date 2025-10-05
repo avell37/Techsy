@@ -3,7 +3,6 @@ import {
     Dialog, 
     DialogContent, 
     DialogDescription, 
-    DialogFooter, 
     DialogHeader, 
     DialogTitle, 
     DialogTrigger
@@ -20,22 +19,20 @@ export const DialogModal = ({
     title,
     description,
     trigger,
-    children
+    children,
 }: DialogModalProps) => {
     return (
         <Dialog>
-            <form>
-                <DialogTrigger asChild>{trigger}</DialogTrigger>
-                <DialogContent className="bg-gradient">
-                    <DialogHeader>
-                        <DialogTitle className="font-bold text-xl text-white">{title}</DialogTitle>
-                        <DialogDescription className="text-gray-400">{description}</DialogDescription>
-                    </DialogHeader>
-                    <div className="mt-6">
-                        {children}
-                    </div>
-                </DialogContent>
-            </form>
+            <DialogTrigger asChild>{trigger}</DialogTrigger>
+            <DialogContent className="bg-gradient">
+                <DialogHeader>
+                    <DialogTitle className="font-bold text-xl text-white">{title}</DialogTitle>
+                    <DialogDescription className="text-gray-400">{description}</DialogDescription>
+                </DialogHeader>
+                <div className="mt-6">
+                    {children}
+                </div>
+            </DialogContent>
         </Dialog>
     )
 

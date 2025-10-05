@@ -1,7 +1,7 @@
 import { $authHost } from "@shared/api";
 import { jwtDecode } from 'jwt-decode';
 import { setToken } from "@/shared/lib";
-import { IUser } from "@shared/types/IUser";
+import { IUser } from "@/shared/types/IUser";
 
 export const fetchUserData = async () => {
     try {

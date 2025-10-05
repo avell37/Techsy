@@ -3,7 +3,7 @@ import { createType } from "../../api/typeApi";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { TypeFormProps } from "../types/TypeFormProps";
-import { TypeAddYupSchema } from "../libs/TypeAddYupSchema";
+import { TypeYupSchema } from "../libs/TypeYupSchema";
 
 export const useTypeAdd = () => {
 
@@ -11,10 +11,10 @@ export const useTypeAdd = () => {
     const { notifySuccess, notifyError } = useNotification();
 
     const form = useForm<TypeFormProps>({
-        resolver: yupResolver(TypeAddYupSchema)
+        resolver: yupResolver(TypeYupSchema)
     });
 
-    const { register, handleSubmit, formState: { errors } } = form;
+    const { handleSubmit } = form;
 
     const handleAddType = async (type: string) => {
         try {
@@ -29,8 +29,6 @@ export const useTypeAdd = () => {
 
     return {
         form,
-        register,
-        errors,
         handleAddType,
         handleSubmit,
     }

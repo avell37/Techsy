@@ -1,14 +1,13 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 const ApiError = require('../error/apiError');
-const deleteDeviceCascade = require('../utils/deleteDeviceCascade');
 
 class DeviceController {
     async create(req: any, res: any, next: any) {
         try {
-            let { name, price, brandId, typeId, info } = req.body;
+            let { name, description, color, storage, price, brandId, typeId } = req.body;
             const file = req.file;
-            if (!name || !price || !brandId || !typeId || !info) {
+            if (!name || !description || !color || !storage || !price || !brandId || !typeId) {
                 return next(ApiError.badRequest('Переданы не все данные.'))
             }
             if (!file) {
@@ -23,6 +22,9 @@ class DeviceController {
             const device = await prisma.device.create({
                 data: {
                     name,
+                    description,
+                    color,
+                    storage: Number(storage),
                     price: Number(price),
                     brandId,
                     typeId,
@@ -30,20 +32,9 @@ class DeviceController {
                 }
             });
 
-            if (info) {
-                info = JSON.parse(info);
-                const deviceInfo = info.map((i: any) => ({
-                    title: i.title,
-                    description: i.description,
-                    deviceId: device.id
-                }));
-                await prisma.deviceInfo.createMany({
-                    data: deviceInfo
-                });
-            }
-
             return res.json(device);
         } catch (err) {
+            console.log(err);
             return next(ApiError.internal('Произошла ошибка на сервере. Попробуйте позже.'))
         }
     }
@@ -88,7 +79,7 @@ class DeviceController {
                 include: {
                     Brand: true,
                     Type: true,
-                    deviceInfo: true
+                    reviews: true
                 }
             })
             if (!device) {
@@ -108,14 +99,14 @@ class DeviceController {
     async update(req: any, res: any, next: any) {
         try {
             const { id } = req.params;
-            const { name, price, brandId, typeId, info } = req.body;
+            const { name, description, color, storage, price, brandId, typeId } = req.body;
 
             if (!id) {
                 return next(ApiError.badRequest('Не найден ID устройства.'))
             }
 
-            if (!name || !price) {
-                return next(ApiError.badRequest('Некорректные данные: name и price обязательны.'))
+            if (!name || !description || !color || !price || !storage) {
+                return next(ApiError.badRequest('Переданы не все данные'))
             }
 
             const device = await prisma.device.findUnique({
@@ -130,19 +121,12 @@ class DeviceController {
                 where: { id },
                 data: {
                     name,
+                    description,
+                    color,
+                    storage: Number(storage),
                     price: Number(price),
                     brandId: brandId ?? null,
                     typeId: typeId ?? null,
-                    deviceInfo: {
-                        deleteMany: {},
-                        create: info?.map((item: any) => ({
-                            title: item.title,
-                            description: item.description
-                        }))
-                    }
-                },
-                include: {
-                    deviceInfo: true
                 }
             })
 
@@ -159,7 +143,9 @@ class DeviceController {
                 return next(ApiError.notFound('Не найден ID устройства'))
             }
 
-            const deleted = await deleteDeviceCascade(id);
+            const deleted = await prisma.Device.delete({
+                where: {id}
+            })
 
             return res.json({ message: "Девайс удален", deleted })
         } catch (err) {

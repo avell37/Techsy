@@ -72,6 +72,51 @@ class ReviewController {
             return next(ApiError.internal('Произошла ошибка на сервере. Попробуйте позже.'))
         }
     }
+
+    async updateReview(req: any, res: any, next: any) {
+        try {
+            if (!req.user) {
+                return next(ApiError.unauthorized('Информация о пользователе не найдена.'))
+            }
+
+            const reviewId = req.params.id;
+            const userId = req.user.id;
+            const { rate, comment } = req.body;
+
+            if (!reviewId) {
+                return next(ApiError.badRequest('Не найден ID отзыва.'))
+            }
+
+            const review = await prisma.review.findUnique({
+                where: {
+                    id: reviewId
+                }
+            })
+
+            if (!review) {
+                return next(ApiError.notFound('Отзыв не надйен'))
+            }
+
+            if (review.userId !== userId) {
+                return next(ApiError.forbidden('Вы не можете отредактировать чужой отзыв.'))
+            }
+
+            const updatedReview = await prisma.review.update({
+                where: { id: reviewId },
+                data: {
+                    rate,
+                    comment
+                }
+            })
+
+            await updateDeviceRating(review.deviceId);
+
+            return res.json(updatedReview);
+        } catch (err) {
+            return next(ApiError.internal('Произошла ошибка на сервере. Попробуйте позже.'))
+        }
+    }
+
     async deleteReview(req: any, res: any, next: any) {
         try {
             if (!req.user) {

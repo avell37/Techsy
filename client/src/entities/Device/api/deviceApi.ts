@@ -1,7 +1,7 @@
 import { IDevice } from "@/shared/types";
 import { $authHost, $host } from "@shared/api";
 
-export const createDevice = async (device: object) => {
+export const createDevice = async (device: FormData) => {
     const { data } = await $authHost.post('/api/device', device);
     return data;
 }
@@ -13,6 +13,11 @@ export const fetchDevices = async (): Promise<IDevice[]> => {
 
 export const fetchOneDevice = async (id: string) => {
     const { data } = await $host.get(`/api/device/${id}`);
+    return data;
+}
+
+export const updateDevice = async (id: string, device: FormData) => {
+    const { data } = await $authHost.patch(`/api/device/${id}`, device);
     return data;
 }
 

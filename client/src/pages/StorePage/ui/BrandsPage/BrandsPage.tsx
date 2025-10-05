@@ -1,5 +1,5 @@
 import { brandSelector } from "@/entities";
-import { BrandColumns } from "@/entities/Brand/ui/BrandColumns";
+import { BrandColumns } from "@/entities/Brand/ui/BrandTable/BrandColumns";
 import { ADD_BRAND_ROUTE } from "@/shared/config/consts";
 import { useAppSelector } from "@/shared/hooks";
 import { DataTable } from "@/shared/ui/DataTable/DataTable";

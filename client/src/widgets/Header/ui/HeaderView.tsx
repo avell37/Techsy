@@ -1,4 +1,3 @@
-import { defaultUser } from "@/shared/assets";
 import { Container, Dropdown } from "@/shared/ui";
 import { getUserDropdownItems } from "../lib/getUserDropdownItems";
 import { LOGIN_ROUTE, SHOP_ROUTE } from "@/shared/config/consts";
@@ -6,6 +5,8 @@ import { HeaderSchema } from "../model/types/HeaderSchema";
 import { UserMenu } from "@/shared/ui/UserMenu/ui/UserMenu";
 import { Button } from "@/shared/ui/ui-lib/Button/Button";
 import { Link } from "react-router-dom";
+import { useAppSelector } from "@/shared/hooks";
+import { userSelector } from "@/entities";
 
 export const HeaderView = ({
     currentUser,
@@ -14,6 +15,7 @@ export const HeaderView = ({
     userIsAuth,
     userLogout
 }: HeaderSchema) => {
+    const isLoading = useAppSelector(userSelector.loading);
     const handleLogin = () => navigate(LOGIN_ROUTE);
     const userDropdownItems = getUserDropdownItems(navigate, userLogout)
 
@@ -32,8 +34,8 @@ export const HeaderView = ({
                             trigger={
                                 <div>
                                     <UserMenu 
-                                        currentUser={currentUser}
                                         picture={picture}
+                                        currentUser={currentUser}
                                     />
                                 </div>
                             }

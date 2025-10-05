@@ -56,6 +56,9 @@ model Device {
   createdAt       DateTime         @default(now()) @map("created_at")
   updatedAt       DateTime         @updatedAt @map("updated_at")
   name            String           @unique
+  description     String           @unique
+  color           String
+  storage         Int
   price           Int
   rating          Int              @default(0)
   img             String
@@ -66,23 +69,10 @@ model Device {
   basket          Basket?          @relation(fields: [basketId], references: [id], onDelete: Cascade)
   Brand           Brand?           @relation(fields: [brandId], references: [id])
   Type            Type?            @relation(fields: [typeId], references: [id])
-  deviceInfo      DeviceInfo[]
   favoriteDevices FavoriteDevice[]
   reviews         Review[]
 
   @@map("device")
-}
-
-model DeviceInfo {
-  id          String   @id @default(cuid())
-  createdAt   DateTime @default(now()) @map("created_at")
-  updatedAt   DateTime @updatedAt @map("updated_at")
-  title       String
-  description String
-  deviceId    String?
-  Device      Device?  @relation(fields: [deviceId], references: [id], onDelete: Cascade)
-
-  @@map("device_info")
 }
 
 model Review {

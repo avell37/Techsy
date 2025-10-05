@@ -1,5 +1,5 @@
 import { typeSelector } from "@/entities";
-import { TypeColumns } from "@/entities/Type/ui/TypeColumns";
+import { TypeColumns } from "@/entities/Type/ui/TypeTable/TypeColumns";
 import { ADD_TYPE_ROUTE } from "@/shared/config/consts";
 import { useAppSelector } from "@/shared/hooks";
 import { DataTable } from "@/shared/ui/DataTable/DataTable";

@@ -1,8 +1,7 @@
 export * from './Dropdown/ui/Dropdown';
-export * from './ImagePreview/ImagePreview';
+export * from './ImagePreview/ui/ImagePreview';
 export * from './FormattedDate/ui/FormattedDate';
 export * from './Container/Container';
-export * from './ShippingFields/ShippingFields';
 export * from './Spinner/ui/Spinner';
 export * from './Spinner/model/SpinnerProps';
 export * from './Pagination/Pagination';
@@ -18,5 +17,4 @@ export * from './ui-lib/Form/Form';
 export * from './ui-lib/Input/Input';
 export * from './ui-lib/Label/Label';
 export * from './ui-lib/Select/Select';
-export * from './ui-lib/Skeleton/Skeleton';
 export * from './ui-lib/Table/Table';

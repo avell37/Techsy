@@ -35,7 +35,7 @@ export const StoreCard = ({
                         </Button>
                     )}
                 </div>
-                <div className="mt-8 p-4 rounded-md border-1 border-primary-900/30">
+                <div className="mt-6">
                     {children}
                 </div>
             </div>

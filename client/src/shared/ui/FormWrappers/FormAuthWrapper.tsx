@@ -32,7 +32,7 @@ export const FormAuthWrapper = <T extends FieldValues>({
                 <Button
                     variant="ghost"
                     type="submit"
-                    className="custom-button w-full rounded-xl border-1 border-primary-900/30 hover:border-primary-900"
+                    className="block apply-button-without-bg w-full rounded-xl border-1 border-primary-900/30 hover:border-primary-900"
                 >
                     {buttonText}
                 </Button>

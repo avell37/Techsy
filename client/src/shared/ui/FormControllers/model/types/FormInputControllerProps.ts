@@ -9,5 +9,6 @@ export interface FormInputControllerProps {
     icon?: ReactNode;
     element?: ReactNode;
     className?: string;
+    label?: string;
     errors?: FieldErrors;
 }

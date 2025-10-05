@@ -1,4 +1,3 @@
-import { defaultUser } from "@/shared/assets";
 import { customAvatar } from "@/shared/lib/customAvatar/customAvatar";
 import { Input } from "@/shared/ui";
 import { Camera } from "lucide-react";

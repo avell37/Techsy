@@ -1,6 +1,5 @@
-import { Controller, FieldValues } from "react-hook-form";
-import { get } from "lodash";
-import { Dropdown } from "@/shared/ui";
+import { FieldValues } from "react-hook-form";
+import { Dropdown, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/shared/ui";
 import { FormDropdownControllerProps } from "../model/types/FormDropdownControllerProps";
 import { Button } from "../../ui-lib/Button/Button";
 
@@ -8,47 +7,46 @@ export const FormDropdownController = <T extends FieldValues>({
     name,
     control,
     items,
-    errors,
     label,
     placeholder = "Выбрать...",
     className = "",
 }: FormDropdownControllerProps<T>) => {
-    const rawError = get(errors, `${name}.message`);
-    const errorMessage = typeof rawError === "string" ? rawError : undefined;
-
     return (
-        <Controller
+        <FormField 
             name={name}
             control={control}
-            render={({ field }) => {
+            render={({ field, fieldState }) => {
                 const selectedItem = items.find((item) => item.id === field.value);
+                const hasError = !!fieldState.error;
+
                 return (
-                    <div className={`flex flex-col gap-[10px] ${className}`}>
-                        {label && (
-                            <label className="text-gray-400 text-sm block">{label}</label>
-                        )}
-                        <Dropdown
-                            trigger={
-                                <Button
-                                    type="button"
-                                    className="p-2 rounded-md max-w-[175px] w-full h-[40px] border-1 border-primary-900/30 
-                                    hover:border-primary-900 hover:bg-primary-300/30 focus:border-light-purple
-                                    transition font-bold cursor-pointer text-white"
-                                    
-                                >
-                                    {selectedItem ? selectedItem.name : placeholder}
-                                </Button>
-                            }
-                            items={items.map((item) => ({
-                                text: item.name,
-                                onClick: () => field.onChange(item.id),
-                            }))}
-                        />
-                        {errorMessage && (
-                            <span className="text-red-500 text-sm mt-1">{errorMessage}</span>
-                        )}
-                    </div>
-                );
+                    <FormItem className={`flex flex-col gap-[10px] ${className}`}>
+                        {label && <FormLabel className="text-gray-400 text-sm block">{label}</FormLabel>}
+
+                        <FormControl>
+                            <Dropdown
+                                trigger={
+                                    <Button
+                                        type="button"
+                                        className={`p-2 rounded-md w-full border-1 transition font-bold cursor-pointer text-white
+                                        ${hasError
+                                            ? "border-red-600 hover:border-red-800"
+                                            : "border-1 border-primary-900/30 hover:border-primary-900 hover:bg-primary-300/30 focus:border-light-purple"
+                                        }`}
+                                    >
+                                        {selectedItem ? selectedItem.name : placeholder}
+                                    </Button>
+                                }
+                                items={items.map((item) => ({
+                                    text: item.name,
+                                    onClick: () => field.onChange(item.id),
+                                }))}
+                            />
+                        </FormControl>
+
+                        <FormMessage />
+                    </FormItem>
+                )
             }}
         />
     );

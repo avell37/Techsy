@@ -1,10 +1,9 @@
 import { useActions, useNotification } from "@/shared/hooks";
-import { IDropdownItem, IType } from "@/shared/types";
 import { updateType } from "../../api/typeApi";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { TypeEditYupSchema } from "../libs/TypeEditYupSchema";
 import { TypeFormProps } from "../types/TypeFormProps";
+import { TypeYupSchema } from "../libs/TypeYupSchema";
 
 export const useTypeEdit = () => {
 
@@ -12,10 +11,10 @@ export const useTypeEdit = () => {
     const { notifySuccess, notifyError } = useNotification();
 
     const form = useForm<TypeFormProps>({
-        resolver: yupResolver(TypeEditYupSchema)
+        resolver: yupResolver(TypeYupSchema)
     });
 
-    const { register, handleSubmit, formState: { errors } } = form;
+    const { handleSubmit } = form;
 
     const handleUpdateType = async (id: string, type: string) => {
         try {
@@ -30,8 +29,6 @@ export const useTypeEdit = () => {
 
     return {
         form,
-        register,
-        errors,
         handleUpdateType,
         handleSubmit,
     }

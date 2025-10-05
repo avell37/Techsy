@@ -59,10 +59,6 @@
         @apply after:content-[''] after:absolute after:hidden after:left-[6px] after:top-[2px] after:w-[5px] after:h-[10px] after:border-r-2 after:border-b-2 after:border-white after:rotate-45 peer-checked:after:block peer-checked:bg-[#5120B8];
     }
 
-    .custom-button {
-        @apply block h-[50px] text-center text-white hover:bg-[#1A1238] focus:border-[#4F45E4] transition cursor-pointer max-sm:h-[40px] max-sm:text-sm;
-    }
-
     .filter-label {
         @apply flex items-center relative max-w-[250px] h-[40px] text-left pl-4 text-white transition cursor-pointer;
     }
@@ -78,13 +74,20 @@
     .filter-label:focus-within {
         @apply border-[#4F45E4];
     }
-
+    
     .apply-button {
-        @apply rounded-md max-w-[100px] w-full h-[40px] focus:outline-none cursor-pointer text-white hover:bg-indigo-900 transition-all duration-300 max-sm:max-w-[70px] max-sm:text-xs
+        @apply flex justify-center items-center rounded-md focus:outline-none cursor-pointer bg-indigo-900 
+        text-white hover:bg-indigo-700 transition-all duration-300 max-sm:max-w-[70px] max-sm:text-xs
+    }
+
+    .apply-button-without-bg {
+        @apply h-[50px] text-white hover:bg-[#1A1238] focus:border-[#4F45E4] 
+        transition cursor-pointer max-sm:h-[40px] max-sm:text-sm;
     }
 
     .cancel-button {
-        @apply rounded-md max-w-[100px] w-full h-[40px] bg-red-700 focus:outline-none cursor-pointer text-white hover:bg-red-900 transition-all duration-300 max-sm:max-w-[70px] max-sm:text-xs
+        @apply flex justify-center items-center rounded-md bg-red-900 focus:outline-none cursor-pointer 
+        text-white hover:bg-red-700 transition-all duration-300 max-sm:max-w-[70px] max-sm:text-xs
     }
 
     .cards-responsive {
@@ -104,10 +107,6 @@
 
     .security-responsive {
         @apply max-[450px]:flex-col gap-[10px]
-    }
-
-    .admin-button {
-        @apply block border rounded-xl max-w-[200px] w-full h-[50px] text-center text-white hover:bg-[#1A1238] transition cursor-pointer max-sm:h-[40px] max-sm:text-xs;
     }
 }
 
@@ -152,21 +151,14 @@
     --color-gradient: var(--gradient);
     --color-primary-900: var(--primary-900);
     --color-menu: var(--menu);
+    --color-skeleton: var(--skeleton);
 }
 
 :root {
-    font-family: 'Montserrat', sans-serif;
     --color-primary-500: color-mix(in srgb, #5120B8 30%, transparent);
     --color-primary-300: #1A1238;
-
     --color-indigo-900: #3A177F;
     --color-indigo-300: color-mix(in srgb, #3A177F 30%, transparent);
-
-    --color-black: #08080e;
-    --color-light-black: #0d091d;
-    --color-black-purple: #3A2D67;
-    --color-light-purple: #8A4FFF;
-    --color-yellow: #ffe500;
     --radius: 0.625rem;
     --background: color-mix(in srgb, #5120B8 30%, transparent);
     --foreground: oklch(0.145 0 0);
@@ -208,6 +200,7 @@
     );
     --primary-900: #5120B8;
     --menu: rgb(21, 21, 43);
+    --skeleton: oklch(32.109% 0.00004 271.152);
 }
 
 body {

@@ -1,4 +1,4 @@
-import { IUser } from '@shared/types/IUser';
+import { IUser } from '@/shared/types/IUser';
 
 export interface UserInitialState {
     currentUser: IUser | null,
