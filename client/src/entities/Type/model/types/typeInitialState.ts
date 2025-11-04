@@ -1,4 +1,4 @@
-import { IType } from "@/shared/types/IType";
+import type { IType } from "./IType"
 
 export interface TypeInitialState {
     types: IType[],

@@ -1,4 +1,4 @@
-import { IDevice } from "@/shared/types/IDevice"
+import type { IDevice } from "./IDevice";
 
 export interface DeviceInitialState {
     devices: IDevice[],

@@ -1,19 +1,14 @@
+import { DeviceReviews, ReviewAddForm, useReviews } from "@/features/ManageReview";
 import { Button, RatingBars } from "@/shared/ui";
-import { DevicePageReviewsSchema } from "../../../model/types/DevicePageSchema";
-import { ReviewCard } from "@/entities/Review/ui/ReviewCard/ui/ReviewCard";
-import { StarRating } from "@/features/StarRating/ui/StarRating";
-import { DialogModal } from "@/shared/ui/DialogModal/DialogModal";
-import { ReviewAddForm } from "@/entities/Review/ui/ReviewCard/ui/ReviewAddForm";
-import { useReview } from "@/entities/Review/model/hooks/useReview";
+import { DialogModal, StarRating } from "@/shared/ui/custom";
 
-export const DevicePageReviews = ({
-    currentUser,
-}: DevicePageReviewsSchema) => {
-    const { reviews, avgRating, counts, handleCheckAuth, handleDeleteReview } = useReview();
-
-    const handleDelete = (id: string) => {
-        handleDeleteReview(id)
-    }
+export const DevicePageReviews = () => {
+    const { 
+        reviews, 
+        currentUser, 
+        avgRating, 
+        counts, 
+    } = useReviews();
 
     return (
         <div className="flex h-full max-sm:flex-col">
@@ -32,43 +27,32 @@ export const DevicePageReviews = ({
                 </div>
             </div>
             <div className="w-full flex flex-col gap-[30px] p-8">
-                <div className="flex justify-between gap-2 max-w-[400px]:flex-col">
+                <div className="flex justify-between gap-2">
                     <h1 className="text-white text-2xl font-bold max-md:text-xl max-sm:text-sm">
                         Все отзывы ({reviews.length})
                     </h1>
-                    <DialogModal
-                        title="Оцените товар"
-                        description="Поставьте оценку в виде звезд от 1 до 5 и напишите отзыв."
-                        trigger={
-                            <Button
-                                type="button"
-                                variant="default"
-                                size="none"
-                                onClick={handleCheckAuth}
-                                className="w-[200px] h-[50px] apply-button"
-                            >
-                                Добавить отзыв
-                            </Button>
-                        }
-                        children={
-                            <ReviewAddForm />
-                        }
-                    />
-                </div>
-                {reviews && !!reviews.length ? (
-                    reviews.map((review) => (
-                        <ReviewCard
-                            key={review.id}
-                            currentUser={currentUser}
-                            review={review}
-                            handleDeleteReview={() => handleDelete(review.id)}
+                    {currentUser ? (
+                        <DialogModal
+                            title="Оцените товар"
+                            description="Поставьте оценку в виде звезд от 1 до 5 и напишите отзыв."
+                            trigger={
+                                <Button
+                                    type="button"
+                                    variant="default"
+                                    size="none"
+                                    className="flex justify-center items-center border border-primary-900/30 
+                                    hover:border-primary-900 max-w-[175px] w-full h-[50px] apply-button-without-bg"
+                                >
+                                    Добавить отзыв
+                                </Button>
+                            }
+                            children={
+                                <ReviewAddForm />
+                            }
                         />
-                    ))
-                ) : (
-                    <div className="text-gray-500 text-2xl my-20 text-center">
-                        Отзывов пока что нет...
-                    </div>
-                )}
+                    ) : null}
+                </div>
+                <DeviceReviews />
             </div>
         </div>
     );

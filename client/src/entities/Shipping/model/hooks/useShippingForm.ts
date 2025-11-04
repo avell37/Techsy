@@ -1,11 +1,10 @@
-import { saveShippingInfo, shippingSelector } from "@/entities";
+import { IShipping, saveShippingInfo, shippingSelector } from "@/entities/Shipping";
 import { useAppSelector, useNotification, useActions } from "@/shared/hooks";
-import { IShipping } from "@/shared/types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { AxiosError } from "axios";
-import { ShippingYupSchema } from "../libs/ShippingYupSchema";
+import { ShippingYupSchema } from "../validation/ShippingYupSchema";
 import { renderMissingErrors } from "../utils/renderMissingErrors";
 
 export const useShippingForm = () => {
@@ -13,7 +12,7 @@ export const useShippingForm = () => {
     const { fetchShippingInfo } = useActions();
     const { notifySuccess, notifyError } = useNotification();
 
-    const methods = useForm<IShipping>({
+    const form = useForm<IShipping>({
         resolver: yupResolver(ShippingYupSchema),
         defaultValues: {
             firstName: "",
@@ -27,7 +26,7 @@ export const useShippingForm = () => {
         }
     });
 
-    const { reset, setError, handleSubmit } = methods;
+    const { reset, setError, handleSubmit } = form;
 
     useEffect(() => {
         if (shipping) {
@@ -53,7 +52,7 @@ export const useShippingForm = () => {
     };
 
     return {
-        methods,
+        form,
         handleShippingFormSubmit: handleSubmit(handleShippingFormSubmit),
     }
 }

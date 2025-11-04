@@ -1,4 +1,4 @@
-import { useActions, useAppDispatch, useAppSelector } from "@/shared/hooks";
+import { useActions, useAppSelector } from "@/shared/hooks";
 import { getToken } from "@/shared/lib";
 import { FC, useEffect } from "react";
 import { userSelector } from "@/entities";
@@ -9,7 +9,7 @@ interface InitProps {
 
 export const InitUser: FC<InitProps> = ({ children }) => {
     const { fetchBasket, fetchAllDevices, fetchAllTypes,
-        fetchAllBrands, fetchUser, fetchAllFavoriteDevices,
+        fetchAllBrands, getUser, getData,
         fetchShippingInfo, fetchUserOrders } = useActions();
     const isAuth = useAppSelector(userSelector.isAuth);
 
@@ -21,13 +21,13 @@ export const InitUser: FC<InitProps> = ({ children }) => {
 
     useEffect(() => {
         if (getToken('token') && !isAuth) {
-            fetchUser();
+            getUser();
+            getData();
         }
     }, [isAuth]);
 
     useEffect(() => {
         if (isAuth) {
-            fetchAllFavoriteDevices();
             fetchShippingInfo();
             fetchBasket();
             fetchUserOrders();

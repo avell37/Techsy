@@ -1,4 +1,4 @@
-import { IBrand } from "@/shared/types/IBrand";
+import type { IBrand } from "./IBrand"
 
 export interface BrandInitialState {
     brands: IBrand[],

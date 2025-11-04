@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchAllDevices } from "../services/fetchAllDevices";
-import { DeviceInitialState } from "../types/deviceInitialState";
-import { fetchDeviceById } from "../services/fetchDeviceById";
+import type { DeviceInitialState } from "../types/deviceInitialState";
+import { fetchAllDevices, fetchDeviceById } from "../thunks/fetchDevices";
 
 const initialState: DeviceInitialState = {
     devices: [],

@@ -1,6 +1,6 @@
 import { FilteredSearch } from "@/features/FilteredSearch";
 import { ProductList } from "@/features/ProductList";
-import { Container } from "@/shared/ui/Container/Container";
+import { Container } from "@/shared/ui/custom/Container/Container";
 import { ProductFilters } from "@/features/ProductFilters";
 
 const ShopPage = () => (

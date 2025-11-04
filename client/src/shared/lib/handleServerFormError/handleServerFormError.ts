@@ -3,7 +3,7 @@ import { isAxiosError } from "axios";
 
 type FieldErrorMap<T extends FieldValues> = {
     [key: string]: Path<T>;
-}
+};
 
 export function handleServerFormError<T extends FieldValues>(
     err: unknown,
@@ -12,7 +12,9 @@ export function handleServerFormError<T extends FieldValues>(
     fallback: (message: string) => void
 ) {
     if (isAxiosError<{ message?: string }>(err)) {
-        const message = err.response?.data?.message || "Произошла ошибка. Попробуйте снова.";
+        const message =
+            err.response?.data?.message ||
+            "Произошла ошибка. Попробуйте снова.";
         const lower = message.toLowerCase();
 
         for (const key in errorMap) {
@@ -27,6 +29,6 @@ export function handleServerFormError<T extends FieldValues>(
 
         fallback(message);
     } else {
-        fallback("Произошла непредвиденная ошибка.")
+        fallback("Произошла непредвиденная ошибка.");
     }
 }

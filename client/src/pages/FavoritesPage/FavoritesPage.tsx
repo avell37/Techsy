@@ -1,12 +1,7 @@
-import { FavoritesList } from "@/entities/Favorites";
-import { Container } from "@/shared/ui";
+import { FavoritesList } from "@/features/Favorites";
 
 const FavoritesPage = () => {
-    return (
-        <Container>
-            <FavoritesList />
-        </Container>
-    );
+    return <FavoritesList />
 };
 
 export default FavoritesPage;

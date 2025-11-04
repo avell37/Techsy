@@ -1,9 +1,9 @@
-import { IDropdownItem } from "@/shared/types";
+import type { IDropdownItem } from "@/shared/ui/custom";
 
 export interface FilteredSearchSchema {
-    value: string,
-    onChange: (value: string) => void,
-    activeFilter: 'priceHigh' | 'priceLow' | 'rating' | null;
+    value: string;
+    onChange: (value: string) => void;
+    activeFilter: "priceHigh" | "priceLow" | "rating" | null;
     selectedBrand: {
         id: string;
         name: string;
@@ -16,5 +16,7 @@ export interface FilteredSearchSchema {
     typeItems: IDropdownItem[];
     isFilterActive: boolean;
     handleResetFilters: () => void;
-    handleFilterChange: (filterType: 'priceHigh' | 'priceLow' | 'rating') => void;
+    handleFilterChange: (
+        filterType: "priceHigh" | "priceLow" | "rating"
+    ) => void;
 }

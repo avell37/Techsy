@@ -4,7 +4,6 @@ import { Undo2 } from "lucide-react";
 import { Button } from "@/shared/ui";
 
 const ErrorPage = () => {
-
     const navigate = useNavigate();
 
     return (

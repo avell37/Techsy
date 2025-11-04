@@ -1,12 +1,14 @@
+import type { IDevice } from "@/entities";
+
 export const checkFavoriteDevices = ({
     deviceId,
-    favoriteDevices,
+    favorites,
 }: {
     deviceId: string;
-    favoriteDevices?: { device: { id: string } }[];
+    favorites?: IDevice[];
 }): boolean => {
-    if (favoriteDevices) {
-        return favoriteDevices.some((fav) => fav.device && fav.device.id === deviceId);
+    if (favorites) {
+        return favorites.some((fav) => fav && fav.id === deviceId);
     }
     return false;
 };

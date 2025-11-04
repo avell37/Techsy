@@ -1,31 +1,40 @@
-import { Button } from "@/shared/ui";
-import { useCreateOrder } from "../hooks/useCreateOrder";
+import { basketSelector, userSelector } from '@/entities';
+import { useAppSelector, useToggleFavorites } from '@/shared/hooks';
+import { checkFavoriteDevices } from '@/shared/lib';
+import { useMemo } from 'react'
+import { CartList } from './CartList/CartList';
+import { CartDetails } from './CartDetails';
+import { Container } from '@/shared/ui';
 
 export const Cart = () => {
-    const { basket, totalPrice, handleCreateOrder } = useCreateOrder();
-    
+    const basket = useAppSelector(basketSelector.basket);
+    const loading = useAppSelector(basketSelector.loading)
+    const user = useAppSelector(userSelector.currentUser);
+    const favorites = user?.favorites;
+    const { toggleFavorites } = useToggleFavorites();
+
+    const isFavorite = useMemo(() => {
+        return (deviceId: string) =>
+            checkFavoriteDevices({ deviceId, favorites });
+    }, [favorites])
+
+    const handleToggleFavorites = (deviceId: string) => toggleFavorites(deviceId);
+
     return (
-        <div className="flex flex-col border border-primary-900/30 bg-gradient rounded-xl p-6">
-            <div className="flex flex-col justify-between gap-[20px] h-full">
-                <h1 className="text-white font-bold text-xl">Корзина</h1>
-                <div className="flex flex-col gap-[20px]">
-                    <p className="text-white">
-                        Количество товаров: {basket?.length}
-                    </p>
-                    <p className="text-white font-bold text-xl">
-                        К оплате: {totalPrice.toLocaleString()} Р.
-                    </p>
-                    <Button
-                        variant="default"
-                        size="none"
-                        className="flex justify-center items-center max-w-[320px] w-full h-[60px] border-2 border-indigo-900 rounded-xl hover:border-primary-900
-                        hover:bg-primary-300/30 transition-all text-white cursor-pointer"
-                        onClick={handleCreateOrder}
-                    >
-                        Перейти к оплате
-                    </Button>
+        <Container>
+            <div className="flex justify-center gap-[50px] mt-5 py-6 rounded-xl max-lg:flex-col">
+                <div className="flex-1 p-8 border border-primary-900/30 rounded-xl bg-gradient shadow-lg w-full">
+                    <CartList 
+                        basket={basket}
+                        loading={loading}
+                        isFavorite={isFavorite}
+                        onToggleFavorites={handleToggleFavorites}
+                    />
+                </div>
+                <div className="max-w-[375px] w-full">
+                    <CartDetails />
                 </div>
             </div>
-        </div>
+        </Container>
     );
-};
+}

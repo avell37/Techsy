@@ -1,11 +1,10 @@
 import { DevicePageReviews } from "../DevicePageReviews/DevicePageReviews";
 import { DevicePageInfo } from "../DevicePageInfo/DevicePageInfo";
 import { Divider } from "@/shared/ui";
-import { DevicePageSchema } from "@/entities/Device/model/types/DevicePageSchema";
+import type { DevicePageSchema } from "@/entities/Device";
 
 export const DevicePageView = ({
     device,
-    currentUser,
     isFavorite,
     notifyError,
     notifySuccess,
@@ -36,9 +35,7 @@ export const DevicePageView = ({
             </div>
             <Divider variant="h-[1px] w-full" />
             <div className="bg-gradient rounded-3xl primary-border mb-6">
-                <DevicePageReviews
-                    currentUser={currentUser}
-                />
+                <DevicePageReviews />
             </div>
         </div>
     );

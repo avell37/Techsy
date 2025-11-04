@@ -1,7 +1,7 @@
 import { FilteredSearchView } from "./FilteredSearchView";
 import { useCallback, useState } from "react";
 import { useActions } from "@/shared/hooks";
-import { useProductFilters } from "@/features/ProductFilters/hooks/useProductFilters";
+import { useProductFilters } from "@/features/ProductFilters";
 
 export const FilteredSearch = () => {
     const { setSearchFilter } = useActions();

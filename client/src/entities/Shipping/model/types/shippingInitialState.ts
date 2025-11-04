@@ -1,4 +1,4 @@
-import { IShipping } from "@/shared/types";
+import type { IShipping } from "./IShipping";
 
 export interface ShippingInitialState {
     shipping: IShipping,

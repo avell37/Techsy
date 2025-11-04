@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchShippingInfo } from "../services/fetchShippingInfo";
-import { ShippingInitialState } from "../types/shippingInitialState";
+import { fetchShippingInfo } from "../thunks/fetchShippingInfo";
+import type { ShippingInitialState } from "../types/shippingInitialState";
 
 const initialState: ShippingInitialState = {
     shipping: {

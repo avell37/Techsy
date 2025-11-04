@@ -1,7 +1,7 @@
-import { BasketItem } from "@/shared/types";
+import type { IBasketItem } from "@/entities/Basket";
 
 export interface CartDeviceSchema {
-    device: BasketItem,
+    device: IBasketItem,
     isFavorite: boolean,
     onClick: () => void,
 }

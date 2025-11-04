@@ -1,4 +1,4 @@
-import { useProductFilters } from "../hooks/useProductFilters";
+import { useProductFilters } from "../model/hooks/useProductFilters";
 import { ProductFiltersView } from "./ProductFiltersView";
 
 export const ProductFilters = () => {

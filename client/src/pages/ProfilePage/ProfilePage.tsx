@@ -1,8 +1,8 @@
-import { Sidebar } from "@/widgets/Sidebar/ui/Sidebar";
+import { Sidebar } from "@/widgets/Sidebar/Sidebar";
 import { Container } from "@/shared/ui";
 import { Outlet, useNavigate } from "react-router-dom";
 import { PROFILE_ROUTE, STORE_MANAGEMENT_ROUTE } from "@/shared/config/consts";
-import { UserProfileSidebar } from "@/entities/User/ui/UserProfileSidebar";
+import { UserProfileSidebar } from "@/entities/User/ui/UserSidebar/UserProfileSidebar";
 import { useAppSelector } from "@/shared/hooks";
 import { userSelector } from "@/entities";
 

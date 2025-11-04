@@ -1,4 +1,4 @@
-import { IDevice } from "@/shared/types";
+import type { IDevice } from "./IDevice";
 
 export interface DeviceCardProps {
     device: IDevice;

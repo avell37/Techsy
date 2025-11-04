@@ -12,7 +12,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
             <GoogleOAuthProvider
                 clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}
             >
-                <Suspense fallback={<Spinner width="100px" height="100px" />}>
+                <Suspense fallback={<Spinner width="100px" height="100px" className="min-h-screen" />}>
                     <InitUser>
                         {children}
                         <ToastContainer />

@@ -1,4 +1,4 @@
-import { toggleFavoriteDevice } from "@/entities/Favorites";
+import { toggleFavoriteDevice } from "@/entities/User";
 import { getToken } from "../../lib/tokenService/tokenService";
 import { useActions, useNotification } from "@/shared/hooks";
 
@@ -11,10 +11,9 @@ export const useToggleFavorites = () => {
             if (!getToken('token')) return notifyError("Чтобы добавить устройство в избранное, необходимо авторизоваться");
             const data = await toggleFavoriteDevice(deviceId);
             if (data.added) {
-                addFavorite(data.favoriteDevice)
+                addFavorite(data.device)
                 notifySuccess("Добавлено в избранное")
-            }
-            if (data.removed) {
+            } else {
                 removeFavorite(deviceId)
                 notifySuccess('Убрано из избранного')
             }

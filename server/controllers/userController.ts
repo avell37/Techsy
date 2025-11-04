@@ -5,16 +5,116 @@ const prisma = new PrismaClient();
 const generateJWT = require('../utils/generateJWT');
 
 class UserController {
-    async getUserData(req: any, res: any, next: any) {
+    async getUser(req: any, res: any, next: any) {
         try {
             if (!req.user) {
                 return next(ApiError.unauthorized('Информация о пользователе не найдена.'))
             }
             const { id, username, email, role, picture } = req.user;
+
             const token = generateJWT(id, username, email, role, picture)
             return res.json({ token })
         } catch (err) {
-            return next(ApiError.internal('Произошла ошибка на сервере. Попробуйте позже.'))
+            return next(ApiError.internal('Произошла ошибка на сервере. Попробуйте позже.'));
+        }
+    }
+
+    async getUserData(req: any, res: any, next: any) {
+        try {
+            if (!req.user) {
+                return next(ApiError.unauthorized('Информация о пользователе не найдена.'))
+            }
+            const { id } = req.user;
+
+            const user = await prisma.user.findUnique({
+                where: { id },
+                select: {
+                    favorites: true,
+                    reviews: {
+                        orderBy: { 
+                            createdAt: 'desc' 
+                        },
+                        select: {
+                            id: true,
+                            rate: true,
+                            comment: true,
+                            createdAt: true,
+                            updatedAt: true,
+                            Device: {
+                                select: {
+                                    id: true,
+                                    name: true,
+                                    img: true,
+                                }
+                            },
+                            userId: true
+                        }
+                    }
+                }
+            })
+
+            return res.json(user)
+        } catch (err) {
+            return next(ApiError.internal('Произошла ошибка на сервере. Попробуйте позже.'));
+        }
+    }
+
+    async toggleFavorite(req: any, res: any, next: any) {
+        try {
+            if (!req.user) {
+                return next(ApiError.unauthorized('Пользователь не авторизован'))
+            }
+
+            const {deviceId} = req.body;
+            if (!deviceId) {
+                return next(ApiError.badRequest('Не указан deviceId'))
+            }
+
+            const userId = req.user.id;
+
+            const user = await prisma.user.findUnique({
+                where: { id: userId },
+                select: { favorites: true }
+            })
+
+            if (!user) {
+                return next(ApiError.notFound('Пользователь не найден'))
+            }
+
+            const isFavorite = user.favorites.some((device: any) => device.id === deviceId);
+            let device;
+
+            if (isFavorite) {
+                await prisma.user.update({
+                    where: { id: userId },
+                    data: {
+                        favorites: {
+                            disconnect: { id: deviceId }
+                        }
+                    },
+                    select: { favorites: true }
+                });
+                device = user.favorites.find((device: any) => device.id === deviceId);
+            } else {
+                const updatedUser = await prisma.user.update({
+                    where: { id: userId },
+                    data: {
+                        favorites: {
+                            connect: { id: deviceId }
+                        }
+                    },
+                    select: { favorites: true }
+                })
+                device = updatedUser.favorites.find((device: any) => device.id === deviceId)
+            }
+
+            return res.json({
+                device,
+                added: !isFavorite
+            })
+
+        } catch (err) {
+            return next(ApiError.internal('Произошла ошибка на сервере. Попробуйте позже.'));
         }
     }
 

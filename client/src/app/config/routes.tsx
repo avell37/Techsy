@@ -12,23 +12,22 @@ import { ShopPage } from "@/pages/ShopPage/ShopPage.lazy";
 import { ErrorPage } from "@/pages/ErrorPage/ErrorPage.lazy";
 import { ProfilePage } from "@/pages/ProfilePage/ProfilePage.lazy";
 import { FavoritesPage } from "@/pages/FavoritesPage/FavoritesPage.lazy";
-import { CheckoutPage } from "@/pages/CheckoutPage/ui/CheckoutPage.lazy";
 import { StorePage } from "@/pages/StorePage/ui/StorePage.lazy";
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import { ProtectedRoute } from "./ProtectedRoute";
-import { Layout } from "@/widgets/Layout/ui/Layout";
-import { OrderHistory, UserProfile } from "@/entities";
 import { StoreRoute } from "./StoreRoute";
-import { TypeEditForm } from "@/entities/Type/ui/TypeForms/TypeEditForm";
-import { TypeAddForm } from "@/entities/Type/ui/TypeForms/TypeAddForm";
 import { TypesPage } from "@/pages/StorePage/ui/TypesPage/TypesPage.lazy";
-import BrandsPage from "@/pages/StorePage/ui/BrandsPage/BrandsPage";
-import { BrandEditForm } from "@/entities/Brand/ui/BrandForms/BrandEditForm";
-import { BrandAddForm } from "@/entities/Brand/ui/BrandForms/BrandAddForm";
-import { DevicesPage } from "@/pages/StorePage/ui/DevicesPage/DevicesPage";
-import { DeviceAddForm } from "@/entities/Device/ui/DeviceForms/DeviceAddForm";
-import { DeviceEditForm } from "@/entities/Device/ui/DeviceForms/DeviceEditForm";
-import { UserSecurity } from "@/entities/User/ui/UserProfile/UserSecurity";
+import { DevicesPage } from "@/pages/StorePage/ui/DevicesPage/DevicesPage.lazy";
+import { TypeAddForm, TypeEditForm } from "@/features/Store/types";
+import { BrandAddForm, BrandEditForm } from "@/features/Store/brands";
+import { DeviceAddForm, DeviceEditForm } from "@/features/Store/devices";
+import { BrandsPage } from "@/pages/StorePage/ui/BrandsPage/BrandsPage.lazy";
+import { ReviewsPage } from "@/pages/StorePage/ui/ReviewsPage/ReviewsPage.lazy";
+import { OrderHistory } from "@/features/Order";
+import { UserReviews } from "@/features/ManageReview";
+import { Layout, UserProfile } from "@/widgets";
+import { UserSecurity } from "@/features/ChangeUserData";
+import { CheckoutPage } from "@/pages/CheckoutPage/CheckoutPage.lazy";
 
 export const routes = createBrowserRouter([
     {
@@ -69,6 +68,8 @@ export const routes = createBrowserRouter([
                     { path: "main", element: <UserProfile /> },
                     { path: "orders", element: <OrderHistory /> },
                     { path: "security", element: <UserSecurity /> },
+                    { path: 'favorites', element: <FavoritesPage />},
+                    { path: 'reviews', element: <UserReviews /> }
                 ]
             },
             {
@@ -113,7 +114,11 @@ export const routes = createBrowserRouter([
                             { path: ":id/edit", element: <DeviceEditForm /> },
                             { path: "add", element: <DeviceAddForm /> }
                         ]},
-                    { path: "reviews", element: <OrderHistory /> },
+                    { path: "reviews",
+                        children: [
+                            { index: true, element: <ReviewsPage /> },
+                        ]
+                    },
                 ]
             }
         ]

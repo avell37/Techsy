@@ -32,6 +32,15 @@ class ReviewController {
                     comment,
                     User: { connect: { id } },
                     Device: { connect: { id: deviceId } },
+                },
+                include: {
+                    Device: {
+                        select: {
+                            id: true,
+                            name: true,
+                            img: true,
+                        }
+                    }
                 }
             });
 
@@ -64,6 +73,70 @@ class ReviewController {
                         }
                     },
                     Device: true
+                },
+                orderBy: { 
+                    createdAt: 'desc' 
+                }
+            })
+
+            return res.json(reviews);
+        } catch (err) {
+            return next(ApiError.internal('Произошла ошибка на сервере. Попробуйте позже.'))
+        }
+    }
+
+    async getUserReviews(req: any, res: any, next: any) {
+        try {
+            if (!req.user) {
+                return next(ApiError.unauthorized('Информация о пользователе не найдена.'))
+            }
+            const { id } = req.user;
+
+            const reviews = await prisma.review.findMany({
+                where: {
+                    userId: id
+                },
+                include: {
+                    Device: true,
+                },
+                orderBy: { 
+                    createdAt: 'desc' 
+                }
+            })
+
+            return res.json(reviews);
+        } catch (err) {
+            return next(ApiError.internal('Произошла ошибка на сервере. Попробуйте позже.'))
+        }
+    }
+
+    async getAllReviews(req: any, res: any, next: any) {
+        try {
+            if (!req.user) {
+                return next(ApiError.unauthorized('Информация о пользователе не найдена.'))
+            }
+            const isAdmin = req.user.role === 'Admin';
+
+            if (!isAdmin) {
+                return next(ApiError.forbidden('У вас нет прав на удаление этого отзыва.'))
+            }
+
+            const reviews = await prisma.review.findMany({
+                include: {
+                    User: {
+                        select: {
+                            username: true
+                        }
+                    },
+                    Device: {
+                        select: {
+                            id: true,
+                            name: true
+                        }
+                    }
+                },
+                orderBy: { 
+                    createdAt: 'desc' 
                 }
             })
 
@@ -106,6 +179,15 @@ class ReviewController {
                 data: {
                     rate,
                     comment
+                },
+                include: {
+                    Device: {
+                        select: {
+                            id: true,
+                            name: true,
+                            img: true
+                        }
+                    },
                 }
             })
 

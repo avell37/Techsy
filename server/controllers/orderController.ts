@@ -142,6 +142,9 @@ class OrderController {
                 where: { userId },
                 include: {
                     OrderItem: true
+                },
+                orderBy: {
+                    createdAt: 'desc'
                 }
             })
             if (!orders) {

@@ -1,7 +1,6 @@
 import { useActions, useAppSelector, useNotification, useToggleFavorites } from "@/shared/hooks";
-import { deviceSelector } from "../selectors/deviceSelector";
+import { deviceSelector } from "../slice/deviceSelector";
 import { userSelector } from "@/entities/User";
-import { favoriteSelector } from "@/entities/Favorites";
 import { useParams } from "react-router-dom";
 import { useEffect, useMemo } from "react";
 import { checkFavoriteDevices } from "@/shared/lib";
@@ -11,10 +10,10 @@ export const useDevice = () => {
     const device = useAppSelector(deviceSelector.selectedDevice)
     const loading = useAppSelector(deviceSelector.loading)
     const currentUser = useAppSelector(userSelector.currentUser);
-    const favoriteDevices = useAppSelector(favoriteSelector.favoriteDevices);
     const { fetchDeviceById, fetchDeviceReviews } = useActions();
     const { toggleFavorites } = useToggleFavorites();
     const { id } = useParams();
+    const favorites = currentUser?.favorites;
     
     useEffect(() => {
         if (id) {
@@ -26,9 +25,9 @@ export const useDevice = () => {
     const isFavorite = useMemo(() => {
         return device ? checkFavoriteDevices({
             deviceId: device.id,
-            favoriteDevices,
+            favorites,
         }) : false
-    }, [device, favoriteDevices])
+    }, [device, favorites])
 
     const handleToggleFavorites = () => {
         if (!device) return;

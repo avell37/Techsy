@@ -1,6 +1,7 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { fetchBasket } from "../services/fetchBasket";
-import { BasketInitialState } from "../types/basketInitialState";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { fetchBasket } from "../thunks/fetchBasket";
+import type { BasketInitialState } from "../types/basketInitialState";
+import type { IBasketItem } from "../types/IBasketItem";
 
 const initialState: BasketInitialState = {
     basket: [],
@@ -13,14 +14,14 @@ const basketSlice = createSlice({
     initialState,
     selectors: {},
     reducers: {
-        deleteFromBasket: (state, action) => {
+        deleteFromBasket: (state, action: PayloadAction<string>) => {
             state.basket = state.basket.filter((device) => device.deviceId !== action.payload)
         },
-        incrementBasketDevice: (state, action) => {
+        incrementBasketDevice: (state, action: PayloadAction<string>) => {
             state.basket = state.basket.map((item) => item.deviceId === action.payload
                 ? { ...item, quantity: item.quantity + 1 } : item);
         },
-        decrementBasketDevice: (state, action) => {
+        decrementBasketDevice: (state, action: PayloadAction<string>) => {
             state.basket = state.basket.map((item) => item.deviceId === action.payload && item.quantity > 1
                 ? { ...item, quantity: item.quantity - 1 } : item);
         }
@@ -30,7 +31,7 @@ const basketSlice = createSlice({
             .addCase(fetchBasket.pending, (state) => {
                 state.loading = true;
             })
-            .addCase(fetchBasket.fulfilled, (state, action) => {
+            .addCase(fetchBasket.fulfilled, (state, action: PayloadAction<IBasketItem[] | undefined>) => {
                 state.basket = action.payload ?? [];
                 state.loading = false;
             })

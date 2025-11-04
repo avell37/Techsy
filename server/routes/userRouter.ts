@@ -7,7 +7,9 @@ const upload = require('../utils/fileStorage');
 router.patch('/change-username', authMiddleware, UserController.changeUsername)
 router.patch('/change-email', authMiddleware, UserController.changeEmail);
 router.patch('/change-password', authMiddleware, UserController.changePassword);
-router.get('/user', authMiddleware, UserController.getUserData)
+router.get('/', authMiddleware, UserController.getUser)
+router.get('/me', authMiddleware, UserController.getUserData)
+router.post('/toggle', authMiddleware, UserController.toggleFavorite)
 router.post('/avatar', authMiddleware, upload.single('avatar'), UserController.uploadAvatar)
 router.get('/info', authMiddleware, UserController.getShippingInfo);
 router.post('/info', authMiddleware, UserController.saveShippingInfo)

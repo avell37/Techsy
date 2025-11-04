@@ -1,10 +1,9 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { DEVICE_ROUTE } from "@/shared/config/consts";
-import { DeviceCardProps } from "@entities/Device";
-import { Card, CardContent, CardHeader } from "@/shared/ui/ui-lib/Card/Card";
-import { Button } from "@/shared/ui/ui-lib/Button/Button";
+import type { DeviceCardProps } from "@entities/Device";
 import { Heart, Star } from "lucide-react";
+import { Button, Card, CardContent, CardHeader } from "@/shared/ui";
 
 export const DeviceCard = React.memo(({
     device,
@@ -67,7 +66,7 @@ export const DeviceCard = React.memo(({
                         text-white hover:border-light-purple hover:bg-primary-300/50 transition-all cursor-pointer"
                         onClick={addToBasket}
                     >
-                        {isInBasket ? "В корзину" : "Добавить в корзину"}
+                        {isInBasket ? "В корзине" : "Добавить в корзину"}
                     </Button>
                 </div>
             </CardContent>

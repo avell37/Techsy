@@ -1,4 +1,4 @@
-import { IReview } from "@/shared/types";
+import type { IReview } from "./IReview";
 
 export interface ReviewInitialState {
     reviews: IReview[];

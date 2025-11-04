@@ -7,16 +7,12 @@
 @custom-variant dark (&:is(.dark *));
 
 @layer utilities {
-    .bg-base-gradient {
-        backdrop-filter: blur(50%);
-        background-image: linear-gradient(135deg,
-                #c37cfa 10%,
-                #9336ee 30%,
-                #1b0e8c 90%);
-    }
-
     .bg-gradient {
         background-image: var(--gradient);
+    }
+
+    .bg-light-gradient {
+        background-image: var(--light-gradient);
     }
 
     .card-gradient {
@@ -77,12 +73,12 @@
     
     .apply-button {
         @apply flex justify-center items-center rounded-md focus:outline-none cursor-pointer bg-indigo-900 
-        text-white hover:bg-indigo-700 transition-all duration-300 max-sm:max-w-[70px] max-sm:text-xs
+        text-white hover:bg-indigo-700 transition-all duration-300 max-sm:text-xs
     }
 
     .apply-button-without-bg {
         @apply h-[50px] text-white hover:bg-[#1A1238] focus:border-[#4F45E4] 
-        transition cursor-pointer max-sm:h-[40px] max-sm:text-sm;
+        transition cursor-pointer max-sm:text-sm;
     }
 
     .cancel-button {
@@ -98,7 +94,7 @@
     }
 
     .favorite-cards-responsive {
-        @apply grid grid-cols-5 gap-5;
+        @apply grid grid-cols-4 gap-4;
         @apply max-[1280px]:grid-cols-4;
         @apply max-[1024px]:grid-cols-3;
         @apply max-[768px]:grid-cols-2;
@@ -149,6 +145,7 @@
     --color-sidebar-ring: var(--sidebar-ring);
     --color-main: var(--main);
     --color-gradient: var(--gradient);
+    --color-light-gradient: var(--light-gradient);
     --color-primary-900: var(--primary-900);
     --color-menu: var(--menu);
     --color-skeleton: var(--skeleton);
@@ -183,7 +180,7 @@
     --chart-3: oklch(0.398 0.07 227.392);
     --chart-4: oklch(0.828 0.189 84.429);
     --chart-5: oklch(0.769 0.188 70.08);
-    --star: oklch(83.275% 0.17151 82.058);
+    --star: oklch(85.2% 0.199 91.936);
     --sidebar: oklch(100% 0.00011 271.152);
     --sidebar-foreground: oklch(0.145 0 0);
     --sidebar-primary: oklch(0.205 0 0);
@@ -195,6 +192,11 @@
     --main: #3A177F;
     --gradient: linear-gradient(to bottom,
         #08080e 0%,
+        #0b0b14 50%,
+        #0F0F1A 100%
+    );
+    --light-gradient: linear-gradient(to bottom,
+        #0F0F1A 0%,
         #0b0b14 50%,
         #0F0F1A 100%
     );

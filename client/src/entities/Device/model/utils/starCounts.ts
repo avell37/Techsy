@@ -1,4 +1,4 @@
-import { IReview } from "@/shared/types";
+import type { IReview } from "@/entities/Review";
 
 export const starCounts = (reviews: IReview[]) => {
     const counts = reviews.reduce((acc, review) => {

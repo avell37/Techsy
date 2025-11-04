@@ -1,2 +1,3 @@
-export * from './ui/ProductList';
-export * from './model/selectors/selectFilteredDevices';
+export * from "./model/hooks/useProductList";
+export * from "./model/slice/selectFilteredDevices";
+export * from "./ui/ProductList";

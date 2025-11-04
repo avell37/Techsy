@@ -1,11 +1,10 @@
-import { FilteredSearchSchema } from "../model/types/filteredSearchSchema";
-import { useState } from "react";
-import { ProductFiltersResponsive } from "@/features/ProductFilters/ui/ProductFiltersResponsive";
-import { XMarkIcon, FiltersIcon } from "@/shared/assets";
-import { AnimatePresence, motion } from "framer-motion";
 import clsx from "clsx";
-import { Button } from "@/shared/ui/ui-lib/Button/Button";
-import { Input } from "@/shared/ui/ui-lib/Input/Input";
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { SlidersHorizontal, X } from "lucide-react";
+import type { FilteredSearchSchema } from "../model/types/filteredSearchSchema";
+import { Button, Input } from "@/shared/ui";
+import { ProductFiltersResponsive } from "@/features/ProductFilters";
 
 export const FilteredSearchView = ({
     value,
@@ -34,7 +33,7 @@ export const FilteredSearchView = ({
                     type="button"
                     onClick={() => setShowFilters(!showFilters)}
                 >
-                    <FiltersIcon />
+                    <SlidersHorizontal className="stroke-white" />
                 </Button>
             </div >
             <AnimatePresence>
@@ -48,9 +47,14 @@ export const FilteredSearchView = ({
                     >
                         <div className="bg-gradient h-full max-w-[320px] relative shadow-xl">
                             <ProductFiltersResponsive {...filterProps} />
-                            <Button onClick={() => setShowFilters(false)}>
-                                <XMarkIcon
-                                    className="stroke-white absolute right-6 top-4 cursor-pointer hover:stroke-gray-400 transition-all
+                            <Button
+                                variant="default"
+                                size="none"
+                                className="absolute right-2 top-4"
+                                onClick={() => setShowFilters(false)}
+                            >
+                                <X
+                                    className="stroke-white cursor-pointer hover:stroke-gray-400 transition-all
                                     duration-300 max-w-[25px] w-full max-h-[25px] h-full"
                                 />
                             </Button>

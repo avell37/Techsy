@@ -1,0 +1,59 @@
+import { ColumnDef } from "@tanstack/react-table";
+import { ArrowDownUp } from "lucide-react";
+import { BrandActions } from "./BrandActions";
+import type { IBrand } from "@/entities";
+
+export const BrandColumns: ColumnDef<IBrand>[] = [
+    {
+        accessorKey: "name",
+        header: ({ column }) => (
+            <div 
+                className="flex justify-center items-center gap-2"
+                onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+            >
+                Название
+                <ArrowDownUp className="size-4" />
+            </div>
+        ),
+        cell: ({ row }) => {
+            return <div>{row.getValue("name")}</div> 
+        }
+    },
+    {
+        accessorKey: "createdAt",
+        header: ({ column }) => (
+            <div 
+                className="flex justify-center items-center gap-2"
+                onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+            >
+                Дата создания
+                <ArrowDownUp className="size-4" />
+            </div>
+        ),
+        cell: ({ row }) => {
+            const date = new Date(row.getValue("createdAt")).toLocaleDateString();
+            return <div>{date}</div> 
+        }
+    },
+    {
+        accessorKey: "updatedAt",
+        header: ({ column }) => (
+            <div 
+                className="flex justify-center items-center gap-2"
+                onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+            >
+                Последнее обновление
+                <ArrowDownUp className="size-4" />
+            </div>
+        ),
+        cell: ({ row }) => {
+            const date = new Date(row.getValue("updatedAt")).toLocaleDateString();
+            return <div>{date}</div> 
+        }
+    },
+    {
+        id: "actions",
+        header: "Действия",
+        cell: ({ row }) => <BrandActions brand={row.original} />
+    }
+]

@@ -1,7 +1,7 @@
-import { IDropdownItem } from "@/shared/types/IDropdownItem";
+import type { IDropdownItem } from "@/shared/ui/custom";
 
 export interface ProductFiltersSchema {
-    activeFilter: 'priceHigh' | 'priceLow' | 'rating' | null;
+    activeFilter: "priceHigh" | "priceLow" | "rating" | null;
     selectedBrand: {
         id: string;
         name: string;
@@ -14,5 +14,7 @@ export interface ProductFiltersSchema {
     typeItems: IDropdownItem[];
     isFilterActive: boolean;
     handleResetFilters: () => void;
-    handleFilterChange: (filterType: 'priceHigh' | 'priceLow' | 'rating') => void;
+    handleFilterChange: (
+        filterType: "priceHigh" | "priceLow" | "rating"
+    ) => void;
 }

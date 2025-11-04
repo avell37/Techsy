@@ -1,9 +1,7 @@
-import { Divider, Dropdown } from "@/shared/ui";
-import { ProductFiltersSchema } from "../model/types/productFiltersSchema";
-import { Sidebar } from "@/widgets/Sidebar/ui/Sidebar";
-import { Button } from "@/shared/ui/ui-lib/Button/Button";
+import { Button, Divider, Dropdown, Input } from "@/shared/ui";
 import { ChevronDown } from "lucide-react";
-import { Input } from "@/shared/ui/ui-lib/Input/Input";
+import type { ProductFiltersSchema } from "../model/types/productFiltersSchema";
+import { Sidebar } from "@/widgets";
 
 export const ProductFiltersView = ({
     activeFilter,

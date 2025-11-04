@@ -4,10 +4,10 @@ import { ShippingFields } from "./ShippingFields";
 import { useShippingForm } from "../model/hooks/useShippingForm";
 
 export const ShippingForm = () => {
-    const { methods, handleShippingFormSubmit } = useShippingForm();
+    const { form, handleShippingFormSubmit } = useShippingForm();
 
     return (
-        <FormProvider {...methods}>
+        <FormProvider {...form}>
             <form onSubmit={handleShippingFormSubmit} className="flex flex-col gap-[20px]">
                 <ShippingFields />
                 <div className="flex justify-end gap-[10px]">

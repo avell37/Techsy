@@ -1,13 +1,23 @@
 import { bindActionCreators } from "@reduxjs/toolkit";
-import { useAppDispatch } from "../useAppDispatch/useAppDispatch"
+import { useAppDispatch } from "../useAppDispatch/useAppDispatch";
 import {
-    basketActions, brandActions, favoriteActions,
-    shippingActions, typeActions, userActions, fetchOrderStatus,
-    fetchUserOrders, fetchBasket, fetchAllBrands,
-    fetchAllDevices, fetchDeviceById, fetchAllFavoriteDevices,
-    fetchDeviceReviews, fetchShippingInfo, fetchAllTypes, fetchUser
+    basketActions,
+    brandActions,
+    shippingActions,
+    typeActions,
+    userActions,
+    fetchBasket,
+    fetchAllBrands,
+    fetchAllDevices,
+    fetchDeviceById,
+    fetchDeviceReviews,
+    fetchShippingInfo,
+    fetchAllTypes,
+    getUser,
+    getData,
 } from "@/entities";
 import { sortActions } from "@/features/FilteredSearch";
+import { fetchOrderStatus, fetchUserOrders } from "@/features/Order";
 
 export const useActions = () => {
     const dispatch = useAppDispatch();
@@ -16,7 +26,6 @@ export const useActions = () => {
         {
             ...basketActions,
             ...brandActions,
-            ...favoriteActions,
             ...shippingActions,
             ...typeActions,
             ...userActions,
@@ -27,10 +36,12 @@ export const useActions = () => {
             fetchAllBrands,
             fetchAllDevices,
             fetchDeviceById,
-            fetchAllFavoriteDevices,
             fetchDeviceReviews,
             fetchShippingInfo,
             fetchAllTypes,
-            fetchUser
-        }, dispatch)
-}
+            getUser,
+            getData,
+        },
+        dispatch
+    );
+};

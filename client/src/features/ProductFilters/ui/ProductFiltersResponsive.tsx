@@ -1,8 +1,6 @@
-import { Divider, Dropdown } from "@/shared/ui";
-import { ProductFiltersSchema } from "../model/types/productFiltersSchema";
-import { Button } from "@/shared/ui/ui-lib/Button/Button";
+import { Button, Divider, Dropdown, Input } from "@/shared/ui";
 import { ChevronDown } from "lucide-react";
-import { Input } from "@/shared/ui/ui-lib/Input/Input";
+import type { ProductFiltersSchema } from "../model/types/productFiltersSchema";
 
 export const ProductFiltersResponsive = ({
     activeFilter,
@@ -16,7 +14,7 @@ export const ProductFiltersResponsive = ({
 }: ProductFiltersSchema) => {
     return (
         <div className="h-full flex justify-center bg-gradient shadow-lg">
-            <div className="flex flex-col gap-[10px] pt-4 w-full">
+            <div className="flex flex-col gap-[10px] pt-10 w-full">
                 <Dropdown
                     trigger={
                         <Button

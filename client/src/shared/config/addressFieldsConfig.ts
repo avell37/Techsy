@@ -1,6 +1,9 @@
-import { IShipping } from "../types";
+import type { IShipping } from "@/entities";
 
-export const addressFieldsConfig: { name: keyof IShipping; placeholder: string }[] = [
+export const addressFieldsConfig: {
+    name: keyof IShipping;
+    placeholder: string;
+}[] = [
     { name: "firstName", placeholder: "Имя" },
     { name: "lastName", placeholder: "Фамилия" },
     { name: "phone", placeholder: "Телефон" },

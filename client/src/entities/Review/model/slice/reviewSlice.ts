@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchDeviceReviews } from "../services/fetchDeviceReviews";
-import { ReviewInitialState } from "../types/reviewInitialState";
+import { fetchDeviceReviews } from "../thunks/fetchDeviceReviews";
+import type { ReviewInitialState } from "../types/reviewInitialState";
 
 const initialState: ReviewInitialState = {
     reviews: [],

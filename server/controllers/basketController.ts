@@ -127,9 +127,12 @@ class BasketController {
                     BasketDevice: {
                         include: {
                             device: true
+                        },
+                        orderBy: { 
+                            createdAt: 'desc' 
                         }
                     }
-                }
+                },
             })
 
             return res.json(basket);

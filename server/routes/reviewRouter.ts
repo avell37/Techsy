@@ -4,6 +4,8 @@ const ReviewController = require('../controllers/reviewController');
 const authMiddleware = require('../middleware/authMiddleware')
 
 router.post('/', authMiddleware, ReviewController.createReview);
+router.get('/all', authMiddleware, ReviewController.getAllReviews);
+router.get('/', authMiddleware, ReviewController.getUserReviews);
 router.get('/:deviceId', ReviewController.getReviews);
 router.patch('/:id', authMiddleware, ReviewController.updateReview);
 router.delete('/:id', authMiddleware, ReviewController.deleteReview)

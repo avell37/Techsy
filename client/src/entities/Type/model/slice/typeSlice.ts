@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { TypeInitialState } from "../types/typeInitialState";
-import { fetchAllTypes } from "../services/fetchAllTypes";
+import type { TypeInitialState } from "../types/typeInitialState";
+import { fetchAllTypes } from "../thunks/fetchAllTypes";
 
 const initialState: TypeInitialState = {
     types: [],

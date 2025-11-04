@@ -1,4 +1,3 @@
-export * from './lib/getUserDropdownItems';
+export * from './model/hooks/useHeader';
+export * from './model/lib/getUserDropdownItems';
 export * from './ui/Header';
-export * from './ui/HeaderView';
-export * from './model/types/HeaderSchema';
